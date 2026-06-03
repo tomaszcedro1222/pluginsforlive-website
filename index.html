@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Darmowe pluginy i skrypty do vMix</title>
-  <meta name="description" content="Darmowe pluginy, wtyczki i skrypty do vMix. Gotowy kod do kopiowania oraz instrukcja użycia." />
+  <meta name="description" content="Darmowe skrypty do vMix. Gotowy kod do kopiowania oraz instrukcja użycia." />
   <style>
 :root{--bg:#0b1020;--text:#f5f7fb;--muted:#aab4d0;--accent:#62d0ff;--accent-2:#8bffb0;--border:rgba(255,255,255,.12);--shadow:0 20px 60px rgba(0,0,0,.35);--radius:22px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at top left,rgba(98,208,255,.18),transparent 35%),radial-gradient(circle at top right,rgba(139,255,176,.10),transparent 30%),var(--bg);color:var(--text);line-height:1.6}a{color:inherit;text-decoration:none}.container{width:min(1120px,calc(100% - 32px));margin:0 auto}
@@ -78,17 +78,15 @@ footer{border-top:1px solid var(--border);padding:26px 0;color:var(--muted);font
         <span class="logo-mark">vM</span>
         <span>Pluginy i skrypty do vmix</span>
       </a>
-      <nav class="nav-links">
-        <a href="#skrypt">Skrypt</a>
-        <a href="#opis">Jak działa</a>
-        <a href="#kawa">Postaw kawę</a>
-      </nav>
+   <nav class="nav-links">
+  <a href="#kawa">Postaw kawę</a>
+</nav>
     </div>
   </header>
 
   <main>
     <section class="container hero">
-      <h1>Darmowe pluginy i wtyczki do vMix</h1>
+      <h1>Darmowe skrypty do vMix</h1>
     </section>
 
     <section class="container script-card" id="skrypt">
@@ -205,6 +203,7 @@ Loop</code></pre>
         <li>Następnie sprawdza poziom sygnału na <strong>BUS F</strong>. Jeżeli poziom przekroczy <strong>50%</strong>, skrypt przycisza <strong>Input 1</strong> do połowy głośności.</li>
         <li>Jeżeli poziom na <strong>BUS F</strong> spadnie poniżej <strong>35%</strong> i minie krótki czas podtrzymania, <strong>Input 1</strong> wraca płynnie do 100%.</li>
         <li>Analogicznie działa druga część: <strong>BUS G</strong> steruje przyciszeniem <strong>Input 2</strong>.</li>
+        <li>Zmienna <strong>ducked1</strong> i <strong>ducked2</strong> pilnuje, żeby input nie był ściszany wielokrotnie coraz niżej. Dzięki temu poziom wraca do normalnej wartości.</li>
       </ol>
         </div>
       </div>
@@ -227,12 +226,14 @@ Loop</code></pre>
       <div>
         <strong>Pomogło?</strong>
         <span>
-          Skrypty są darmowe. Możesz postawić kawę BLIK-iem na telefon.
+          Skrypty są darmowe. Jeśli chcesz docenić moją pracę, możesz postawić mi kawę BLIK-iem.
           <br><br>
           Odbiorca BLIK: <strong>Tomek Cedro</strong>
+          <br>
+          Tytuł: <strong>Kawa za skrypt vmix</strong>
         </span>
       </div>
-      <div class="phone">536 800 099</div>
+      <div class="phone">+48 536 800 099</div>
     </section>
   </main>
 
