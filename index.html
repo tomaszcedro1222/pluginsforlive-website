@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Darmowe pluginy i skrypty do vMix</title>
+  <meta name="description" content="Darmowe pluginy, wtyczki i skrypty do vMix. Gotowy kod do kopiowania oraz instrukcja użycia." />
+  <style>
+:root{--bg:#0b1020;--text:#f5f7fb;--muted:#aab4d0;--accent:#62d0ff;--accent-2:#8bffb0;--border:rgba(255,255,255,.12);--shadow:0 20px 60px rgba(0,0,0,.35);--radius:22px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at top left,rgba(98,208,255,.18),transparent 35%),radial-gradient(circle at top right,rgba(139,255,176,.10),transparent 30%),var(--bg);color:var(--text);line-height:1.6}a{color:inherit;text-decoration:none}.container{width:min(1120px,calc(100% - 32px));margin:0 auto}
+header{position:sticky;top:0;z-index:10;backdrop-filter:blur(14px);background:rgba(11,16,32,.76);border-bottom:1px solid var(--border)}.nav{display:flex;justify-content:space-between;align-items:center;padding:16px 0;gap:16px}.logo{display:flex;align-items:center;gap:10px;font-weight:850;letter-spacing:-.03em}.logo-mark{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#06101f;font-weight:950}.nav-links{display:flex;gap:18px;font-size:14px;color:var(--muted)}.nav-links a:hover{color:var(--text)}
+.hero{padding:82px 0 54px;text-align:center}h1{font-size:clamp(42px,7vw,78px);line-height:.96;letter-spacing:-.07em;margin:0 auto;max-width:950px}
+.script-card{background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-bottom:34px}.script-head{padding:28px;background:rgba(255,255,255,.035);border-bottom:1px solid var(--border);text-align:center}.script-head h2{margin:0 0 12px;font-size:clamp(26px,4vw,42px);letter-spacing:-.04em}.script-head p{margin:0 auto;color:var(--muted);max-width:850px}
+.code-wrap{position:relative;background:#070b16;border-bottom:1px solid var(--border)}pre{margin:0;padding:24px;overflow-x:auto;color:#e8efff;font-size:13px;line-height:1.5;max-height:620px}code{font-family:"JetBrains Mono","Fira Code",Consolas,monospace}.copy-btn{position:sticky;top:74px;float:right;margin:14px 14px -54px 0;border:1px solid var(--border);background:rgba(255,255,255,.10);color:var(--text);border-radius:999px;padding:9px 13px;font-weight:800;cursor:pointer;backdrop-filter:blur(10px)}.copy-btn:hover{background:rgba(255,255,255,.16)}
+.center-section{width:min(820px,calc(100% - 32px));margin:0 auto 34px;padding:28px;border-radius:var(--radius);border:1px solid var(--border);background:rgba(255,255,255,.045);text-align:left}.center-section h2{margin:0 0 18px;text-align:center;font-size:clamp(26px,4vw,38px);letter-spacing:-.04em}.center-section p,.center-section li{color:var(--muted)}.center-section strong{color:var(--text)}.center-section ol{padding-left:22px;margin-bottom:0}
+.coffee{display:flex;justify-content:space-between;align-items:center;gap:18px;width:min(820px,calc(100% - 32px));margin:20px auto 70px;padding:20px;background:rgba(98,208,255,.08);border:1px solid rgba(98,208,255,.22);border-radius:18px}.coffee strong{display:block;margin-bottom:2px}.coffee span{color:var(--muted);font-size:14px}.phone{white-space:nowrap;font-weight:950;color:var(--accent);font-size:24px}
+footer{border-top:1px solid var(--border);padding:26px 0;color:var(--muted);font-size:14px}footer .container{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media(max-width:820px){.nav-links{display:none}.hero{padding-top:56px}.coffee{align-items:flex-start;flex-direction:column}.phone{white-space:normal}}
+</style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a href="#" class="logo">
+        <span class="logo-mark">vM</span>
+        <span>Pluginy i skrypty do vmix</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#skrypt">Skrypt</a>
+        <a href="#opis">Jak działa</a>
+        <a href="#kawa">Postaw kawę</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="container hero">
+      <h1>Darmowe pluginy i wtyczki do vMix</h1>
+    </section>
+
+    <section class="container script-card" id="skrypt">
+      <div class="script-head">
+        <h2>Ducking Audio inputa 1 i 2 wywoływany BUSEM F i BUSEM G</h2>
+        <p>
+          Gotowy skrypt do vMix. Działa w pętli, sprawdza poziom audio na wybranych BUS-ach
+          i płynnie przycisza wskazane inputy.
+        </p>
+      </div>
+
+      <div class="code-wrap">
+        <button class="copy-btn" data-copy="script-main">Kopiuj kod</button>
+        <pre><code id="script-main">Dim engageThreshold As Double = 50.0
+Dim releaseThreshold As Double = 35.0
+
+Dim normalVolume1 As Double = 100.0
+Dim normalVolume2 As Double = 100.0
+
+Dim duckPercent As Double = 0.5
+Dim fadeMs As Integer = 500
+Dim releaseHoldMs As Integer = 700
+Dim checkMs As Integer = 100
+
+Dim ducked1 As Boolean = False
+Dim lastSignalTime1 As DateTime = DateTime.Now
+
+Dim ducked2 As Boolean = False
+Dim lastSignalTime2 As DateTime = DateTime.Now
+
+Do While True
+
+    Dim x As New System.Xml.XmlDocument
+    x.LoadXml(API.XML())
+
+    &#x27; BUS F -&gt; INPUT 1
+    Dim busFNode = x.SelectSingleNode(&quot;//audio/busF&quot;)
+
+    If busFNode IsNot Nothing Then
+
+        Dim meterLF As Double = Double.Parse(busFNode.Attributes(&quot;meterF1&quot;).Value, Globalization.CultureInfo.InvariantCulture)
+        Dim meterRF As Double = Double.Parse(busFNode.Attributes(&quot;meterF2&quot;).Value, Globalization.CultureInfo.InvariantCulture)
+
+        Dim busLevelF As Double = Math.Max(Math.Pow(meterLF, 0.25) * 100.0, Math.Pow(meterRF, 0.25) * 100.0)
+
+        If busLevelF &gt; engageThreshold Then
+
+            lastSignalTime1 = DateTime.Now
+
+            If ducked1 = False Then
+                API.Function(&quot;SetVolumeFade&quot;, Input:=&quot;1&quot;, Value:=CInt(normalVolume1 * duckPercent).ToString() &amp; &quot;,&quot; &amp; fadeMs.ToString())
+                ducked1 = True
+            End If
+
+        End If
+
+        If busLevelF &lt; releaseThreshold Then
+
+            If ducked1 = True AndAlso DateTime.Now.Subtract(lastSignalTime1).TotalMilliseconds &gt; releaseHoldMs Then
+                API.Function(&quot;SetVolumeFade&quot;, Input:=&quot;1&quot;, Value:=CInt(normalVolume1).ToString() &amp; &quot;,&quot; &amp; fadeMs.ToString())
+                ducked1 = False
+            End If
+
+        End If
+
+    End If
+
+    &#x27; BUS G -&gt; INPUT 2
+    Dim busGNode = x.SelectSingleNode(&quot;//audio/busG&quot;)
+
+    If busGNode IsNot Nothing Then
+
+        If busGNode.Attributes(&quot;meterF1&quot;) IsNot Nothing AndAlso busGNode.Attributes(&quot;meterF2&quot;) IsNot Nothing Then
+
+            Dim meterLG As Double = Double.Parse(busGNode.Attributes(&quot;meterF1&quot;).Value, Globalization.CultureInfo.InvariantCulture)
+            Dim meterRG As Double = Double.Parse(busGNode.Attributes(&quot;meterF2&quot;).Value, Globalization.CultureInfo.InvariantCulture)
+
+            Dim busLevelG As Double = Math.Max(Math.Pow(meterLG, 0.25) * 100.0, Math.Pow(meterRG, 0.25) * 100.0)
+
+            If busLevelG &gt; engageThreshold Then
+
+                lastSignalTime2 = DateTime.Now
+
+                If ducked2 = False Then
+                    API.Function(&quot;SetVolumeFade&quot;, Input:=&quot;2&quot;, Value:=CInt(normalVolume2 * duckPercent).ToString() &amp; &quot;,&quot; &amp; fadeMs.ToString())
+                    ducked2 = True
+                End If
+
+            End If
+
+            If busLevelG &lt; releaseThreshold Then
+
+                If ducked2 = True AndAlso DateTime.Now.Subtract(lastSignalTime2).TotalMilliseconds &gt; releaseHoldMs Then
+                    API.Function(&quot;SetVolumeFade&quot;, Input:=&quot;2&quot;, Value:=CInt(normalVolume2).ToString() &amp; &quot;,&quot; &amp; fadeMs.ToString())
+                    ducked2 = False
+                End If
+
+            End If
+
+        End If
+
+    End If
+
+    Sleep(checkMs)
+
+Loop</code></pre>
+      </div>
+    </section>
+
+    <section class="center-section" id="opis">
+      <h2>Jak działa ten skrypt?</h2>
+      <ol>
+        <li>Skrypt co <strong>100 ms</strong> pobiera z vMix aktualny XML, czyli informacje o projekcie, inputach i poziomach audio.</li>
+        <li>Następnie sprawdza poziom sygnału na <strong>BUS F</strong>. Jeżeli poziom przekroczy <strong>50%</strong>, skrypt przycisza <strong>Input 1</strong> do połowy głośności.</li>
+        <li>Jeżeli poziom na <strong>BUS F</strong> spadnie poniżej <strong>35%</strong> i minie krótki czas podtrzymania, <strong>Input 1</strong> wraca płynnie do 100%.</li>
+        <li>Analogicznie działa druga część: <strong>BUS G</strong> steruje przyciszeniem <strong>Input 2</strong>.</li>
+        <li>Zmienna <strong>ducked1</strong> i <strong>ducked2</strong> pilnuje, żeby input nie był ściszany wielokrotnie coraz niżej. Dzięki temu poziom wraca do normalnej wartości.</li>
+      </ol>
+    </section>
+
+    <section class="center-section">
+      <h2>Jak dodać skrypt w vMix?</h2>
+      <ol>
+        <li>Wejdź w <strong>Settings → Scripting</strong>.</li>
+        <li>Kliknij <strong>Add</strong> i wybierz skrypt VB.NET.</li>
+        <li>Wklej kod z tej strony.</li>
+        <li>Dostosuj inputy, BUS-y i progi działania bezpośrednio w kodzie.</li>
+        <li>Uruchom skrypt i przetestuj na kopii projektu przed realizacją live.</li>
+      </ol>
+      <p><strong>Ważne:</strong> skrypt działa w pętli, więc zatrzymujesz go ręcznie w panelu Scripting.</p>
+    </section>
+
+    <section class="coffee" id="kawa">
+      <div>
+        <strong>Pomogło?</strong>
+        <span>
+          Skrypty są darmowe. Możesz postawić kawę BLIK-iem na telefon.
+          <br><br>
+          Odbiorca BLIK: <strong>Tomek Cedro</strong>
+        </span>
+      </div>
+      <div class="phone">536 800 099</div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <span>© 2026 Tomek Cedro — pluginy i skrypty do vMix</span>
+      <span>Realizator vMix / automatyzacje live</span>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll(".copy-btn").forEach((button) => {
+      button.addEventListener("click", async () => {
+        const id = button.getAttribute("data-copy");
+        const code = document.getElementById(id).innerText;
+        try {
+          await navigator.clipboard.writeText(code);
+          const oldText = button.innerText;
+          button.innerText = "Skopiowano";
+          setTimeout(() => button.innerText = oldText, 1400);
+        } catch (err) {
+          alert("Nie udało się skopiować. Zaznacz kod ręcznie.");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
