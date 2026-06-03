@@ -477,21 +477,38 @@ Loop</code></pre>
     </div>
   </footer>
 
-  <script>
-    document.querySelectorAll(".copy-btn").forEach((button) => {
-      button.addEventListener("click", async () => {
-        const id = button.getAttribute("data-copy");
-        const code = document.getElementById(id).innerText;
-        try {
-          await navigator.clipboard.writeText(code);
-          const oldText = button.innerText;
-          button.innerText = "Skopiowano";
-          setTimeout(() => button.innerText = oldText, 1400);
-        } catch (err) {
-          alert("Nie udało się skopiować. Zaznacz kod ręcznie.");
-        }
-      });
-    });
-  </script>
-</body>
-</html>
+ <script>
+document.querySelectorAll(".copy-btn").forEach((button) => {
+  button.addEventListener("click", () => {
+
+    const id = button.getAttribute("data-copy");
+    const codeElement = document.getElementById(id);
+
+    const text = codeElement.textContent;
+
+    const textarea = document.createElement("textarea");
+    textarea.value = text;
+
+    document.body.appendChild(textarea);
+
+    textarea.select();
+    textarea.setSelectionRange(0, 999999);
+
+    try {
+      document.execCommand("copy");
+
+      const oldText = button.innerText;
+      button.innerText = "Skopiowano";
+
+      setTimeout(() => {
+        button.innerText = oldText;
+      }, 1400);
+
+    } catch (err) {
+      alert("Nie udało się skopiować.");
+    }
+
+    document.body.removeChild(textarea);
+  });
+});
+</script>
