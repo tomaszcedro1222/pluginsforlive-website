@@ -210,6 +210,234 @@ Loop</code></pre>
     </section>
 
 
+    <section class="container script-card" id="auto-cut">
+      <div class="script-head">
+        <h2>Auto Cut by Audio — automatyczne przełączanie kamer</h2>
+        <p>
+          Gotowy skrypt do vMix, który na podstawie poziomów audio automatycznie przełącza
+          ujęcia między planem szerokim a close-upami rozmówców.
+        </p>
+      </div>
+      <div class="script-body-combined">
+
+
+      <div class="code-wrap">
+        <button class="copy-btn" data-copy="script-auto-cut">Kopiuj kod</button>
+        <pre><code id="script-auto-cut">' ==========================================
+' AUTO CUT BY AUDIO - CLOSE-UP PRIORITY VERSION
+' BUS A Left  -&gt; LEFT_CLOSE_INPUT
+' BUS A Right OR BUS B Left -&gt; RIGHT_CLOSE_INPUT
+' Priorytet: trzymanie close-upów
+' Szeroki: rzadko lub gdy mówią obie strony
+' ==========================================
+
+Dim WIDE_INPUT As String = "4"
+Dim LEFT_CLOSE_INPUT As String = "5"
+Dim RIGHT_CLOSE_INPUT As String = "6"
+
+Dim THRESHOLD_SPEECH As Double = 0.060
+Dim THRESHOLD_DOMINANCE As Double = 0.010
+Dim THRESHOLD_BOTH_TALK As Double = 0.018
+
+Dim MIN_SHOT_MS As Integer = 2600
+
+Dim WIDE_INSERT_EVERY_MS As Integer = 60000
+Dim WIDE_INSERT_DURATION_MS As Integer = 3000
+
+Dim SPEAKER_HOLD_MS As Integer = 500
+Dim PAUSE_HOLD_MS As Integer = 5000
+
+Dim LOOP_MS As Integer = 150
+Dim TRANSITION_NAME As String = "CutDirect"
+
+Dim currentShot As String = WIDE_INPUT
+Dim target As String = WIDE_INPUT
+Dim lastCloseShot As String = LEFT_CLOSE_INPUT
+
+Dim lastSwitchTime As Date = Date.Now
+Dim lastWideInsertTime As Date = Date.Now
+Dim leftCandidateSince As Date = Date.MinValue
+Dim rightCandidateSince As Date = Date.MinValue
+Dim wideCandidateSince As Date = Date.MinValue
+Dim silenceSince As Date = Date.MinValue
+Dim forceWideUntil As Date = Date.MinValue
+
+Dim rnd As New Random()
+
+API.Function(TRANSITION_NAME, Input:=WIDE_INPUT)
+
+Do While True
+
+    Dim xml As String = API.XML()
+    Dim x As New System.Xml.XmlDocument()
+    x.LoadXml(xml)
+
+    Dim busALeftNode As System.Xml.XmlNode = x.SelectSingleNode(".//audio/busA/@meterF1")
+    If busALeftNode Is Nothing Then
+        busALeftNode = x.SelectSingleNode(".//audio/busa/@meterF1")
+    End If
+
+    Dim busARightNode As System.Xml.XmlNode = x.SelectSingleNode(".//audio/busA/@meterF2")
+    If busARightNode Is Nothing Then
+        busARightNode = x.SelectSingleNode(".//audio/busa/@meterF2")
+    End If
+
+    Dim busBLeftNode As System.Xml.XmlNode = x.SelectSingleNode(".//audio/busB/@meterF1")
+    If busBLeftNode Is Nothing Then
+        busBLeftNode = x.SelectSingleNode(".//audio/busb/@meterF1")
+    End If
+
+    Dim leftLevel As Double = 0.0
+    Dim busARightLevel As Double = 0.0
+    Dim busBLeftLevel As Double = 0.0
+    Dim rightLevel As Double = 0.0
+
+    If Not busALeftNode Is Nothing Then
+        Double.TryParse(busALeftNode.Value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, leftLevel)
+    End If
+
+    If Not busARightNode Is Nothing Then
+        Double.TryParse(busARightNode.Value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, busARightLevel)
+    End If
+
+    If Not busBLeftNode Is Nothing Then
+        Double.TryParse(busBLeftNode.Value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, busBLeftLevel)
+    End If
+
+    rightLevel = Math.Max(busARightLevel, busBLeftLevel)
+
+    Dim nowTime As Date = Date.Now
+    Dim diff As Double = Math.Abs(leftLevel - rightLevel)
+
+    Dim leftSpeaking As Boolean = leftLevel &gt;= THRESHOLD_SPEECH
+    Dim rightSpeaking As Boolean = rightLevel &gt;= THRESHOLD_SPEECH
+    Dim bothSpeaking As Boolean = leftSpeaking And rightSpeaking
+    Dim silence As Boolean = (Not leftSpeaking And Not rightSpeaking)
+
+    target = currentShot
+
+    If nowTime &lt; forceWideUntil Then
+        target = WIDE_INPUT
+    Else
+
+        ' Rzadki szeroki "oddech"
+        If (nowTime - lastWideInsertTime).TotalMilliseconds &gt;= WIDE_INSERT_EVERY_MS Then
+            If rnd.Next(0, 100) &lt; 50 Then
+                forceWideUntil = nowTime.AddMilliseconds(WIDE_INSERT_DURATION_MS)
+                lastWideInsertTime = nowTime
+                target = WIDE_INPUT
+            End If
+        End If
+
+        If nowTime &gt;= forceWideUntil Then
+
+            If bothSpeaking And diff &lt;= THRESHOLD_BOTH_TALK Then
+
+                If wideCandidateSince = Date.MinValue Then
+                    wideCandidateSince = nowTime
+                End If
+                leftCandidateSince = Date.MinValue
+                rightCandidateSince = Date.MinValue
+                silenceSince = Date.MinValue
+
+                If (nowTime - wideCandidateSince).TotalMilliseconds &gt;= SPEAKER_HOLD_MS Then
+                    target = WIDE_INPUT
+                End If
+
+            ElseIf leftSpeaking And (leftLevel - rightLevel) &gt;= THRESHOLD_DOMINANCE Then
+
+                If leftCandidateSince = Date.MinValue Then
+                    leftCandidateSince = nowTime
+                End If
+                rightCandidateSince = Date.MinValue
+                wideCandidateSince = Date.MinValue
+                silenceSince = Date.MinValue
+
+                If (nowTime - leftCandidateSince).TotalMilliseconds &gt;= SPEAKER_HOLD_MS Then
+                    target = LEFT_CLOSE_INPUT
+                    lastCloseShot = LEFT_CLOSE_INPUT
+                End If
+
+            ElseIf rightSpeaking And (rightLevel - leftLevel) &gt;= THRESHOLD_DOMINANCE Then
+
+                If rightCandidateSince = Date.MinValue Then
+                    rightCandidateSince = nowTime
+                End If
+                leftCandidateSince = Date.MinValue
+                wideCandidateSince = Date.MinValue
+                silenceSince = Date.MinValue
+
+                If (nowTime - rightCandidateSince).TotalMilliseconds &gt;= SPEAKER_HOLD_MS Then
+                    target = RIGHT_CLOSE_INPUT
+                    lastCloseShot = RIGHT_CLOSE_INPUT
+                End If
+
+            ElseIf silence Then
+
+                If silenceSince = Date.MinValue Then
+                    silenceSince = nowTime
+                End If
+                leftCandidateSince = Date.MinValue
+                rightCandidateSince = Date.MinValue
+                wideCandidateSince = Date.MinValue
+
+                ' Przy ciszy nie lecimy od razu na szeroki.
+                ' Trzymamy ostatni close-up przez PAUSE_HOLD_MS.
+                If (nowTime - silenceSince).TotalMilliseconds &lt;= PAUSE_HOLD_MS Then
+                    target = lastCloseShot
+                Else
+                    ' Po dłuższej ciszy można dać szeroki
+                    target = WIDE_INPUT
+                End If
+
+            Else
+
+                ' Niejednoznacznie -&gt; preferuj ostatni close-up, nie szeroki
+                leftCandidateSince = Date.MinValue
+                rightCandidateSince = Date.MinValue
+                wideCandidateSince = Date.MinValue
+                silenceSince = Date.MinValue
+
+                target = lastCloseShot
+
+            End If
+        End If
+    End If
+
+    If target &lt;&gt; currentShot Then
+        If (nowTime - lastSwitchTime).TotalMilliseconds &gt;= MIN_SHOT_MS Then
+            API.Function(TRANSITION_NAME, Input:=target)
+            currentShot = target
+            lastSwitchTime = nowTime
+
+            If target = LEFT_CLOSE_INPUT Or target = RIGHT_CLOSE_INPUT Then
+                lastCloseShot = target
+            End If
+        End If
+    End If
+
+    Console.WriteLine("A_L=" &amp; leftLevel.ToString("0.000") &amp; " | A_R=" &amp; busARightLevel.ToString("0.000") &amp; " | B_L=" &amp; busBLeftLevel.ToString("0.000") &amp; " | RIGHT_USED=" &amp; rightLevel.ToString("0.000") &amp; " | LAST_CLOSE=" &amp; lastCloseShot &amp; " | CURRENT=" &amp; currentShot)
+
+    Sleep(LOOP_MS)
+
+Loop</code></pre>
+      </div>
+        <div class="script-description-inline" id="opis-auto-cut">
+          <h2>Jak działa ten skrypt?</h2>
+          <ol>
+        <li>Skrypt analizuje poziomy audio z <strong>BUS A</strong> oraz <strong>BUS B</strong> i na tej podstawie wykrywa, która strona aktualnie mówi.</li>
+        <li><strong>BUS A Left</strong> steruje lewym close-upem, czyli inputem ustawionym w zmiennej <strong>LEFT_CLOSE_INPUT</strong>.</li>
+        <li><strong>BUS A Right</strong> lub <strong>BUS B Left</strong> steruje prawym close-upem, czyli inputem ustawionym w zmiennej <strong>RIGHT_CLOSE_INPUT</strong>.</li>
+        <li>Jeżeli mówi jedna osoba i jej poziom dominuje nad drugą stroną, skrypt przełącza obraz na odpowiedni close-up.</li>
+        <li>Jeżeli mówią obie strony albo po dłuższej ciszy nie ma aktywnego rozmówcy, skrypt może przełączyć obraz na plan szeroki.</li>
+        <li>Zmienne czasowe, takie jak <strong>MIN_SHOT_MS</strong>, <strong>SPEAKER_HOLD_MS</strong> i <strong>PAUSE_HOLD_MS</strong>, chronią przed zbyt szybkim i nerwowym przełączaniem kamer.</li>
+      </ol>
+        </div>
+      </div>
+    </section>
+
+
+
     <section class="center-section">
       <h2>Jak dodać skrypt w vMix?</h2>
       <ol>
