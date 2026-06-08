@@ -1,694 +1,93 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Darmowe pluginy i skrypty do vMix</title>
-  <meta name="description" content="Darmowe skrypty do vMix. Gotowy kod do kopiowania oraz instrukcja użycia." />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PluginForLive — narzędzia automatyzujące pracę w vMix</title>
+  <meta name="description" content="PluginForLive — programy do vMix: Auto Cut, AutoMix i Interpreter Ducking. Automatyzuj kamery i audio podczas transmisji live." />
   <style>
-:root{--bg:#0b1020;--text:#f5f7fb;--muted:#aab4d0;--accent:#62d0ff;--accent-2:#8bffb0;--border:rgba(255,255,255,.12);--shadow:0 20px 60px rgba(0,0,0,.35);--radius:22px}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:radial-gradient(circle at top left,rgba(98,208,255,.18),transparent 35%),radial-gradient(circle at top right,rgba(139,255,176,.10),transparent 30%),var(--bg);color:var(--text);line-height:1.6}a{color:inherit;text-decoration:none}.container{width:min(1120px,calc(100% - 32px));margin:0 auto}
-header{position:sticky;top:0;z-index:10;backdrop-filter:blur(14px);background:rgba(11,16,32,.76);border-bottom:1px solid var(--border)}.nav{display:flex;justify-content:space-between;align-items:center;padding:16px 0;gap:16px}.logo{display:flex;align-items:center;gap:10px;font-weight:850;letter-spacing:-.03em}.logo-mark{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#06101f;font-weight:950}.nav-links{display:flex;gap:18px;font-size:14px;color:var(--muted)}.nav-links a:hover{color:var(--text)}
-.hero{padding:82px 0 54px;text-align:center}h1{font-size:clamp(42px,7vw,78px);line-height:.96;letter-spacing:-.07em;margin:0 auto;max-width:950px}
-.script-card{background:linear-gradient(180deg,rgba(255,255,255,.055),rgba(255,255,255,.025));border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);margin-bottom:34px}.script-head{padding:28px;background:rgba(255,255,255,.035);border-bottom:1px solid var(--border);text-align:center}.script-head h2{margin:0 0 12px;font-size:clamp(26px,4vw,42px);letter-spacing:-.04em}.script-head p{margin:0 auto;color:var(--muted);max-width:850px}
-.code-wrap{position:relative;background:#070b16;border-bottom:1px solid var(--border)}pre{margin:0;padding:24px;overflow-x:auto;color:#e8efff;font-size:13px;line-height:1.5;max-height:620px}code{font-family:"JetBrains Mono","Fira Code",Consolas,monospace}.copy-btn{position:sticky;top:74px;float:right;margin:14px 14px -54px 0;border:1px solid var(--border);background:rgba(255,255,255,.10);color:var(--text);border-radius:999px;padding:9px 13px;font-weight:800;cursor:pointer;backdrop-filter:blur(10px)}.copy-btn:hover{background:rgba(255,255,255,.16)}
-.center-section{width:min(820px,calc(100% - 32px));margin:0 auto 34px;padding:28px;border-radius:var(--radius);border:1px solid var(--border);background:rgba(255,255,255,.045);text-align:left}.center-section h2{margin:0 0 18px;text-align:center;font-size:clamp(26px,4vw,38px);letter-spacing:-.04em}.center-section p,.center-section li{color:var(--muted)}.center-section strong{color:var(--text)}.center-section ol{padding-left:22px;margin-bottom:0}
-.coffee{display:flex;justify-content:space-between;align-items:center;gap:18px;width:min(820px,calc(100% - 32px));margin:20px auto 70px;padding:20px;background:rgba(98,208,255,.08);border:1px solid rgba(98,208,255,.22);border-radius:18px}.coffee strong{display:block;margin-bottom:2px}.coffee span{color:var(--muted);font-size:14px}.phone{white-space:nowrap;font-weight:950;color:var(--accent);font-size:24px}
-footer{border-top:1px solid var(--border);padding:26px 0;color:var(--muted);font-size:14px}footer .container{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-@media(max-width:820px){.nav-links{display:none}.hero{padding-top:56px}.coffee{align-items:flex-start;flex-direction:column}.phone{white-space:normal}}
-
-    .script-body-combined {
-      display: grid;
-      grid-template-columns: minmax(280px, .85fr) minmax(320px, 1.15fr);
-      gap: 0;
-      border-bottom: 1px solid var(--border);
+    :root{
+      --bg:#070b14; --card:#101827; --card2:#0d1422; --text:#edf3ff; --muted:#a9b7ce;
+      --brand:#57d4ff; --brand2:#8d7cff; --ok:#4ade80; --line:rgba(255,255,255,.11);
+      --danger:#ff6b6b; --shadow:0 20px 70px rgba(0,0,0,.45); --radius:24px;
     }
-
-    .script-body-combined .code-wrap {
-      border-bottom: 0;
-      border-right: 1px solid var(--border);
-    }
-
-    .script-body-combined pre {
-      max-height: 430px;
-    }
-
-    .script-description-inline {
-      padding: 26px;
-      background: rgba(255,255,255,.025);
-    }
-
-    .script-description-inline h2 {
-      margin: 0 0 18px;
-      text-align: center;
-      font-size: clamp(24px, 3vw, 34px);
-      letter-spacing: -.04em;
-    }
-
-    .script-description-inline li {
-      color: var(--muted);
-    }
-
-    .script-description-inline strong {
-      color: var(--text);
-    }
-
-    .script-description-inline ol {
-      padding-left: 22px;
-      margin: 0;
-    }
-
-    @media(max-width:820px){
-      .script-body-combined {
-        grid-template-columns: 1fr;
-      }
-
-      .script-body-combined .code-wrap {
-        border-right: 0;
-        border-bottom: 1px solid var(--border);
-      }
-    }
-
-
-    /* Poprawki mobilne / iPhone */
-    html, body {
-      width: 100%;
-      max-width: 100%;
-      overflow-x: hidden;
-      -webkit-text-size-adjust: 100%;
-    }
-
-    body {
-      padding-left: env(safe-area-inset-left);
-      padding-right: env(safe-area-inset-right);
-    }
-
-    pre, code {
-      white-space: pre;
-      overflow-wrap: normal;
-      word-break: normal;
-    }
-
-    .code-wrap {
-      overflow: hidden;
-    }
-
-    .code-wrap pre {
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: thin;
-    }
-
-    .copy-btn {
-      z-index: 3;
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    @media(max-width:600px){
-      :root {
-        --radius: 18px;
-      }
-
-      .container,
-      .center-section,
-      .coffee {
-        width: min(100% - 20px, 1120px);
-      }
-
-      .nav {
-        padding: 12px 0;
-      }
-
-      .logo {
-        gap: 8px;
-        min-width: 0;
-      }
-
-      .logo span:last-child {
-        font-size: 14px;
-        line-height: 1.2;
-      }
-
-      .logo-mark {
-        width: 34px;
-        height: 34px;
-        border-radius: 10px;
-        flex: 0 0 auto;
-      }
-
-      .hero {
-        padding: 44px 0 30px;
-      }
-
-      h1 {
-        font-size: clamp(34px, 12vw, 48px);
-        line-height: 1;
-        letter-spacing: -.055em;
-      }
-
-      .script-card {
-        margin-bottom: 22px;
-      }
-
-      .script-head {
-        padding: 20px 16px;
-      }
-
-      .script-head h2 {
-        font-size: clamp(23px, 8vw, 32px);
-        line-height: 1.05;
-      }
-
-      .script-head p {
-        font-size: 14px;
-      }
-
-      .script-description-inline {
-        padding: 20px 16px;
-      }
-
-      .script-description-inline h2,
-      .center-section h2 {
-        font-size: clamp(23px, 7vw, 30px);
-        line-height: 1.1;
-      }
-
-      .script-description-inline ol,
-      .center-section ol {
-        padding-left: 20px;
-      }
-
-      .script-description-inline li,
-      .center-section li,
-      .center-section p {
-        font-size: 14px;
-      }
-
-      pre {
-        padding: 58px 14px 18px;
-        font-size: 12px;
-        line-height: 1.45;
-        max-height: 70vh;
-        overflow-x: auto;
-        overflow-y: auto;
-      }
-
-      .script-body-combined pre {
-        max-height: 70vh;
-      }
-
-      .copy-btn {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        float: none;
-        margin: 0;
-        padding: 10px 14px;
-        min-height: 42px;
-        font-size: 14px;
-      }
-
-      .center-section {
-        padding: 20px 16px;
-        margin-bottom: 22px;
-      }
-
-      .coffee {
-        margin: 18px auto 48px;
-        padding: 18px 16px;
-        gap: 16px;
-      }
-
-      .phone {
-        font-size: 22px;
-      }
-
-      .coffee div[style] {
-        font-size: 16px !important;
-        overflow-wrap: anywhere;
-      }
-
-      footer .container {
-        display: block;
-      }
-
-      footer span {
-        display: block;
-        margin-bottom: 8px;
-      }
-    }
-
+    *{box-sizing:border-box} html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:
+      radial-gradient(circle at 20% 0%,rgba(87,212,255,.22),transparent 30%),
+      radial-gradient(circle at 90% 10%,rgba(141,124,255,.19),transparent 32%),var(--bg);color:var(--text);line-height:1.55}
+    a{color:inherit;text-decoration:none}.wrap{width:min(1120px,calc(100% - 36px));margin:0 auto}
+    .nav{position:sticky;top:0;z-index:5;background:rgba(7,11,20,.72);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+    .navin{display:flex;align-items:center;justify-content:space-between;padding:14px 0}.logo{display:flex;gap:10px;align-items:center;font-weight:800;letter-spacing:.2px}
+    .mark{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--brand),var(--brand2));box-shadow:0 0 26px rgba(87,212,255,.35)}
+    .links{display:flex;gap:18px;color:var(--muted);font-size:14px}.links a:hover{color:var(--text)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:13px 18px;font-weight:800;cursor:pointer;background:linear-gradient(135deg,var(--brand),var(--brand2));color:#06101d;box-shadow:0 12px 34px rgba(87,212,255,.22)}
+    .btn.secondary{background:rgba(255,255,255,.08);color:var(--text);border:1px solid var(--line);box-shadow:none}.hero{padding:86px 0 58px}
+    .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:34px;align-items:center}.badge{display:inline-flex;padding:8px 12px;border:1px solid var(--line);border-radius:999px;color:var(--muted);background:rgba(255,255,255,.05);font-size:14px}
+    h1{font-size:clamp(40px,6vw,72px);line-height:.98;margin:18px 0 18px;letter-spacing:-2.4px}h1 span{background:linear-gradient(135deg,var(--brand),#fff,var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .lead{font-size:20px;color:var(--muted);max-width:680px}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}.panel{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.035));border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px;position:relative;overflow:hidden}
+    .panel:before{content:"";position:absolute;inset:-80px -120px auto auto;width:240px;height:240px;border-radius:50%;background:rgba(87,212,255,.18);filter:blur(10px)}
+    .mock{display:grid;gap:12px}.row{display:flex;gap:10px}.dot{width:10px;height:10px;border-radius:50%;background:var(--danger)}.dot:nth-child(2){background:#ffd166}.dot:nth-child(3){background:var(--ok)}
+    .meter{height:14px;border-radius:999px;background:rgba(255,255,255,.09);overflow:hidden}.meter i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--ok));animation:pulse 1.7s infinite ease-in-out}.meter:nth-child(odd) i{width:72%}.meter:nth-child(even) i{width:43%;animation-delay:.4s}
+    @keyframes pulse{50%{filter:brightness(1.5);transform:scaleX(.82)}}.screen{margin-top:18px;padding:18px;border-radius:18px;background:#070b14;border:1px solid var(--line)}
+    section{padding:56px 0}.section-title{font-size:38px;letter-spacing:-1.2px;margin:0 0 12px}.muted{color:var(--muted)}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:26px}.card{background:rgba(255,255,255,.055);border:1px solid var(--line);border-radius:22px;padding:22px;min-height:260px;display:flex;flex-direction:column;justify-content:space-between}
+    .icon{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:rgba(87,212,255,.13);border:1px solid rgba(87,212,255,.22);font-size:24px}.card h3{font-size:24px;margin:18px 0 8px}.card p{color:var(--muted);margin:0}.price{font-size:34px;font-weight:900;margin-top:20px}.price small{font-size:15px;color:var(--muted);font-weight:600}
+    .buy{display:grid;grid-template-columns:1fr 1fr;gap:22px}.box{background:rgba(255,255,255,.055);border:1px solid var(--line);border-radius:22px;padding:24px}.steps{counter-reset:s}.step{display:flex;gap:14px;margin:16px 0;color:var(--muted)}.step:before{counter-increment:s;content:counter(s);flex:0 0 30px;height:30px;border-radius:50%;display:grid;place-items:center;background:rgba(87,212,255,.14);color:var(--text);font-weight:900}
+    label{display:block;margin:12px 0 6px;color:var(--muted);font-size:14px}input,textarea{width:100%;background:#07101e;color:var(--text);border:1px solid var(--line);border-radius:14px;padding:13px 14px;font:inherit;outline:none}textarea{min-height:130px;resize:vertical}input:focus,textarea:focus{border-color:rgba(87,212,255,.65)}.full{width:100%}.smallnote{font-size:13px;color:var(--muted);margin:10px 0 0}.hidden-field{position:absolute;left:-9999px;opacity:0;height:0;width:0;overflow:hidden}
+    .notice{margin-top:14px;padding:14px;border-radius:16px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);color:#d7ffe4}.blik{font-size:28px;font-weight:900;letter-spacing:1px;color:#fff}.foot{padding:30px 0 48px;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+    @media(max-width:860px){.grid,.buy{grid-template-columns:1fr}.cards{grid-template-columns:1fr}.links{display:none}.hero{padding-top:52px}h1{letter-spacing:-1.4px}.lead{font-size:18px}}
   </style>
 </head>
 <body>
-  <header>
-    <div class="container nav">
-      <a href="#" class="logo">
-        <span class="logo-mark">vM</span>
-        <span>Pluginy i skrypty do vmix</span>
-      </a>
-   <nav class="nav-links">
-  <a href="#kawa">Postaw kawę</a>
-</nav>
-    </div>
-  </header>
-
+  <nav class="nav"><div class="wrap navin"><a class="logo" href="#"><span class="mark"></span>PluginForLive</a><div class="links"><a href="#programy">Programy</a><a href="#zakup">Zakup</a><a href="#kontakt">Kontakt</a></div><a class="btn secondary" href="#zakup">Kup program</a></div></nav>
   <main>
-    <section class="container hero">
-      <h1>Darmowe skrypty do vMix</h1>
-    </section>
+    <header class="hero"><div class="wrap grid"><div><span class="badge">Automatyzacja realizacji live w vMix</span><h1>Pluginy, które zdejmują z Ciebie <span>część realizacji</span>.</h1><p class="lead">Trzy praktyczne programy do vMix: automatyczne cięcia kamer, automix mikrofonów oraz inteligentne ściszanie flooru podczas tłumaczenia symultanicznego.</p><div class="actions"><a class="btn" href="#programy">Zobacz programy</a><a class="btn secondary" href="#zakup">Kup za 100 zł</a></div></div><div class="panel"><div class="row"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div><div class="screen mock"><strong>Live audio monitor</strong><div class="meter"><i></i></div><div class="meter"><i></i></div><div class="meter"><i></i></div><div class="meter"><i></i></div><p class="muted">Program wykrywa aktywne źródło audio i wykonuje akcje w vMix bez ręcznego klikania.</p></div></div></div></header>
+    <section id="programy"><div class="wrap"><h2 class="section-title">Programy do vMix</h2><p class="muted">Każdy program kosztuje 100 zł. Po zakupie otrzymasz indywidualny klucz aktywacyjny.</p><div class="cards">
+      <article class="card"><div><div class="icon">🎥</div><h3>Auto Cut</h3><p>Program zmienia kamery na podstawie tego, kto aktualnie mówi. Idealny do podcastów, paneli, rozmów i realizacji z kilkoma mikrofonami.</p></div><div class="price">100 zł <small>/ licencja</small></div></article>
+      <article class="card"><div><div class="icon">🎚️</div><h3>AutoMix</h3><p>Typowy automix znany z mikserów audio. Pomaga utrzymać czytelność wielu mikrofonów i ograniczyć chaos w miksie.</p></div><div class="price">100 zł <small>/ licencja</small></div></article>
+      <article class="card"><div><div class="icon">🌍</div><h3>Interpreter Ducking</h3><p>Program przycisza floor, kiedy mówi tłumacz angielski lub polski. Przydatny przy transmisjach z tłumaczeniem symultanicznym.</p></div><div class="price">100 zł <small>/ licencja</small></div></article>
+    </div></div></section>
+    <section id="zakup"><div class="wrap buy"><div class="box"><h2 class="section-title">Jak kupić?</h2><div class="step">Wybierz program i uzupełnij formularz zamówienia.</div><div class="step">Wyślij płatność BLIK na numer <span class="blik">536 800 099</span> z dopiskiem wybranego programu.</div><div class="step">Po otrzymaniu zgłoszenia i płatności odeślę klucz aktywacyjny na Twój e-mail.</div><div class="notice"><strong>Cena:</strong> 100 zł za jeden program. Klucz wysyłany jest ręcznie po weryfikacji płatności.</div></div>
+      <form class="box" id="orderForm" action="https://usebasin.com/f/6eb488aeb4c5" method="POST">
+        <h2 class="section-title">Formularz zamówienia</h2>
+        <p class="muted">Wypełnij formularz po wykonaniu płatności BLIK. Zamówienie trafi do mnie mailem przez Basin.</p>
 
-    <section class="container script-card" id="skrypt">
-      <div class="script-head">
-        <h2>Ducking Audio inputa 1 i 2 wywoływany BUSEM F i G</h2>
-        <p>
-          Gotowy skrypt do vMix. Działa w pętli, sprawdza poziom audio na wybranych BUS-ach
-          i płynnie przycisza wskazane inputy.
-        </p>
-      </div>
-      <div class="script-body-combined">
+        <input type="hidden" name="_subject" value="Nowe zamówienie PluginForLive">
+        <input type="hidden" name="Cena" value="100 zł">
+        <input type="hidden" name="Płatność" value="BLIK 536 800 099">
 
-
-      <div class="code-wrap">
-        <button class="copy-btn" data-copy="script-main">Kopiuj kod</button>
-        <pre><code id="script-main">Dim engageThreshold As Double = 50.0
-Dim releaseThreshold As Double = 35.0
-
-Dim normalVolume1 As Double = 100.0
-Dim normalVolume2 As Double = 100.0
-
-Dim duckPercent As Double = 0.5
-Dim fadeMs As Integer = 500
-Dim releaseHoldMs As Integer = 700
-Dim checkMs As Integer = 100
-
-Dim ducked1 As Boolean = False
-Dim lastSignalTime1 As DateTime = DateTime.Now
-
-Dim ducked2 As Boolean = False
-Dim lastSignalTime2 As DateTime = DateTime.Now
-
-Do While True
-
-    Dim x As New System.Xml.XmlDocument
-    x.LoadXml(API.XML())
-
-    &#x27; BUS F -&gt; INPUT 1
-    Dim busFNode = x.SelectSingleNode(&quot;//audio/busF&quot;)
-
-    If busFNode IsNot Nothing Then
-
-        Dim meterLF As Double = Double.Parse(busFNode.Attributes(&quot;meterF1&quot;).Value, Globalization.CultureInfo.InvariantCulture)
-        Dim meterRF As Double = Double.Parse(busFNode.Attributes(&quot;meterF2&quot;).Value, Globalization.CultureInfo.InvariantCulture)
-
-        Dim busLevelF As Double = Math.Max(Math.Pow(meterLF, 0.25) * 100.0, Math.Pow(meterRF, 0.25) * 100.0)
-
-        If busLevelF &gt; engageThreshold Then
-
-            lastSignalTime1 = DateTime.Now
-
-            If ducked1 = False Then
-                API.Function(&quot;SetVolumeFade&quot;, Input:=&quot;1&quot;, Value:=CInt(normalVolume1 * duckPercent).ToString() &amp; &quot;,&quot; &amp; fadeMs.ToString())
-                ducked1 = True
-            End If
-
-        End If
-
-        If busLevelF &lt; releaseThreshold Then
-
-            If ducked1 = True AndAlso DateTime.Now.Subtract(lastSignalTime1).TotalMilliseconds &gt; releaseHoldMs Then
-                API.Function(&quot;SetVolumeFade&quot;, Input:=&quot;1&quot;, Value:=CInt(normalVolume1).ToString() &amp; &quot;,&quot; &amp; fadeMs.ToString())
-                ducked1 = False
-            End If
-
-        End If
-
-    End If
-
-    &#x27; BUS G -&gt; INPUT 2
-    Dim busGNode = x.SelectSingleNode(&quot;//audio/busG&quot;)
-
-    If busGNode IsNot Nothing Then
-
-        If busGNode.Attributes(&quot;meterF1&quot;) IsNot Nothing AndAlso busGNode.Attributes(&quot;meterF2&quot;) IsNot Nothing Then
-
-            Dim meterLG As Double = Double.Parse(busGNode.Attributes(&quot;meterF1&quot;).Value, Globalization.CultureInfo.InvariantCulture)
-            Dim meterRG As Double = Double.Parse(busGNode.Attributes(&quot;meterF2&quot;).Value, Globalization.CultureInfo.InvariantCulture)
-
-            Dim busLevelG As Double = Math.Max(Math.Pow(meterLG, 0.25) * 100.0, Math.Pow(meterRG, 0.25) * 100.0)
-
-            If busLevelG &gt; engageThreshold Then
-
-                lastSignalTime2 = DateTime.Now
-
-                If ducked2 = False Then
-                    API.Function(&quot;SetVolumeFade&quot;, Input:=&quot;2&quot;, Value:=CInt(normalVolume2 * duckPercent).ToString() &amp; &quot;,&quot; &amp; fadeMs.ToString())
-                    ducked2 = True
-                End If
-
-            End If
-
-            If busLevelG &lt; releaseThreshold Then
-
-                If ducked2 = True AndAlso DateTime.Now.Subtract(lastSignalTime2).TotalMilliseconds &gt; releaseHoldMs Then
-                    API.Function(&quot;SetVolumeFade&quot;, Input:=&quot;2&quot;, Value:=CInt(normalVolume2).ToString() &amp; &quot;,&quot; &amp; fadeMs.ToString())
-                    ducked2 = False
-                End If
-
-            End If
-
-        End If
-
-    End If
-
-    Sleep(checkMs)
-
-Loop</code></pre>
-      </div>
-        <div class="script-description-inline" id="opis">
-          <h2>Jak działa ten skrypt?</h2>
-          <ol>
-        <li>Skrypt co <strong>100 ms</strong> pobiera z vMix aktualny XML, czyli informacje o projekcie, inputach i poziomach audio.</li>
-        <li>Następnie sprawdza poziom sygnału na <strong>BUS F</strong>. Jeżeli poziom przekroczy <strong>50%</strong>, skrypt przycisza <strong>Input 1</strong> do połowy głośności.</li>
-        <li>Jeżeli poziom na <strong>BUS F</strong> spadnie poniżej <strong>35%</strong> i minie krótki czas podtrzymania, <strong>Input 1</strong> wraca płynnie do 100%.</li>
-        <li>Analogicznie działa druga część: <strong>BUS G</strong> steruje przyciszeniem <strong>Input 2</strong>.</li>
-        <li>Zmienna <strong>ducked1</strong> i <strong>ducked2</strong> pilnuje, żeby input nie był ściszany wielokrotnie coraz niżej. Dzięki temu poziom wraca do normalnej wartości.</li>
-      </ol>
+        <div class="hidden-field">
+          <label>Nie wypełniaj tego pola</label>
+          <input type="text" name="_gotcha" tabindex="-1" autocomplete="off">
         </div>
-      </div>
-    </section>
 
+        <label for="name">Imię i nazwisko *</label>
+        <input id="name" name="Imię i nazwisko" autocomplete="name" required placeholder="Jan Kowalski">
 
-    <section class="container script-card" id="auto-cut">
-      <div class="script-head">
-        <h2>Auto Cut by Audio — automatyczne przełączanie kamer</h2>
-        <p>
-          Gotowy skrypt do vMix, który na podstawie poziomów audio automatycznie przełącza
-          ujęcia między planem szerokim a close-upami rozmówców.
-        </p>
-      </div>
-      <div class="script-body-combined">
+        <label for="address">Adres *</label>
+        <input id="address" name="Adres" autocomplete="street-address" required placeholder="Ulica, numer, kod pocztowy, miasto">
 
+        <label for="nip">Numer NIP</label>
+        <input id="nip" name="NIP" inputmode="numeric" placeholder="Opcjonalnie, jeśli potrzebujesz faktury">
 
-      <div class="code-wrap">
-        <button class="copy-btn" data-copy="script-auto-cut">Kopiuj kod</button>
-        <pre><code id="script-auto-cut">' ==========================================
-' AUTO CUT BY AUDIO - CLOSE-UP PRIORITY VERSION
-' BUS A Left  -&gt; LEFT_CLOSE_INPUT
-' BUS A Right OR BUS B Left -&gt; RIGHT_CLOSE_INPUT
-' Priorytet: trzymanie close-upów
-' Szeroki: rzadko lub gdy mówią obie strony
-' ==========================================
+        <label for="email">Adres e-mail *</label>
+        <input id="email" name="E-mail" type="email" autocomplete="email" required placeholder="mail@example.com">
 
-Dim WIDE_INPUT As String = "4"
-Dim LEFT_CLOSE_INPUT As String = "5"
-Dim RIGHT_CLOSE_INPUT As String = "6"
+        <label for="phone">Numer telefonu *</label>
+        <input id="phone" name="Telefon" type="tel" autocomplete="tel" required placeholder="np. 500 000 000">
 
-Dim THRESHOLD_SPEECH As Double = 0.060
-Dim THRESHOLD_DOMINANCE As Double = 0.010
-Dim THRESHOLD_BOTH_TALK As Double = 0.018
+        <label for="description">Opis zamówienia *</label>
+        <textarea id="description" name="Opis zamówienia" required placeholder="Napisz, który program chcesz kupić: Auto Cut, AutoMix lub Interpreter Ducking. Możesz też dopisać uwagi do zamówienia."></textarea>
 
-Dim MIN_SHOT_MS As Integer = 2600
-
-Dim WIDE_INSERT_EVERY_MS As Integer = 60000
-Dim WIDE_INSERT_DURATION_MS As Integer = 3000
-
-Dim SPEAKER_HOLD_MS As Integer = 500
-Dim PAUSE_HOLD_MS As Integer = 5000
-
-Dim LOOP_MS As Integer = 150
-Dim TRANSITION_NAME As String = "CutDirect"
-
-Dim currentShot As String = WIDE_INPUT
-Dim target As String = WIDE_INPUT
-Dim lastCloseShot As String = LEFT_CLOSE_INPUT
-
-Dim lastSwitchTime As Date = Date.Now
-Dim lastWideInsertTime As Date = Date.Now
-Dim leftCandidateSince As Date = Date.MinValue
-Dim rightCandidateSince As Date = Date.MinValue
-Dim wideCandidateSince As Date = Date.MinValue
-Dim silenceSince As Date = Date.MinValue
-Dim forceWideUntil As Date = Date.MinValue
-
-Dim rnd As New Random()
-
-API.Function(TRANSITION_NAME, Input:=WIDE_INPUT)
-
-Do While True
-
-    Dim xml As String = API.XML()
-    Dim x As New System.Xml.XmlDocument()
-    x.LoadXml(xml)
-
-    Dim busALeftNode As System.Xml.XmlNode = x.SelectSingleNode(".//audio/busA/@meterF1")
-    If busALeftNode Is Nothing Then
-        busALeftNode = x.SelectSingleNode(".//audio/busa/@meterF1")
-    End If
-
-    Dim busARightNode As System.Xml.XmlNode = x.SelectSingleNode(".//audio/busA/@meterF2")
-    If busARightNode Is Nothing Then
-        busARightNode = x.SelectSingleNode(".//audio/busa/@meterF2")
-    End If
-
-    Dim busBLeftNode As System.Xml.XmlNode = x.SelectSingleNode(".//audio/busB/@meterF1")
-    If busBLeftNode Is Nothing Then
-        busBLeftNode = x.SelectSingleNode(".//audio/busb/@meterF1")
-    End If
-
-    Dim leftLevel As Double = 0.0
-    Dim busARightLevel As Double = 0.0
-    Dim busBLeftLevel As Double = 0.0
-    Dim rightLevel As Double = 0.0
-
-    If Not busALeftNode Is Nothing Then
-        Double.TryParse(busALeftNode.Value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, leftLevel)
-    End If
-
-    If Not busARightNode Is Nothing Then
-        Double.TryParse(busARightNode.Value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, busARightLevel)
-    End If
-
-    If Not busBLeftNode Is Nothing Then
-        Double.TryParse(busBLeftNode.Value, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, busBLeftLevel)
-    End If
-
-    rightLevel = Math.Max(busARightLevel, busBLeftLevel)
-
-    Dim nowTime As Date = Date.Now
-    Dim diff As Double = Math.Abs(leftLevel - rightLevel)
-
-    Dim leftSpeaking As Boolean = leftLevel &gt;= THRESHOLD_SPEECH
-    Dim rightSpeaking As Boolean = rightLevel &gt;= THRESHOLD_SPEECH
-    Dim bothSpeaking As Boolean = leftSpeaking And rightSpeaking
-    Dim silence As Boolean = (Not leftSpeaking And Not rightSpeaking)
-
-    target = currentShot
-
-    If nowTime &lt; forceWideUntil Then
-        target = WIDE_INPUT
-    Else
-
-        ' Rzadki szeroki "oddech"
-        If (nowTime - lastWideInsertTime).TotalMilliseconds &gt;= WIDE_INSERT_EVERY_MS Then
-            If rnd.Next(0, 100) &lt; 50 Then
-                forceWideUntil = nowTime.AddMilliseconds(WIDE_INSERT_DURATION_MS)
-                lastWideInsertTime = nowTime
-                target = WIDE_INPUT
-            End If
-        End If
-
-        If nowTime &gt;= forceWideUntil Then
-
-            If bothSpeaking And diff &lt;= THRESHOLD_BOTH_TALK Then
-
-                If wideCandidateSince = Date.MinValue Then
-                    wideCandidateSince = nowTime
-                End If
-                leftCandidateSince = Date.MinValue
-                rightCandidateSince = Date.MinValue
-                silenceSince = Date.MinValue
-
-                If (nowTime - wideCandidateSince).TotalMilliseconds &gt;= SPEAKER_HOLD_MS Then
-                    target = WIDE_INPUT
-                End If
-
-            ElseIf leftSpeaking And (leftLevel - rightLevel) &gt;= THRESHOLD_DOMINANCE Then
-
-                If leftCandidateSince = Date.MinValue Then
-                    leftCandidateSince = nowTime
-                End If
-                rightCandidateSince = Date.MinValue
-                wideCandidateSince = Date.MinValue
-                silenceSince = Date.MinValue
-
-                If (nowTime - leftCandidateSince).TotalMilliseconds &gt;= SPEAKER_HOLD_MS Then
-                    target = LEFT_CLOSE_INPUT
-                    lastCloseShot = LEFT_CLOSE_INPUT
-                End If
-
-            ElseIf rightSpeaking And (rightLevel - leftLevel) &gt;= THRESHOLD_DOMINANCE Then
-
-                If rightCandidateSince = Date.MinValue Then
-                    rightCandidateSince = nowTime
-                End If
-                leftCandidateSince = Date.MinValue
-                wideCandidateSince = Date.MinValue
-                silenceSince = Date.MinValue
-
-                If (nowTime - rightCandidateSince).TotalMilliseconds &gt;= SPEAKER_HOLD_MS Then
-                    target = RIGHT_CLOSE_INPUT
-                    lastCloseShot = RIGHT_CLOSE_INPUT
-                End If
-
-            ElseIf silence Then
-
-                If silenceSince = Date.MinValue Then
-                    silenceSince = nowTime
-                End If
-                leftCandidateSince = Date.MinValue
-                rightCandidateSince = Date.MinValue
-                wideCandidateSince = Date.MinValue
-
-                ' Przy ciszy nie lecimy od razu na szeroki.
-                ' Trzymamy ostatni close-up przez PAUSE_HOLD_MS.
-                If (nowTime - silenceSince).TotalMilliseconds &lt;= PAUSE_HOLD_MS Then
-                    target = lastCloseShot
-                Else
-                    ' Po dłuższej ciszy można dać szeroki
-                    target = WIDE_INPUT
-                End If
-
-            Else
-
-                ' Niejednoznacznie -&gt; preferuj ostatni close-up, nie szeroki
-                leftCandidateSince = Date.MinValue
-                rightCandidateSince = Date.MinValue
-                wideCandidateSince = Date.MinValue
-                silenceSince = Date.MinValue
-
-                target = lastCloseShot
-
-            End If
-        End If
-    End If
-
-    If target &lt;&gt; currentShot Then
-        If (nowTime - lastSwitchTime).TotalMilliseconds &gt;= MIN_SHOT_MS Then
-            API.Function(TRANSITION_NAME, Input:=target)
-            currentShot = target
-            lastSwitchTime = nowTime
-
-            If target = LEFT_CLOSE_INPUT Or target = RIGHT_CLOSE_INPUT Then
-                lastCloseShot = target
-            End If
-        End If
-    End If
-
-    Console.WriteLine("A_L=" &amp; leftLevel.ToString("0.000") &amp; " | A_R=" &amp; busARightLevel.ToString("0.000") &amp; " | B_L=" &amp; busBLeftLevel.ToString("0.000") &amp; " | RIGHT_USED=" &amp; rightLevel.ToString("0.000") &amp; " | LAST_CLOSE=" &amp; lastCloseShot &amp; " | CURRENT=" &amp; currentShot)
-
-    Sleep(LOOP_MS)
-
-Loop</code></pre>
-      </div>
-        <div class="script-description-inline" id="opis-auto-cut">
-          <h2>Jak działa ten skrypt?</h2>
-          <ol>
-        <li>Skrypt analizuje poziomy audio z <strong>BUS A</strong> oraz <strong>BUS B</strong> i na tej podstawie wykrywa, która strona aktualnie mówi.</li>
-        <li><strong>BUS A Left</strong> steruje lewym close-upem, czyli inputem ustawionym w zmiennej <strong>LEFT_CLOSE_INPUT</strong>.</li>
-        <li><strong>BUS A Right</strong> lub <strong>BUS B Left</strong> steruje prawym close-upem, czyli inputem ustawionym w zmiennej <strong>RIGHT_CLOSE_INPUT</strong>.</li>
-        <li>Jeżeli mówi jedna osoba i jej poziom dominuje nad drugą stroną, skrypt przełącza obraz na odpowiedni close-up.</li>
-        <li>Jeżeli mówią obie strony albo po dłuższej ciszy nie ma aktywnego rozmówcy, skrypt może przełączyć obraz na plan szeroki.</li>
-        <li>Zmienne czasowe, takie jak <strong>MIN_SHOT_MS</strong>, <strong>SPEAKER_HOLD_MS</strong> i <strong>PAUSE_HOLD_MS</strong>, chronią przed zbyt szybkim i nerwowym przełączaniem kamer.</li>
-      </ol>
-        </div>
-      </div>
-    </section>
-
-
-
-    <section class="center-section">
-      <h2>Jak dodać skrypt w vMix?</h2>
-      <ol>
-        <li>Wejdź w <strong>Settings → Scripting</strong>.</li>
-        <li>Kliknij <strong>Add</strong> i wybierz skrypt VB.NET.</li>
-        <li>Wklej kod z tej strony.</li>
-        <li>Dostosuj inputy, BUS-y i progi działania bezpośrednio w kodzie.</li>
-        <li>Uruchom skrypt i przetestuj na kopii projektu przed realizacją live.</li>
-      </ol>
-      <p><strong>Ważne:</strong> skrypt działa w pętli, więc zatrzymujesz go ręcznie w panelu Scripting.</p>
-    </section>
-
-    <section class="coffee" id="kawa">
-      <div>
-        <strong>Pomogło?</strong>
-        <span>
-          Skrypty są darmowe. Jeśli chcesz docenić moją pracę, możesz postawić mi kawę BLIK-iem.
-          <br><br>
-          Odbiorca BLIK: <strong>Tomek Cedro</strong>
-          <br>
-          Tytuł: <strong>Kawa za skrypt vmix</strong>
-        </span>
-      </div>
-      <div>
-        <div class="phone">+48 536 800 099</div>
-        <div style="margin-top:12px;color:#62d0ff;font-size:18px;font-weight:700;">
-          cedrotomasz@gmail.com
-        </div>
-      </div>
-    </section>
+        <button class="btn full" type="submit" style="margin-top:16px">Wyślij zamówienie</button>
+        <p class="smallnote">* pola wymagane. Po wysłaniu zgłoszenia sprawdzę płatność i odeślę klucz aktywacyjny na podany e-mail.</p>
+      </form>
+    </div></section>
+    <section id="kontakt"><div class="wrap"><div class="box"><h2 class="section-title">Kontakt</h2><p class="muted">W sprawie zamówień i kluczy aktywacyjnych: <strong>login.cedtotomasz@gmail.com</strong></p></div></div></section>
   </main>
-
-  <footer>
-    <div class="container">
-      <span>© 2026 Tomek Cedro — pluginy i skrypty do vMix</span>
-      <span>Realizator vMix / automatyzacje live</span>
-    </div>
-  </footer>
-
+  <footer class="foot"><div class="wrap">© <span id="year"></span> PluginForLive. Niezależne narzędzia do pracy z vMix. Strona nie jest oficjalnie powiązana z producentem vMix.</div></footer>
   <script>
-    document.querySelectorAll(".copy-btn").forEach((button) => {
-      button.addEventListener("click", async () => {
-        const id = button.getAttribute("data-copy");
-        const codeElement = document.getElementById(id);
-        const code = codeElement ? codeElement.textContent : "";
-        const oldText = button.innerText;
-
-        const showCopied = () => {
-          button.innerText = "Skopiowano";
-          setTimeout(() => button.innerText = oldText, 1400);
-        };
-
-        try {
-          if (navigator.clipboard && window.isSecureContext) {
-            await navigator.clipboard.writeText(code);
-            showCopied();
-            return;
-          }
-        } catch (err) {}
-
-        const textarea = document.createElement("textarea");
-        textarea.value = code;
-        textarea.setAttribute("readonly", "");
-        textarea.style.position = "fixed";
-        textarea.style.top = "-9999px";
-        textarea.style.left = "-9999px";
-        document.body.appendChild(textarea);
-        textarea.focus();
-        textarea.select();
-        textarea.setSelectionRange(0, textarea.value.length);
-
-        try {
-          const copied = document.execCommand("copy");
-          if (!copied) throw new Error("Copy failed");
-          showCopied();
-        } catch (err) {
-          alert("Nie udało się skopiować. Zaznacz kod ręcznie.");
-        } finally {
-          document.body.removeChild(textarea);
-        }
-      });
-    });
+    document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 </body>
 </html>
