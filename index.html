@@ -136,6 +136,21 @@
     }
 
 
+
+    .plugin-actions{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:12px;
+      margin-top:22px;
+    }
+
+    .plugin-actions .download-btn,
+    .plugin-actions .trial-btn{
+      margin-top:0;
+      text-align:center;
+    }
+
     .download-btn{
       margin-top:22px;
       display:inline-flex;
@@ -156,9 +171,33 @@
       opacity:.95;
     }
 
+
+    .trial-btn{
+      margin-top:12px;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px 20px;
+      border-radius:999px;
+      background:linear-gradient(135deg,#22c55e,#06b6d4);
+      color:white;
+      font-weight:800;
+      text-decoration:none;
+      transition:.25s;
+      box-shadow:0 10px 28px rgba(34,197,94,.25);
+    }
+
+    .trial-btn:hover{
+      transform:translateY(-2px);
+      opacity:.95;
+    }
+
     .coming-soon{
-      margin-top:22px;
-      display:inline-block;
+      margin:22px auto 0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width:fit-content;
       padding:10px 16px;
       border-radius:999px;
       background:rgba(255,193,7,.12);
@@ -215,8 +254,10 @@
     <div class="wrap navin">
       <a class="logo" href="#"><span class="mark"></span>plugins4vmix.pl</a>
       <div class="links">
+        <a href="#pluginy">Wtyczki</a>
         <a href="#zakup">Zakup</a>
         <a href="#kontakt">Kontakt</a>
+        <a href="#polityka-prywatnosci">Polityka prywatności</a>
       </div>
       <a class="btn secondary" href="#zakup">Kup wtyczkę</a>
     </div>
@@ -237,11 +278,11 @@
         <div class="panel">
           <div class="panel-content">
             <p class="muted">Licencja dożywotnia</p>
-            <div class="big-price">150 zł <small>brutto / wtyczka</small></div>
+            <div class="big-price">199 zł <small>brutto / Auto Cut</small></div>
             <div class="highlight-list">
               <div class="highlight-item">Programy przygotowane do pracy z vMix podczas transmisji live.</div>
               <div class="highlight-item">Po zakupie otrzymujesz indywidualny klucz aktywacyjny.</div>
-              <div class="highlight-item">Klucz wysyłany jest ręcznie w ciągu 24 godzin od zamówienia.</div>
+              <div class="highlight-item">Po płatności przez Stripe otrzymasz dalsze informacje dotyczące aktywacji.</div>
             </div>
           </div>
         </div>
@@ -276,12 +317,21 @@
               <li>Idealny do podcastów i livestreamów</li>
             </ul>
 
-            <a
-              href="https://drive.google.com/file/d/1KU5okbrvsa4DXnbXns9YdxvtGBMooTOl/view?usp=sharing"
-              target="_blank"
-              class="download-btn">
-              Pobierz
-            </a>
+            <div class="plugin-actions">
+              <a
+                href="https://buy.stripe.com/test_dRmeVd2sx976dYC34Q6Ri00"
+                target="_blank"
+                class="download-btn">
+                Kup Auto Cut — 199 zł brutto
+              </a>
+
+              <a
+                href="https://drive.google.com/file/d/1SeHg9cBpifEdGm6LBtM94SS6AEdOhbhj/view?usp=drive_link"
+                target="_blank"
+                class="trial-btn">
+                Pobierz wersję trial
+              </a>
+            </div>
           </div>
 
           <div class="plugin-item">
@@ -337,55 +387,16 @@
         <div class="box">
           <h2 class="section-title">Jak kupić?</h2>
           <div class="steps">
-            <div class="step">Wybierz program, który chcesz kupić i uzupełnij formularz zamówienia widoczny obok.</div>
-            <div class="step">Wyślij płatność BLIK na numer:<br><span class="blik">536 800 099</span></div>
-            <div class="step">Wypełnij formularz i zrób przelew za pomocą płatności BLIK. W ciągu 24h otrzymasz dożywotni klucz aktywacyjny do programu, który zamówiłeś.</div>
+            <div class="step">Kliknij przycisk „Kup Auto Cut” przy opisie programu albo przycisk obok w sekcji zakupu.</div>
+            <div class="step">Zostaniesz przeniesiony do bezpiecznej płatności Stripe, gdzie możesz zapłacić kartą, Apple Pay, Google Pay lub dostępnymi metodami płatności online.</div>
+            <div class="step">Po opłaceniu zamówienia otrzymasz informacje dotyczące dalszego pobrania i aktywacji programu.</div>
           </div>
           <div class="notice">
-            <strong>Cena:</strong> każda wtyczka to koszt 150 zł brutto. Po zakupie otrzymasz klucz aktywacyjny, a licencja jest dożywotnia.
+            <strong>Cena:</strong> Auto Cut kosztuje 199 zł brutto. Po zakupie otrzymasz klucz aktywacyjny, a licencja jest dożywotnia.
           </div>
         </div>
 
-        <div class="box">
-          <div class="order-header">
-            <h2 class="section-title">Formularz zamówienia</h2>
-            <p class="muted">Wypełnij formularz i podaj, którą wtyczkę chcesz kupić.</p>
-          </div>
 
-          <form action="https://usebasin.com/f/6eb488aeb4c5" method="POST" class="order-form">
-            <label>
-              Imię i nazwisko
-              <input type="text" name="imie_nazwisko" placeholder="Jan Kowalski" required>
-            </label>
-
-            <label>
-              Adres
-              <input type="text" name="adres" placeholder="Ulica, numer, kod pocztowy, miasto" required>
-            </label>
-
-            <label>
-              NIP <span class="form-note">opcjonalnie</span>
-              <input type="text" name="nip" placeholder="NIP, jeśli potrzebujesz danych do faktury">
-            </label>
-
-            <label>
-              Adres e-mail
-              <input type="email" name="email" placeholder="twoj@email.pl" required>
-            </label>
-
-            <label>
-              Numer telefonu
-              <input type="tel" name="telefon" placeholder="123 456 789" required>
-            </label>
-
-            <label>
-              Opis zamówienia
-              <textarea name="opis" placeholder="Napisz, jaki program chcesz kupić: Auto Cut, AutoMix lub Interpreter Ducking." required></textarea>
-            </label>
-
-            <button class="btn" type="submit">Wyślij zamówienie</button>
-          </form>
-        </div>
       </div>
     </section>
 
@@ -400,6 +411,39 @@
       </div>
     </section>
   </main>
+
+    <section id="polityka-prywatnosci">
+      <div class="wrap">
+        <div class="box">
+          <h2 class="section-title">Polityka prywatności</h2>
+
+          <p class="contact-text">
+            Administratorem danych osobowych jest:
+            <br><br>
+            <strong>AZ Tomasz Cedro</strong><br>
+            NIP: 5361869704<br>
+            Artura Grottgera 14/1<br>
+            05-120 Legionowo
+          </p>
+
+          <p class="contact-text">
+            Dane osobowe przekazane podczas zakupu lub kontaktu są przetwarzane w celu obsługi zamówienia,
+            wysyłki informacji dotyczących programu, kontaktu z klientem oraz realizacji obowiązków księgowych i podatkowych.
+          </p>
+
+          <p class="contact-text">
+            Płatności obsługiwane są przez zewnętrznego operatora płatności Stripe. Dane płatnicze nie są przechowywane
+            bezpośrednio na stronie plugins4vmix.pl.
+          </p>
+
+          <p class="contact-text">
+            W sprawach dotyczących danych osobowych możesz skontaktować się mailowo:
+            <br>
+            <strong>plugins4vmix@gmail.com</strong>
+          </p>
+        </div>
+      </div>
+    </section>
 
   <footer class="foot">
     <div class="wrap">© <span id="year"></span> plugins4vmix.pl. Niezależne narzędzia do pracy z vMix. Strona nie jest oficjalnie powiązana z producentem vMix.</div>
