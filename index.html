@@ -1,5 +1,8 @@
 <!doctype html>
 <html lang="pl">
+
+
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -258,6 +261,19 @@
       .blik{font-size:20px}
     }
   </style>
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-D0Q0FWS91E"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-D0Q0FWS91E');
+</script>
+
+
 </head>
 <body>
   <nav class="nav">
@@ -272,7 +288,10 @@
         <a href="#kontakt">Kontakt</a>
         <a href="#polityka-prywatnosci">Polityka prywatności</a>
       </div>
-      <a class="btn secondary" href="#zakup">Kup wtyczkę</a>
+      <a class="btn secondary" href="#zakup"
+onclick="gtag('event', 'menu_kup_wtyczke')">
+Kup wtyczkę
+</a>
     </div>
   </nav>
 
@@ -283,8 +302,14 @@
           <h1>Pluginy, które <span>automatyzują realizację video</span>.</h1>
           <p class="lead">Programy przeznaczone do pracy z vMix. Auto Camera, automix mikrofonów oraz inteligentne ściszanie flooru podczas tłumaczenia symultanicznego. Więcej wtyczek wkrótce.</p>
           <div class="actions">
-            <a class="btn" href="#zakup">Kup wtyczkę</a>
-            <a class="btn secondary" href="#kontakt">Kontakt</a>
+            <a class="btn" href="#zakup"
+onclick="gtag('event', 'hero_kup_wtyczke')">
+Kup wtyczkę
+</a>
+            <a class="btn secondary" href="#kontakt"
+onclick="gtag('event', 'hero_kontakt')">
+Kontakt
+</a>
           </div>
         </div>
 
@@ -332,16 +357,18 @@
 
             <div class="plugin-actions">
               <a
-                href="https://buy.stripe.com/dRm6oH5Ej51fePq32B6Na01"
+                href="https://buy.stripe.com/3cI5kD3wb0KZ4aM6eN6Na02"
                 target="_blank"
-                class="download-btn">
+                class="download-btn"
+                onclick="gtag('event', 'kup_auto_camera')">
                 Kup Auto Camera — 199 zł brutto
               </a>
 
               <a
                 href="https://drive.google.com/drive/folders/1Hj5OukwOevPnRLzGN8Ppe2jq2pbiO8eF?usp=sharing"
                 target="_blank"
-                class="trial-btn">
+                class="trial-btn"
+                onclick="gtag('event', 'trial_auto_camera')">
                 Pobierz wersję trial
               </a>
             </div>
