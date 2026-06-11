@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>Questions</title>
+
+<style>
+:root{
+  --bg:#000;
+  --panel:#101010;
+  --button:#252525;
+  --button-active:#4a4a4a;
+  --white:#ffffff;
+  --green:#9cff9c;
+  --red:#ff9c9c;
+  --muted:#bdbdbd;
+  --frame:rgba(255,255,255,.65);
+  --font-size:58px;
+}
+
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  background:#000;
+  color:#fff;
+  font-family:Arial,Helvetica,sans-serif;
+  overflow:hidden;
+  -webkit-text-size-adjust:100%;
+}
+
+body{
+  display:flex;
+  flex-direction:column;
+}
+
+.toolbar{
+  flex:0 0 auto;
+  background:var(--panel);
+  display:flex;
+  gap:7px;
+  align-items:center;
+  padding:7px;
+  border-bottom:1px solid #222;
+  overflow-x:auto;
+  overflow-y:hidden;
+  white-space:nowrap;
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none;
+}
+
+button{
+  appearance:none;
+  -webkit-appearance:none;
+  background:var(--button);
+  color:#fff;
+  border:1px solid #444;
+  border-radius:8px;
+  min-height:44px;
+  min-width:44px;
+  padding:9px 12px;
+  font-size:14px;
+  font-weight:700;
+  cursor:pointer;
+  touch-action:manipulation;
+  flex:0 0 auto;
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none;
+}
+
+button:active{
+  transform:scale(.96);
+}
+
+button.active{
+  outline:2px solid #fff;
+  background:var(--button-active);
+}
+
+button.danger.active{
+  outline:2px solid #ff9c9c;
+  background:#5a2020;
+}
+
+button:disabled{
+  opacity:.35;
+}
+
+.size-btn{
+  min-width:48px;
+  font-size:24px;
+}
+
+.white-btn{color:var(--white)}
+.green-btn{color:var(--green)}
+.red-btn{color:var(--red)}
+
+.hint{
+  color:var(--muted);
+  font-size:12px;
+  padding:0 8px;
+  flex:0 0 auto;
+  user-select:none;
+  -webkit-user-select:none;
+}
+
+.stage{
+  flex:1 1 auto;
+  min-height:0;
+  width:100%;
+  background:#000;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+
+.frame{
+  width:100%;
+  height:100%;
+  background:#000;
+  overflow:hidden;
+}
+
+body.frame-on .frame{
+  aspect-ratio:16/9;
+  width:min(100vw, calc((100vh - 135px) * 16 / 9));
+  height:min(calc(100vh - 135px), calc(100vw * 9 / 16));
+  border:2px dashed var(--frame);
+}
+
+#questions{
+  width:100%;
+  height:100%;
+  overflow-y:auto;
+  padding:14px 18px;
+  font-size:var(--font-size);
+  font-weight:700;
+  line-height:1.14;
+  -webkit-overflow-scrolling:touch;
+}
+
+.question{
+  display:grid;
+  grid-template-columns:.72em 1fr;
+  gap:.14em;
+  align-items:start;
+  color:#fff;
+  min-height:1.14em;
+  padding:1px 0;
+  white-space:pre-wrap;
+  word-break:break-word;
+}
+
+.marker{
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none;
+  text-align:center;
+  font-weight:900;
+  cursor:pointer;
+  min-width:44px;
+  min-height:44px;
+  touch-action:manipulation;
+}
+
+.question-text{
+  outline:none;
+  min-height:1.14em;
+}
+
+.question.white{color:var(--white)}
+.question.green{color:var(--green)}
+.question.red{color:var(--red)}
+
+body.delete-mode .question{
+  cursor:pointer;
+}
+
+body.delete-mode .question:active,
+body.delete-mode .question:hover{
+  background:rgba(255,80,80,.24);
+}
+
+.composer{
+  flex:0 0 auto;
+  display:flex;
+  gap:8px;
+  align-items:center;
+  background:#0b0b0b;
+  border-top:1px solid #242424;
+  padding:10px;
+  padding-bottom:calc(10px + env(safe-area-inset-bottom));
+}
+
+#questionInput{
+  flex:1 1 auto;
+  min-width:0;
+  height:46px;
+  background:#1d1d1d;
+  color:#fff;
+  border:1px solid #555;
+  border-radius:9px;
+  padding:0 13px;
+  font-size:18px;
+  outline:none;
+}
+
+#questionInput::placeholder{
+  color:#8c8c8c;
+}
+
+#questionInput:focus{
+  border-color:#888;
+}
+
+.modal-bg{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.74);
+  z-index:50;
+  align-items:center;
+  justify-content:center;
+  padding:22px;
+}
+
+.modal-bg.show{
+  display:flex;
+}
+
+.modal{
+  width:min(720px,94vw);
+  background:#151515;
+  border:1px solid #555;
+  border-radius:14px;
+  padding:24px;
+  box-shadow:0 18px 60px rgba(0,0,0,.75);
+}
+
+.modal h1{
+  margin:0 0 10px;
+  font-size:28px;
+}
+
+.modal p{
+  margin:9px 0;
+  font-size:16px;
+  line-height:1.45;
+  color:#e5e5e5;
+}
+
+.modal .small{
+  color:#bbb;
+  font-size:14px;
+  margin-top:18px;
+}
+
+@media(max-width:900px){
+  :root{
+    --font-size:42px;
+  }
+
+  .toolbar{
+    min-height:60px;
+  }
+
+  button{
+    min-height:46px;
+    font-size:13px;
+    padding:9px 11px;
+  }
+
+  .hint{
+    display:none;
+  }
+
+  #questions{
+    padding:10px;
+  }
+
+  .question{
+    grid-template-columns:.62em 1fr;
+  }
+}
+
+@media(max-width:520px){
+  :root{
+    --font-size:34px;
+  }
+
+  button{
+    min-height:46px;
+    font-size:12px;
+    padding:9px 10px;
+  }
+
+  .toolbar{
+    gap:6px;
+  }
+
+  #questions{
+    padding:8px;
+  }
+
+  body.frame-on .frame{
+    width:100vw;
+    height:calc(100vw * 9 / 16);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="toolbar" id="toolbar">
+  <button type="button" class="size-btn" data-action="font-minus">−</button>
+  <button type="button" class="size-btn" data-action="font-plus">+</button>
+
+  <button type="button" id="whiteBtn" class="white-btn active" data-action="color-white">White</button>
+  <button type="button" id="greenBtn" class="green-btn" data-action="color-green">Green</button>
+  <button type="button" id="redBtn" class="red-btn" data-action="color-red">Red</button>
+
+  <button type="button" id="trashBtn" class="danger" data-action="delete-mode">🗑 Delete</button>
+  <button type="button" id="undoBtn" data-action="undo" disabled>Undo</button>
+  <button type="button" data-action="clear">Clear</button>
+  <button type="button" id="frameBtn" data-action="frame">16:9 Frame</button>
+
+  <span class="hint" id="hint">Select a color, then tap the dash next to a question</span>
+
+  <button type="button" data-action="fullscreen">Fullscreen</button>
+  <button type="button" data-action="info">Info</button>
+</div>
+
+<div class="stage">
+  <div class="frame">
+    <div id="questions"></div>
+  </div>
+</div>
+
+<div class="composer">
+  <input id="questionInput" type="text" placeholder="Add text" autocomplete="off">
+  <button type="button" data-action="add">Add</button>
+</div>
+
+<div class="modal-bg" id="infoModal">
+  <div class="modal">
+    <h1>Questions</h1>
+    <p><strong>Work-in-progress app for displaying questions to hosts during live productions.</strong></p>
+    <p>Developed by Tomasz Cedro — RocketCam.</p>
+    <p>Working version: 1.6 mobile hard fix</p>
+    <p>Other plugins are available at <strong>www.pluginsforlive.com</strong>.</p>
+    <p>The website includes free plugins as well as selected paid plugins.</p>
+    <p class="small">Press Enter in the bottom field to add a question. Tap the dash to apply the selected color. Delete mode: tap Delete, then tap the question you want to remove.</p>
+    <button type="button" data-action="close-info">Close</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  var fontSize = 58;
+  var selectedColor = "white";
+  var deleteMode = false;
+  var frameOn = false;
+  var undoStack = [];
+  var lastTouchTime = 0;
+
+  var questions = document.getElementById("questions");
+  var input = document.getElementById("questionInput");
+  var modal = document.getElementById("infoModal");
+  var hint = document.getElementById("hint");
+
+  function byId(id){
+    return document.getElementById(id);
+  }
+
+  function saveState(){
+    undoStack.push(questions.innerHTML);
+    if(undoStack.length > 30){
+      undoStack.shift();
+    }
+    updateUndo();
+  }
+
+  function updateUndo(){
+    byId("undoBtn").disabled = undoStack.length === 0;
+  }
+
+  function undo(){
+    if(!undoStack.length) return;
+    questions.innerHTML = undoStack.pop();
+    updateUndo();
+  }
+
+  function updateFont(){
+    document.documentElement.style.setProperty("--font-size", fontSize + "px");
+    try{
+      localStorage.setItem("questionsFontSize", String(fontSize));
+    }catch(e){}
+  }
+
+  function changeFont(delta){
+    fontSize = Math.max(22, Math.min(170, fontSize + delta));
+    updateFont();
+  }
+
+  function selectColor(color){
+    selectedColor = color;
+    deleteMode = false;
+    updateMode();
+
+    byId("whiteBtn").classList.toggle("active", color === "white");
+    byId("greenBtn").classList.toggle("active", color === "green");
+    byId("redBtn").classList.toggle("active", color === "red");
+  }
+
+  function updateMode(){
+    document.body.classList.toggle("delete-mode", deleteMode);
+    byId("trashBtn").classList.toggle("active", deleteMode);
+
+    if(hint){
+      hint.textContent = deleteMode
+        ? "Delete mode: tap the question you want to remove"
+        : "Select a color, then tap the dash next to a question";
+    }
+  }
+
+  function createQuestion(text){
+    var q = document.createElement("div");
+    q.className = "question white";
+
+    var marker = document.createElement("span");
+    marker.className = "marker";
+    marker.textContent = "-";
+
+    var content = document.createElement("span");
+    content.className = "question-text";
+    content.contentEditable = "true";
+    content.textContent = text || "";
+
+    q.appendChild(marker);
+    q.appendChild(content);
+
+    return q;
+  }
+
+  function addQuestion(){
+    var text = input.value.trim();
+
+    if(!text){
+      input.focus();
+      return;
+    }
+
+    saveState();
+
+    var q = createQuestion(text);
+    questions.appendChild(q);
+
+    input.value = "";
+    q.scrollIntoView({block:"nearest"});
+    input.focus();
+  }
+
+  function clearQuestions(){
+    saveState();
+    questions.innerHTML = "";
+  }
+
+  function setQuestionColor(q){
+    saveState();
+    q.classList.remove("white", "green", "red");
+    q.classList.add(selectedColor);
+  }
+
+  function deleteQuestion(q){
+    saveState();
+    if(q && q.parentNode){
+      q.parentNode.removeChild(q);
+    }
+    deleteMode = false;
+    updateMode();
+  }
+
+  function toggleFrame(){
+    frameOn = !frameOn;
+    document.body.classList.toggle("frame-on", frameOn);
+    byId("frameBtn").classList.toggle("active", frameOn);
+
+    try{
+      localStorage.setItem("questionsFrameOn", frameOn ? "1" : "0");
+    }catch(e){}
+  }
+
+  function toggleFullscreen(){
+    if(!document.fullscreenElement && document.documentElement.requestFullscreen){
+      document.documentElement.requestFullscreen().catch(function(){});
+    }else if(document.exitFullscreen){
+      document.exitFullscreen().catch(function(){});
+    }
+  }
+
+  function showInfo(){
+    modal.classList.add("show");
+  }
+
+  function closeInfo(){
+    modal.classList.remove("show");
+  }
+
+  function handleAction(action){
+    if(action === "font-minus") changeFont(-5);
+    else if(action === "font-plus") changeFont(5);
+    else if(action === "color-white") selectColor("white");
+    else if(action === "color-green") selectColor("green");
+    else if(action === "color-red") selectColor("red");
+    else if(action === "delete-mode"){
+      deleteMode = !deleteMode;
+      updateMode();
+    }
+    else if(action === "undo") undo();
+    else if(action === "clear") clearQuestions();
+    else if(action === "frame") toggleFrame();
+    else if(action === "fullscreen") toggleFullscreen();
+    else if(action === "info") showInfo();
+    else if(action === "close-info") closeInfo();
+    else if(action === "add") addQuestion();
+  }
+
+  function findButton(target){
+    while(target && target !== document){
+      if(target.tagName && target.tagName.toLowerCase() === "button" && target.getAttribute("data-action")){
+        return target;
+      }
+      target = target.parentNode;
+    }
+    return null;
+  }
+
+  function findQuestion(target){
+    while(target && target !== document){
+      if(target.classList && target.classList.contains("question")){
+        return target;
+      }
+      target = target.parentNode;
+    }
+    return null;
+  }
+
+  function hasClassInPath(target, className){
+    while(target && target !== document){
+      if(target.classList && target.classList.contains(className)){
+        return true;
+      }
+      target = target.parentNode;
+    }
+    return false;
+  }
+
+  document.addEventListener("touchstart", function(event){
+    var button = findButton(event.target);
+    if(button){
+      event.preventDefault();
+      lastTouchTime = Date.now();
+      handleAction(button.getAttribute("data-action"));
+      return;
+    }
+
+    var q = findQuestion(event.target);
+    if(!q) return;
+
+    if(deleteMode){
+      event.preventDefault();
+      lastTouchTime = Date.now();
+      deleteQuestion(q);
+      return;
+    }
+
+    if(hasClassInPath(event.target, "marker")){
+      event.preventDefault();
+      lastTouchTime = Date.now();
+      setQuestionColor(q);
+    }
+  }, {passive:false});
+
+  document.addEventListener("click", function(event){
+    if(Date.now() - lastTouchTime < 500){
+      return;
+    }
+
+    var button = findButton(event.target);
+    if(button){
+      event.preventDefault();
+      handleAction(button.getAttribute("data-action"));
+      return;
+    }
+
+    var q = findQuestion(event.target);
+    if(!q) return;
+
+    if(deleteMode){
+      event.preventDefault();
+      deleteQuestion(q);
+      return;
+    }
+
+    if(hasClassInPath(event.target, "marker")){
+      event.preventDefault();
+      setQuestionColor(q);
+    }
+  });
+
+  input.addEventListener("keydown", function(event){
+    if(event.key === "Enter"){
+      event.preventDefault();
+      addQuestion();
+    }
+
+    if((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "z"){
+      event.preventDefault();
+      undo();
+    }
+  });
+
+  questions.addEventListener("keydown", function(event){
+    if(event.key === "Enter"){
+      event.preventDefault();
+
+      saveState();
+
+      var q = createQuestion("");
+      questions.appendChild(q);
+
+      var editable = q.querySelector(".question-text");
+      var range = document.createRange();
+      var sel = window.getSelection();
+
+      editable.focus();
+      range.selectNodeContents(editable);
+      range.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+
+    if((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "z"){
+      event.preventDefault();
+      undo();
+    }
+  });
+
+  modal.addEventListener("touchstart", function(event){
+    if(event.target === modal){
+      event.preventDefault();
+      closeInfo();
+    }
+  }, {passive:false});
+
+  modal.addEventListener("click", function(event){
+    if(event.target === modal){
+      closeInfo();
+    }
+  });
+
+  try{
+    var savedSize = localStorage.getItem("questionsFontSize");
+    if(savedSize){
+      fontSize = parseInt(savedSize, 10);
+      updateFont();
+    }
+
+    if(localStorage.getItem("questionsFrameOn") === "1"){
+      toggleFrame();
+    }
+  }catch(e){}
+
+  updateUndo();
+  updateMode();
+})();
+</script>
+
+</body>
+</html>
