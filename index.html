@@ -1,8 +1,5 @@
 <!doctype html>
 <html lang="pl">
-
-
-
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -113,6 +110,48 @@
       grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
       gap:22px;
       margin-top:26px;
+    }
+
+
+    .tools-list{
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(280px,320px));
+      gap:22px;
+      justify-content:start;
+      margin-top:26px;
+    }
+
+    .tool-item{
+      background:rgba(255,255,255,.055);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:26px;
+      transition:.25s;
+    }
+
+    .tool-item:hover{
+      transform:translateY(-4px);
+      border-color:rgba(87,212,255,.45);
+    }
+
+    .tool-item h3{
+      margin:0 0 14px;
+      font-size:26px;
+    }
+
+    .tool-item p{
+      color:var(--muted);
+      margin-bottom:18px;
+    }
+
+    .tool-item ul{
+      padding-left:18px;
+      margin:0;
+    }
+
+    .tool-item li{
+      color:var(--muted);
+      margin-bottom:10px;
     }
 
     .plugin-item{
@@ -227,26 +266,7 @@
     .step{display:flex;gap:14px;margin:16px 0;color:var(--muted)}
     .step:before{counter-increment:s;content:counter(s);flex:0 0 30px;height:30px;border-radius:50%;display:grid;place-items:center;background:rgba(87,212,255,.14);color:var(--text);font-weight:900}
     .notice{margin-top:14px;padding:14px;border-radius:16px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);color:#d7ffe4}
-    .blik{display:inline-block;font-size:22px;font-weight:900;letter-spacing:.5px;color:#fff;margin-top:4px;white-space:nowrap}
 
-    .order-header{margin-bottom:20px}
-    .order-form{display:grid;gap:14px}
-    .order-form label{display:grid;gap:7px;color:var(--muted);font-size:14px;font-weight:700}
-    .order-form input,
-    .order-form textarea{
-      width:100%;
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:14px 15px;
-      background:rgba(7,11,20,.7);
-      color:var(--text);
-      font:inherit;
-      outline:none;
-    }
-    .order-form input:focus,
-    .order-form textarea:focus{border-color:rgba(87,212,255,.65);box-shadow:0 0 0 4px rgba(87,212,255,.09)}
-    .order-form textarea{resize:vertical;min-height:130px}
-    .form-note{font-size:13px;color:var(--muted);margin:2px 0 0}
 
     .contact-text{margin-top:20px;line-height:1.8;color:var(--muted);max-width:820px}
     .contact-name{margin:24px 0 4px;font-size:22px}
@@ -258,7 +278,6 @@
       .hero{padding-top:52px}
       h1{letter-spacing:-1.4px}
       .lead{font-size:18px}
-      .blik{font-size:20px}
     }
   </style>
 
@@ -284,12 +303,13 @@
       </a>
       <div class="links">
         <a href="#pluginy">Wtyczki</a>
+        <a href="#tools">Darmowe narzędzia</a>
         <a href="#zakup">Zakup</a>
         <a href="#kontakt">Kontakt</a>
         <a href="#polityka-prywatnosci">Polityka prywatności</a>
       </div>
       <a class="btn secondary" href="#zakup"
-onclick="gtag('event', 'menu_kup_wtyczke')">
+onclick="gtag('event', 'menu_kup_wtyczke', { event_category: 'navigation' })">
 Kup wtyczkę
 </a>
     </div>
@@ -303,11 +323,11 @@ Kup wtyczkę
           <p class="lead">Programy przeznaczone do pracy z vMix. Auto Camera, automix mikrofonów oraz inteligentne ściszanie flooru podczas tłumaczenia symultanicznego. Więcej wtyczek wkrótce.</p>
           <div class="actions">
             <a class="btn" href="#zakup"
-onclick="gtag('event', 'hero_kup_wtyczke')">
+onclick="gtag('event', 'hero_kup_wtyczke', { event_category: 'button' })">
 Kup wtyczkę
 </a>
             <a class="btn secondary" href="#kontakt"
-onclick="gtag('event', 'hero_kontakt')">
+onclick="gtag('event', 'hero_kontakt', { event_category: 'button' })">
 Kontakt
 </a>
           </div>
@@ -360,7 +380,7 @@ Kontakt
                 href="https://buy.stripe.com/3cI5kD3wb0KZ4aM6eN6Na02"
                 target="_blank"
                 class="download-btn"
-                onclick="gtag('event', 'kup_auto_camera')">
+                onclick="gtag('event', 'kup_auto_camera', { event_category: 'button', event_label: 'Kup Auto Camera' })">
                 Kup Auto Camera — 199 zł brutto
               </a>
 
@@ -368,7 +388,7 @@ Kontakt
                 href="https://drive.google.com/drive/folders/1Hj5OukwOevPnRLzGN8Ppe2jq2pbiO8eF?usp=sharing"
                 target="_blank"
                 class="trial-btn"
-                onclick="gtag('event', 'trial_auto_camera')">
+                onclick="gtag('event', 'trial_auto_camera', { event_category: 'button', event_label: 'Pobierz wersję trial' })">
                 Pobierz wersję trial
               </a>
             </div>
@@ -420,6 +440,51 @@ Kontakt
 
         </div>
       </div>
+    </section>
+
+
+    <section id="tools">
+  <div class="wrap">
+
+    <h2 class="section-title">Darmowe narzędzia online</h2>
+
+    <p class="muted" style="margin-bottom:28px;">
+      Proste aplikacje działające bezpośrednio w przeglądarce.
+      Możesz używać ich podczas transmisji live bez instalowania dodatkowego oprogramowania.
+    </p>
+
+    <div class="tools-list">
+
+      <div class="tool-item">
+        <h3>Questions app</h3>
+
+        <p>
+          Narzędzie do zbierania i wyświetlania pytań podczas transmisji live.
+          Pytania można dodawać z telefonu, tabletu lub komputera, a następnie
+          wyświetlać je jako Browser Source w vMix.
+        </p>
+
+        <ul>
+          <li>Dodawanie pytań w czasie rzeczywistym</li>
+          <li>Obsługa telefonów i komputerów</li>
+          <li>Tryb pełnoekranowy do transmisji</li>
+          <li>Idealne do webinarów i podcastów</li>
+        </ul>
+
+        <div class="plugin-actions">
+          <a
+            href="questions.html"
+            target="_blank"
+            class="trial-btn"
+            onclick="gtag('event', 'open_questions_tool', { event_category: 'tools', event_label: 'Questions app' })">
+            Otwórz aplikację
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
     </section>
 
     <section id="zakup">
