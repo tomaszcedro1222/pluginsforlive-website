@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timer</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+body.flash-red {
+    background: red;
+}
+
+.controls {
+    position: fixed;
+    top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    z-index: 100;
+    opacity: 1;
+    transition: opacity 0.25s ease;
+    max-width: 96vw;
+}
+
+.controls.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+button, input {
+    background: #111;
+    color: white;
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 15px;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    background: #222;
+}
+
+button.active {
+    background: white;
+    color: black;
+}
+
+.control-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+label {
+    color: #aaa;
+    font-size: 14px;
+}
+
+input {
+    width: 90px;
+}
+
+.timer {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--timer-size, 18vw);
+    font-weight: bold;
+    letter-spacing: 4px;
+    user-select: none;
+    width: 100vw;
+    text-align: center;
+}
+
+.timer.red {
+    color: red;
+}
+
+body.flash-red .timer {
+    color: white;
+}
+
+.hint {
+    position: fixed;
+    bottom: 20px;
+    color: #666;
+    font-size: 14px;
+    text-align: center;
+    opacity: 1;
+    transition: opacity 0.25s ease;
+    line-height: 1.5;
+}
+
+.hint.hidden {
+    opacity: 0;
+}
+
+.info-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.9);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.info-box {
+    max-width: 720px;
+    background: #111;
+    border: 1px solid #444;
+    border-radius: 14px;
+    padding: 30px;
+    text-align: center;
+    line-height: 1.5;
+}
+
+.info-box h2 {
+    margin-top: 0;
+}
+
+.info-box a {
+    color: #4da3ff;
+    text-decoration: none;
+}
+
+.info-box a:hover {
+    text-decoration: underline;
+}
+</style>
+</head>
+
+<body>
+
+<div class="controls" id="controls">
+    <button id="playBtn">▶ Play</button>
+    <button id="resetBtn">↺ Reset</button>
+
+    <button id="modeUpBtn">Count Up</button>
+    <button id="modeDownBtn" class="active">Count Down</button>
+
+    <button id="minusMinBtn">-1 min</button>
+    <button id="plusMinBtn">+1 min</button>
+
+    <button id="minusSecBtn">-1 sec</button>
+    <button id="plusSecBtn">+1 sec</button>
+
+    <button id="sizeMinusBtn">A-</button>
+    <button id="sizePlusBtn">A+</button>
+
+    <button id="redModeBtn" class="active">Red: ON</button>
+    <button id="flashModeBtn" class="active">Flash: ON</button>
+    <button id="fullscreenBtn">⛶ Full Screen</button>
+    <button id="infoBtn">Info</button>
+
+    <div class="control-group">
+        <label for="redTimeInput">Red from:</label>
+        <input id="redTimeInput" type="text" value="05:00" title="Format: MM:SS or HH:MM:SS">
+    </div>
+</div>
+
+<div class="timer" id="timer">40:00</div>
+
+<div class="info-modal" id="infoModal">
+    <div class="info-box">
+        <h2>Timer for Live Productions</h2>
+
+        <p>
+            A simple fullscreen timer designed for live productions,
+            conferences, events, recordings and streaming.
+        </p>
+
+        <p>
+            Features:<br>
+            • Count Up and Count Down modes<br>
+            • Play and Reset buttons<br>
+            • Keyboard shortcuts<br>
+            • Adjustable timer size<br>
+            • Custom red warning threshold<br>
+            • Optional flashing alarm when the timer reaches zero<br>
+            • Fullscreen support<br>
+            • Auto-hiding control menu
+        </p>
+
+        <p>
+            Keyboard shortcuts:<br>
+            SPACE — Start / Stop<br>
+            ENTER — Reset<br>
+            F — Full Screen<br>
+            ↑ / ↓ — Add / subtract one minute<br>
+            ← / → — Add / subtract one second<br>
+            + / - — Change timer size
+        </p>
+
+        <p>
+            More free plugins and tools:<br>
+            <a href="https://www.pluginsforlive.com" target="_blank">
+                www.pluginsforlive.com
+            </a>
+        </p>
+
+        <button id="closeInfoBtn">Close</button>
+    </div>
+</div>
+
+<div class="hint" id="hint">
+    SPACE = Start / Stop | ENTER = Reset | F = Full Screen | ↑/↓ = min | ←/→ = sec | +/- = size
+    <br>
+    More free plugins and tools: www.pluginsforlive.com
+</div>
+
+<script>
+let time = 40 * 60;
+let defaultTime = 40 * 60;
+let startTime = 40 * 60;
+
+let running = false;
+let mode = "down";
+let interval = null;
+
+let redUnderTime = true;
+let redThreshold = 5 * 60;
+
+let flashEnabled = true;
+let flashInterval = null;
+
+let timerSize = 18;
+
+const timerEl = document.getElementById("timer");
+const playBtn = document.getElementById("playBtn");
+const resetBtn = document.getElementById("resetBtn");
+const modeUpBtn = document.getElementById("modeUpBtn");
+const modeDownBtn = document.getElementById("modeDownBtn");
+
+const minusMinBtn = document.getElementById("minusMinBtn");
+const plusMinBtn = document.getElementById("plusMinBtn");
+const minusSecBtn = document.getElementById("minusSecBtn");
+const plusSecBtn = document.getElementById("plusSecBtn");
+
+const sizeMinusBtn = document.getElementById("sizeMinusBtn");
+const sizePlusBtn = document.getElementById("sizePlusBtn");
+
+const redModeBtn = document.getElementById("redModeBtn");
+const flashModeBtn = document.getElementById("flashModeBtn");
+const fullscreenBtn = document.getElementById("fullscreenBtn");
+const infoBtn = document.getElementById("infoBtn");
+const infoModal = document.getElementById("infoModal");
+const closeInfoBtn = document.getElementById("closeInfoBtn");
+const redTimeInput = document.getElementById("redTimeInput");
+
+const controls = document.getElementById("controls");
+const hint = document.getElementById("hint");
+
+function formatTime(seconds) {
+    seconds = Math.max(0, seconds);
+
+    const hours = Math.floor(seconds / 3600);
+    const mins = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+
+    if (seconds >= 3600) {
+        return `${String(hours).padStart(2, "0")}:${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+    }
+
+    return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+}
+
+function parseTime(value) {
+    const parts = value.trim().split(":").map(Number);
+
+    if (parts.some(isNaN)) return null;
+
+    if (parts.length === 2) {
+        return parts[0] * 60 + parts[1];
+    }
+
+    if (parts.length === 3) {
+        return parts[0] * 3600 + parts[1] * 60 + parts[2];
+    }
+
+    return null;
+}
+
+function updateDisplay() {
+    timerEl.textContent = formatTime(time);
+
+    if (
+        redUnderTime &&
+        mode === "down" &&
+        time <= redThreshold &&
+        time > 0
+    ) {
+        timerEl.classList.add("red");
+    } else {
+        timerEl.classList.remove("red");
+    }
+}
+
+function startFlashing() {
+    if (!flashEnabled) return;
+    if (flashInterval) return;
+
+    document.body.classList.add("flash-red");
+
+    flashInterval = setInterval(() => {
+        document.body.classList.toggle("flash-red");
+    }, 1000);
+}
+
+function stopFlashing() {
+    clearInterval(flashInterval);
+    flashInterval = null;
+    document.body.classList.remove("flash-red");
+}
+
+function startTimer() {
+    if (running) return;
+
+    stopFlashing();
+
+    startTime = time;
+    running = true;
+    playBtn.textContent = "⏸ Pause";
+
+    interval = setInterval(() => {
+        if (mode === "down") {
+            if (time > 0) {
+                time--;
+            } else {
+                stopTimer();
+                startFlashing();
+            }
+        } else {
+            time++;
+        }
+
+        updateDisplay();
+    }, 1000);
+}
+
+function stopTimer() {
+    running = false;
+    playBtn.textContent = "▶ Play";
+    clearInterval(interval);
+    interval = null;
+}
+
+function toggleTimer() {
+    running ? stopTimer() : startTimer();
+}
+
+function resetTimer() {
+    stopTimer();
+    stopFlashing();
+
+    if (mode === "down") {
+        time = startTime;
+        defaultTime = startTime;
+    } else {
+        time = 0;
+    }
+
+    updateDisplay();
+}
+
+function setMode(newMode) {
+    stopTimer();
+    stopFlashing();
+
+    mode = newMode;
+
+    if (newMode === "up") {
+        time = 0;
+        startTime = 0;
+        modeUpBtn.classList.add("active");
+        modeDownBtn.classList.remove("active");
+    } else {
+        time = defaultTime;
+        startTime = defaultTime;
+        modeDownBtn.classList.add("active");
+        modeUpBtn.classList.remove("active");
+    }
+
+    updateDisplay();
+}
+
+function changeTime(seconds) {
+    stopFlashing();
+
+    time = Math.max(0, time + seconds);
+
+    if (mode === "down" && !running) {
+        defaultTime = time;
+        startTime = time;
+    }
+
+    updateDisplay();
+}
+
+function changeTimerSize(amount) {
+    timerSize = Math.min(30, Math.max(6, timerSize + amount));
+    document.documentElement.style.setProperty("--timer-size", timerSize + "vw");
+}
+
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+    } else {
+        document.exitFullscreen();
+    }
+}
+
+function openInfo() {
+    infoModal.style.display = "flex";
+    showMenu();
+}
+
+function closeInfo() {
+    infoModal.style.display = "none";
+}
+
+playBtn.addEventListener("click", toggleTimer);
+resetBtn.addEventListener("click", resetTimer);
+modeUpBtn.addEventListener("click", () => setMode("up"));
+modeDownBtn.addEventListener("click", () => setMode("down"));
+
+minusMinBtn.addEventListener("click", () => changeTime(-60));
+plusMinBtn.addEventListener("click", () => changeTime(60));
+minusSecBtn.addEventListener("click", () => changeTime(-1));
+plusSecBtn.addEventListener("click", () => changeTime(1));
+
+sizeMinusBtn.addEventListener("click", () => changeTimerSize(-1));
+sizePlusBtn.addEventListener("click", () => changeTimerSize(1));
+
+fullscreenBtn.addEventListener("click", toggleFullscreen);
+infoBtn.addEventListener("click", openInfo);
+closeInfoBtn.addEventListener("click", closeInfo);
+
+infoModal.addEventListener("click", (e) => {
+    if (e.target === infoModal) {
+        closeInfo();
+    }
+});
+
+redModeBtn.addEventListener("click", () => {
+    redUnderTime = !redUnderTime;
+    redModeBtn.textContent = redUnderTime ? "Red: ON" : "Red: OFF";
+    redModeBtn.classList.toggle("active", redUnderTime);
+    updateDisplay();
+});
+
+flashModeBtn.addEventListener("click", () => {
+    flashEnabled = !flashEnabled;
+
+    flashModeBtn.textContent = flashEnabled ? "Flash: ON" : "Flash: OFF";
+    flashModeBtn.classList.toggle("active", flashEnabled);
+
+    if (!flashEnabled) {
+        stopFlashing();
+    } else if (mode === "down" && time === 0 && !running) {
+        startFlashing();
+    }
+});
+
+redTimeInput.addEventListener("change", () => {
+    const parsed = parseTime(redTimeInput.value);
+
+    if (parsed !== null && parsed >= 0) {
+        redThreshold = parsed;
+        redTimeInput.value = formatTime(redThreshold);
+    } else {
+        redTimeInput.value = formatTime(redThreshold);
+    }
+
+    updateDisplay();
+});
+
+document.addEventListener("keydown", (e) => {
+    if (document.activeElement === redTimeInput) return;
+
+    if (e.code === "Space") {
+        e.preventDefault();
+        toggleTimer();
+    }
+
+    if (e.code === "Enter") {
+        e.preventDefault();
+        resetTimer();
+    }
+
+    if (e.code === "KeyF") {
+        e.preventDefault();
+        toggleFullscreen();
+    }
+
+    if (e.code === "Escape") {
+        closeInfo();
+    }
+
+    if (e.code === "ArrowUp") {
+        e.preventDefault();
+        changeTime(60);
+    }
+
+    if (e.code === "ArrowDown") {
+        e.preventDefault();
+        changeTime(-60);
+    }
+
+    if (e.code === "ArrowRight") {
+        e.preventDefault();
+        changeTime(1);
+    }
+
+    if (e.code === "ArrowLeft") {
+        e.preventDefault();
+        changeTime(-1);
+    }
+
+    if (e.code === "Equal" || e.code === "NumpadAdd") {
+        e.preventDefault();
+        changeTimerSize(1);
+    }
+
+    if (e.code === "Minus" || e.code === "NumpadSubtract") {
+        e.preventDefault();
+        changeTimerSize(-1);
+    }
+
+    showMenu();
+});
+
+let hideMenuTimeout;
+
+function showMenu() {
+    controls.classList.remove("hidden");
+    hint.classList.remove("hidden");
+
+    clearTimeout(hideMenuTimeout);
+
+    hideMenuTimeout = setTimeout(() => {
+        controls.classList.add("hidden");
+        hint.classList.add("hidden");
+    }, 2000);
+}
+
+document.addEventListener("mousemove", showMenu);
+document.addEventListener("touchstart", showMenu);
+document.addEventListener("click", showMenu);
+
+showMenu();
+updateDisplay();
+</script>
+
+</body>
+</html>
