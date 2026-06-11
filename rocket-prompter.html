@@ -299,6 +299,7 @@
     <button id="resetBtn">Reset</button>
     <button id="mirrorBtn">Mirror: OFF</button>
     <button id="fullscreenBtn">Fullscreen</button>
+    <button id="infoBtn">Info</button>
 
     <div class="control-group">
         <span class="control-label">Speed</span>
@@ -329,7 +330,7 @@
     <div class="empty-message" id="emptyMessage">Click “Paste text” and add your prompter text</div>
 </div>
 
-<div class="hint" id="hint">Space = start / pause • Esc = close text window • Controls hide in fullscreen after a moment</div>
+<div class="hint" id="hint">Space = start / pause • Esc = close text window • Controls hide in fullscreen after a moment<br><br>More free plugins and tools available at www.pluginsforlive.com</div>
 
 <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal">
@@ -341,6 +342,33 @@
         <div class="modal-footer">
             <button id="clearTextBtn">Clear</button>
             <button class="primary" id="applyTextBtn">Apply</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal-backdrop" id="infoBackdrop">
+    <div class="modal" style="max-width:700px;height:auto;">
+        <div class="modal-header">
+            <div class="modal-title">About Rocket Prompter</div>
+            <button id="closeInfoBtn">Close</button>
+        </div>
+        <div style="padding:25px;line-height:1.7;font-size:18px;">
+            <p><strong>Rocket Prompter</strong></p>
+            <p>Developed by Tomasz Cedro – RocketCam.</p>
+            <p>Free teleprompter for live productions, webinars, conferences, podcasts and video recordings.</p>
+            <ul>
+                <li>Adjustable speed</li>
+                <li>Mirror mode</li>
+                <li>Fullscreen mode</li>
+                <li>Mouse and keyboard scrolling</li>
+                <li>Adjustable text size and margins</li>
+            </ul>
+            <hr style="border:0;border-top:1px solid #333;margin:25px 0;">
+            <p style="text-align:center;color:#ff9d2e;font-weight:bold;">
+                More free plugins and tools:<br>
+                www.pluginsforlive.com
+            </p>
         </div>
     </div>
 </div>
@@ -363,6 +391,9 @@
     const resetBtn = document.getElementById('resetBtn');
     const mirrorBtn = document.getElementById('mirrorBtn');
     const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const infoBtn = document.getElementById('infoBtn');
+    const infoBackdrop = document.getElementById('infoBackdrop');
+    const closeInfoBtn = document.getElementById('closeInfoBtn');
 
     const speedDown = document.getElementById('speedDown');
     const speedUp = document.getElementById('speedUp');
@@ -514,8 +545,21 @@ function changeSpeed(delta) {
     mirrorBtn.addEventListener('click', () => { isMirror = !isMirror; updateUi(); });
     fullscreenBtn.addEventListener('click', enterFullscreen);
 
-    speedDown.addEventListener('click', () => changeSpeed(-1));
-    speedUp.addEventListener('click', () => changeSpeed(1));
+    infoBtn.addEventListener('click', () => {
+        infoBackdrop.classList.add('show');
+    });
+
+    closeInfoBtn.addEventListener('click', () => {
+        infoBackdrop.classList.remove('show');
+    });
+
+    infoBackdrop.addEventListener('click', (e) => {
+        if (e.target === infoBackdrop) infoBackdrop.classList.remove('show');
+    });
+
+
+    speedDown.addEventListener('click', () => changeSpeed(-0.05));
+    speedUp.addEventListener('click', () => changeSpeed(0.05));
     fontDown.addEventListener('click', () => changeFont(-4));
     fontUp.addEventListener('click', () => changeFont(4));
     marginDown.addEventListener('click', () => changeMargin(-1));
