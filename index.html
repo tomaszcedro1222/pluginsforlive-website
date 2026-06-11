@@ -154,6 +154,21 @@
       margin-bottom:10px;
     }
 
+
+    .tools-list{
+      align-items:stretch;
+    }
+
+    .tool-item{
+      display:flex;
+      flex-direction:column;
+    }
+
+    .tool-item .plugin-actions{
+      margin-top:auto;
+      padding-top:22px;
+    }
+
     .plugin-item{
       background:rgba(255,255,255,.055);
       border:1px solid var(--line);
@@ -477,6 +492,32 @@ Kontakt
             target="_blank"
             class="trial-btn"
             onclick="gtag('event', 'open_questions_tool', { event_category: 'tools', event_label: 'Questions app' })">
+            Otwórz aplikację
+          </a>
+        </div>
+      </div>
+
+      <div class="tool-item">
+        <h3>Rocket Timer</h3>
+
+        <p>
+          Prosty timer odliczający czas, przygotowany z myślą o transmisjach live.
+          Działa bezpośrednio w przeglądarce i może być dodany do vMix jako Browser Input.
+        </p>
+
+        <ul>
+          <li>Odliczanie czasu podczas transmisji</li>
+          <li>Tryb pełnoekranowy</li>
+          <li>Działa jako Browser Input w vMix</li>
+          <li>Przydatny podczas eventów i livestreamów</li>
+        </ul>
+
+        <div class="plugin-actions">
+          <a
+            href="rocket-timer.html"
+            target="_blank"
+            class="trial-btn"
+            onclick="gtag('event', 'open_rocket_timer_tool', { event_category: 'tools', event_label: 'Rocket Timer' })">
             Otwórz aplikację
           </a>
         </div>
