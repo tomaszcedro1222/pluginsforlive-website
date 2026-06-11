@@ -322,6 +322,7 @@ body.delete-mode .question:hover{
 <body>
 
 <div class="toolbar" id="toolbar">
+  <button type="button" data-action="plugins">pluginsforlive.com</button>
   <button type="button" class="size-btn" data-action="font-minus">−</button>
   <button type="button" class="size-btn" data-action="font-plus">+</button>
 
@@ -517,7 +518,8 @@ body.delete-mode .question:hover{
   }
 
   function handleAction(action){
-    if(action === "font-minus") changeFont(-5);
+    if(action === "plugins") window.open("https://www.pluginsforlive.com", "_blank");
+    else if(action === "font-minus") changeFont(-5);
     else if(action === "font-plus") changeFont(5);
     else if(action === "color-white") selectColor("white");
     else if(action === "color-green") selectColor("green");
