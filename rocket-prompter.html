@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Rocket Prompter</title>
+<style>
+    * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+        --bg: #000000;
+        --panel: #111111;
+        --panel2: #171717;
+        --text: #ffffff;
+        --muted: #a8a8a8;
+        --accent: #ff7a00;
+        --accent2: #ff9d2e;
+        --danger: #d33;
+        --border: #333333;
+        --font-size: 64px;
+        --side-margin: 12vw;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--text);
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .topbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        background: linear-gradient(180deg, rgba(20,20,20,0.98), rgba(10,10,10,0.88));
+        border-bottom: 1px solid var(--border);
+        flex-wrap: wrap;
+        user-select: none;
+    }
+
+    .brand {
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        color: var(--accent);
+        margin-right: 8px;
+        white-space: nowrap;
+    }
+
+    button {
+        border: none;
+        background: var(--panel2);
+        color: var(--text);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 10px 14px;
+        font-size: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        touch-action: manipulation;
+        user-select: none;
+    }
+
+    button:active {
+        transform: scale(0.97);
+    }
+
+    button.primary {
+        background: var(--accent);
+        color: #000;
+        border-color: var(--accent2);
+    }
+
+    button.active {
+        background: var(--accent);
+        color: #000;
+        border-color: var(--accent2);
+    }
+
+    .control-group {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: rgba(255,255,255,0.04);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 5px;
+    }
+
+    .control-label {
+        color: var(--muted);
+        font-size: 12px;
+        padding: 0 3px 0 6px;
+        white-space: nowrap;
+    }
+
+    .value {
+        min-width: 56px;
+        text-align: center;
+        font-weight: 800;
+        color: var(--accent2);
+        font-size: 14px;
+    }
+
+    .stage {
+        position: fixed;
+        inset: 0;
+        overflow: hidden;
+        background: #000;
+    }
+
+    .scroll-wrap {
+        position: absolute;
+        inset: 0;
+        padding-left: var(--side-margin);
+        padding-right: var(--side-margin);
+        transform-origin: center center;
+    }
+
+    .scroll-wrap.mirror {
+        transform: scaleX(-1);
+    }
+
+    #textContent {
+        position: absolute;
+        top: 42vh;
+        left: var(--side-margin);
+        right: var(--side-margin);
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+        font-size: var(--font-size);
+        line-height: 1.32;
+        font-weight: 700;
+        color: #fff;
+        text-align: left;
+        text-shadow: 0 0 10px rgba(255,255,255,0.12);
+        will-change: transform;
+    }
+
+    .hint {
+        position: fixed;
+        left: 50%;
+        bottom: 18px;
+        transform: translateX(-50%);
+        z-index: 10;
+        color: rgba(255,255,255,0.55);
+        font-size: 14px;
+        text-align: center;
+        pointer-events: none;
+        user-select: none;
+    }
+
+    .modal-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.78);
+        z-index: 50;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 18px;
+    }
+
+    .modal-backdrop.show {
+        display: flex;
+    }
+
+    .modal {
+        width: min(1000px, 100%);
+        height: min(760px, 92vh);
+        background: #101010;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        box-shadow: 0 0 50px rgba(255,122,0,0.18);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px;
+        border-bottom: 1px solid var(--border);
+        background: #151515;
+    }
+
+    .modal-title {
+        font-weight: 800;
+        color: var(--accent);
+    }
+
+    textarea {
+        flex: 1;
+        width: 100%;
+        resize: none;
+        border: none;
+        outline: none;
+        background: #050505;
+        color: #fff;
+        padding: 18px;
+        font-size: 22px;
+        line-height: 1.45;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        padding: 14px;
+        border-top: 1px solid var(--border);
+        background: #151515;
+    }
+
+    .empty-message {
+        position: fixed;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: rgba(255,255,255,0.45);
+        font-size: 28px;
+        font-weight: 700;
+        padding: 30px;
+        pointer-events: none;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    @media (max-width: 760px) {
+        .topbar {
+            gap: 6px;
+            padding: 8px;
+        }
+
+        .brand {
+            width: 100%;
+            margin-bottom: 2px;
+        }
+
+        button {
+            padding: 9px 11px;
+            font-size: 14px;
+        }
+
+        .control-group {
+            gap: 4px;
+        }
+
+        .control-label {
+            font-size: 11px;
+        }
+
+        .value {
+            min-width: 36px;
+        }
+
+        #textContent {
+            top: 45vh;
+        }
+
+        .hint {
+            font-size: 12px;
+            width: 90%;
+        }
+    }
+</style>
+</head>
+<body>
+
+<div class="topbar" id="topbar">
+    <div class="brand">ROCKET PROMPTER</div>
+
+    <button class="primary" id="openTextBtn">Paste text</button>
+    <button id="startBtn">Start / Pause</button>
+    <button id="resetBtn">Reset</button>
+    <button id="mirrorBtn">Mirror: OFF</button>
+    <button id="fullscreenBtn">Fullscreen</button>
+
+    <div class="control-group">
+        <span class="control-label">Speed</span>
+        <button id="speedDown">−</button>
+        <span class="value" id="speedValue">1.0</span>
+        <button id="speedUp">+</button>
+    </div>
+
+    <div class="control-group">
+        <span class="control-label">Text</span>
+        <button id="fontDown">−</button>
+        <span class="value" id="fontValue">64</span>
+        <button id="fontUp">+</button>
+    </div>
+
+    <div class="control-group">
+        <span class="control-label">Margins</span>
+        <button id="marginDown">−</button>
+        <span class="value" id="marginValue">12</span>
+        <button id="marginUp">+</button>
+    </div>
+</div>
+
+<div class="stage">
+    <div class="scroll-wrap" id="scrollWrap">
+        <div id="textContent"></div>
+    </div>
+    <div class="empty-message" id="emptyMessage">Click “Paste text” and add your prompter text</div>
+</div>
+
+<div class="hint" id="hint">Space = start / pause • Esc = close text window • Controls hide in fullscreen after a moment</div>
+
+<div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-title">Paste your text</div>
+            <button id="closeModalBtn">Close</button>
+        </div>
+        <textarea id="textInput" placeholder="Paste text here..."></textarea>
+        <div class="modal-footer">
+            <button id="clearTextBtn">Clear</button>
+            <button class="primary" id="applyTextBtn">Apply</button>
+        </div>
+    </div>
+</div>
+
+<script>
+(function () {
+    const root = document.documentElement;
+    const topbar = document.getElementById('topbar');
+    const textContent = document.getElementById('textContent');
+    const emptyMessage = document.getElementById('emptyMessage');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const textInput = document.getElementById('textInput');
+    const scrollWrap = document.getElementById('scrollWrap');
+
+    const openTextBtn = document.getElementById('openTextBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const applyTextBtn = document.getElementById('applyTextBtn');
+    const clearTextBtn = document.getElementById('clearTextBtn');
+    const startBtn = document.getElementById('startBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const mirrorBtn = document.getElementById('mirrorBtn');
+    const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+    const speedDown = document.getElementById('speedDown');
+    const speedUp = document.getElementById('speedUp');
+    const speedValue = document.getElementById('speedValue');
+    const fontDown = document.getElementById('fontDown');
+    const fontUp = document.getElementById('fontUp');
+    const fontValue = document.getElementById('fontValue');
+    const marginDown = document.getElementById('marginDown');
+    const marginUp = document.getElementById('marginUp');
+    const marginValue = document.getElementById('marginValue');
+
+    let isRunning = false;
+    let isMirror = false;
+    let lastTimestamp = null;
+    let offsetY = 0;
+    let speed = 20.0;
+    let fontSize = 64;
+    let margin = 12;
+    let hideControlsTimer = null;
+    let keyboardScrollDirection = 0;
+    let keyboardScrollSpeed = 1500; // px na sekundę podczas trzymania strzałki
+    let lastKeyboardScrollTimestamp = null;
+
+    function updateTextPosition() {
+        textContent.style.transform = `translateY(${-offsetY}px)`;
+    }
+
+    function updateUi() {
+        speedValue.textContent = Math.round(speed);
+        fontValue.textContent = fontSize;
+        marginValue.textContent = margin;
+        root.style.setProperty('--font-size', fontSize + 'px');
+        root.style.setProperty('--side-margin', margin + 'vw');
+        startBtn.classList.toggle('active', isRunning);
+        startBtn.textContent = isRunning ? 'Pause' : 'Start';
+        mirrorBtn.textContent = isMirror ? 'Mirror: ON' : 'Mirror: OFF';
+        mirrorBtn.classList.toggle('active', isMirror);
+        scrollWrap.classList.toggle('mirror', isMirror);
+    }
+
+    function hasText() {
+        return textContent.textContent.trim().length > 0;
+    }
+
+    function setRunning(value) {
+        if (!hasText()) return;
+        isRunning = value;
+        lastTimestamp = null;
+        updateUi();
+    }
+
+    function toggleRunning() {
+        if (modalBackdrop.classList.contains('show')) return;
+        setRunning(!isRunning);
+    }
+
+    function resetScroll() {
+        offsetY = 0;
+        updateTextPosition();
+    }
+
+    function openModal() {
+        isRunning = false;
+        updateUi();
+        modalBackdrop.classList.add('show');
+        textInput.focus();
+    }
+
+    function closeModal() {
+        modalBackdrop.classList.remove('show');
+    }
+
+    function applyText() {
+        const value = textInput.value.trim();
+        textContent.textContent = value;
+        emptyMessage.classList.toggle('hidden', value.length > 0);
+        resetScroll();
+        closeModal();
+    }
+
+function changeSpeed(delta) {
+    speed = Math.max(0, Math.min(400, speed + delta));
+    updateUi();
+}
+
+    function changeFont(delta) {
+        fontSize = Math.max(24, Math.min(180, fontSize + delta));
+        updateUi();
+    }
+
+    function changeMargin(delta) {
+        margin = Math.max(0, Math.min(35, margin + delta));
+        updateUi();
+    }
+
+    function loop(timestamp) {
+        if (isRunning) {
+            if (lastTimestamp === null) lastTimestamp = timestamp;
+            const delta = timestamp - lastTimestamp;
+            lastTimestamp = timestamp;
+            offsetY += delta * (speed / 20) * 0.06;
+            updateTextPosition();
+        } else {
+            lastTimestamp = null;
+        }
+
+        if (keyboardScrollDirection !== 0) {
+            if (lastKeyboardScrollTimestamp === null) lastKeyboardScrollTimestamp = timestamp;
+            const keyDelta = timestamp - lastKeyboardScrollTimestamp;
+            lastKeyboardScrollTimestamp = timestamp;
+            offsetY += keyboardScrollDirection * keyboardScrollSpeed * (keyDelta / 1000);
+            offsetY = Math.max(0, offsetY);
+            updateTextPosition();
+        } else {
+            lastKeyboardScrollTimestamp = null;
+        }
+
+        requestAnimationFrame(loop);
+    }
+
+    function enterFullscreen() {
+        const el = document.documentElement;
+        if (!document.fullscreenElement && el.requestFullscreen) {
+            el.requestFullscreen();
+        } else if (document.fullscreenElement && document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
+
+    function hideControlsSoon() {
+        clearTimeout(hideControlsTimer);
+        topbar.style.opacity = '1';
+        topbar.style.pointerEvents = 'auto';
+
+        if (document.fullscreenElement) {
+            hideControlsTimer = setTimeout(() => {
+                topbar.style.opacity = '0';
+                topbar.style.pointerEvents = 'none';
+            }, 2500);
+        }
+    }
+
+    openTextBtn.addEventListener('click', openModal);
+    closeModalBtn.addEventListener('click', closeModal);
+    applyTextBtn.addEventListener('click', applyText);
+    clearTextBtn.addEventListener('click', () => { textInput.value = ''; textInput.focus(); });
+    startBtn.addEventListener('click', toggleRunning);
+    resetBtn.addEventListener('click', () => { setRunning(false); resetScroll(); });
+    mirrorBtn.addEventListener('click', () => { isMirror = !isMirror; updateUi(); });
+    fullscreenBtn.addEventListener('click', enterFullscreen);
+
+    speedDown.addEventListener('click', () => changeSpeed(-1));
+    speedUp.addEventListener('click', () => changeSpeed(1));
+    fontDown.addEventListener('click', () => changeFont(-4));
+    fontUp.addEventListener('click', () => changeFont(4));
+    marginDown.addEventListener('click', () => changeMargin(-1));
+    marginUp.addEventListener('click', () => changeMargin(1));
+
+    document.addEventListener('keydown', (e) => {
+        const isTyping = document.activeElement === textInput;
+
+        if (e.code === 'Space' && !isTyping) {
+            e.preventDefault();
+            toggleRunning();
+        }
+
+        if (!isTyping && !modalBackdrop.classList.contains('show')) {
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                keyboardScrollDirection = 1;
+            }
+
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                keyboardScrollDirection = -1;
+            }
+        }
+
+        if (e.key === 'Escape') {
+            if (modalBackdrop.classList.contains('show')) closeModal();
+            else setRunning(false);
+        }
+    });
+
+    document.addEventListener('keyup', (e) => {
+        if (e.key === 'ArrowDown' && keyboardScrollDirection === 1) {
+            keyboardScrollDirection = 0;
+        }
+
+        if (e.key === 'ArrowUp' && keyboardScrollDirection === -1) {
+            keyboardScrollDirection = 0;
+        }
+    });
+
+    document.addEventListener('wheel', (e) => {
+        if (modalBackdrop.classList.contains('show')) return;
+        e.preventDefault();
+        offsetY += e.deltaY * 1.2;
+        offsetY = Math.max(0, offsetY);
+        updateTextPosition();
+        hideControlsSoon();
+    }, { passive: false });
+
+    modalBackdrop.addEventListener('click', (e) => {
+        if (e.target === modalBackdrop) closeModal();
+    });
+
+    document.addEventListener('mousemove', hideControlsSoon);
+    document.addEventListener('touchstart', hideControlsSoon, { passive: true });
+    document.addEventListener('fullscreenchange', hideControlsSoon);
+
+    updateUi();
+    updateTextPosition();
+    requestAnimationFrame(loop);
+})();
+</script>
+
+</body>
+</html>
