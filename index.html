@@ -129,14 +129,12 @@
     .section-title{font-size:38px;letter-spacing:-1.2px;margin:0 0 12px}
     .muted{color:var(--muted)}
 
-
     .plugins-list{
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
       gap:22px;
       margin-top:26px;
     }
-
 
     .tools-list{
       display:grid;
@@ -179,7 +177,6 @@
       margin-bottom:10px;
     }
 
-
     .tools-list{
       align-items:stretch;
     }
@@ -200,6 +197,8 @@
       border-radius:22px;
       padding:26px;
       transition:.25s;
+      display:flex;
+      flex-direction:column;
     }
 
     .plugin-item:hover{
@@ -225,6 +224,32 @@
     .plugin-item li{
       color:var(--muted);
       margin-bottom:10px;
+    }
+    .plugin-item .plugin-actions{
+      margin-top:auto;
+      padding-top:22px;
+    }
+
+    .plugin-item .coming-soon{
+      margin-top:auto;
+      width:100%;
+      height:58px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      border-radius:999px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.15);
+      color:#ffffff;
+      font-weight:700;
+      text-align:center;
+    }
+
+    .plugin-item .coming-soon span{
+      font-size:12px;
+      font-weight:500;
+      opacity:.7;
     }
 
 
@@ -263,7 +288,6 @@
       opacity:.95;
     }
 
-
     .trial-btn{
       margin-top:12px;
       display:inline-flex;
@@ -299,14 +323,12 @@
       font-size:14px;
     }
 
-
-    .buy{display:grid;grid-template-columns:1.2fr .8fr;gap:22px;align-items:stretch}
+    .buy{display:grid;grid-template-columns:1fr;gap:22px;align-items:stretch}
     .box{background:rgba(255,255,255,.055);border:1px solid var(--line);border-radius:22px;padding:24px}
     .steps{counter-reset:s}
     .step{display:flex;gap:14px;margin:16px 0;color:var(--muted)}
     .step:before{counter-increment:s;content:counter(s);flex:0 0 30px;height:30px;border-radius:50%;display:grid;place-items:center;background:rgba(87,212,255,.14);color:var(--text);font-weight:900}
     .notice{margin-top:14px;padding:14px;border-radius:16px;background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);color:#d7ffe4}
-
 
     .contact-text{margin-top:20px;line-height:1.8;color:var(--muted);max-width:820px}
     .contact-name{margin:24px 0 4px;font-size:22px}
@@ -322,7 +344,6 @@
     }
   </style>
 
-
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8RVYVMY0"></script>
 <script>
@@ -332,7 +353,6 @@
 
   gtag('config', 'G-QS8RVYVMY0');
 </script>
-
 
 </head>
 <body>
@@ -355,7 +375,7 @@
       </div>
       <a class="btn secondary" href="#zakup"
 onclick="gtag('event', 'menu_kup_wtyczke', { event_category: 'navigation' })">
-Kup wtyczkę
+Buy Plugin
 </a>
     </div>
   </nav>
@@ -369,11 +389,11 @@ Kup wtyczkę
           <div class="actions">
             <a class="btn" href="#zakup"
 onclick="gtag('event', 'hero_kup_wtyczke', { event_category: 'button' })">
-Kup wtyczkę
+Buy Plugin
 </a>
             <a class="btn secondary" href="#kontakt"
 onclick="gtag('event', 'hero_kontakt', { event_category: 'button' })">
-Kontakt
+Contact us
 </a>
           </div>
         </div>
@@ -381,7 +401,7 @@ Kontakt
         <div class="panel">
           <div class="panel-content">
             <p class="muted">Lifetime license</p>
-            <div class="big-price">199 PLN <small>gross / plugin</small></div>
+            <div class="big-price">$69 <small>starting price</small></div>
             <div class="highlight-list">
               <div class="highlight-item">Tools prepared for vMix workflows.</div>
               <div class="highlight-item">Tested during many hours of live streams and recordings.</div>
@@ -391,7 +411,6 @@ Kontakt
         </div>
       </div>
     </header>
-
 
     <section id="pluginy">
       <div class="wrap">
@@ -420,11 +439,11 @@ Kontakt
 
             <div class="plugin-actions">
               <a
-                href="https://buy.stripe.com/bJe6oHd6L0KZfTu8mV6Na03"
+                href="https://buy.stripe.com/bJe7sL4Af65j6iUgTr6Na05"
                 target="_blank"
                 class="download-btn"
                 onclick="gtag('event', 'kup_auto_camera', { event_category: 'button', event_label: 'Kup Auto Camera' })">
-                Buy Auto Camera — 199 PLN
+                Buy Auto Camera — $69
               </a>
 
               <a
@@ -479,25 +498,37 @@ Kontakt
               <li>Designed for real live production workflows</li>
             </ul>
 
-            <div class="plugin-actions">
-              <a
-                href="https://github.com/tomaszcedro1222/pluginyvmix/releases/download/v7.0/DuckingAudioSetup.exe"
-                target="_blank"
-                class="trial-btn"
-                onclick="gtag('event', 'download_trial_ducking_audio', {
-                  event_category: 'download',
-                  event_label: 'Ducking Audio Trial GitHub',
-                  file_name: 'DuckingAudioSetup.exe'
-                })">
-                Download trial version
-              </a>
-            </div>
-          </div>
+            
+<div class="plugin-actions">
+
+  <a
+    href="https://buy.stripe.com/4gM14ngiXctHdLm8mV6Na04"
+    target="_blank"
+    class="download-btn"
+    onclick="gtag('event', 'buy_ducking_audio', {
+      event_category: 'button',
+      event_label: 'Buy Ducking Audio'
+    })">
+    Buy Ducking Audio — $45
+  </a>
+
+  <a
+    href="https://github.com/tomaszcedro1222/pluginyvmix/releases/download/v7.0/DuckingAudioSetup.exe"
+    target="_blank"
+    class="trial-btn"
+    onclick="gtag('event', 'download_trial_ducking_audio', {
+      event_category: 'download',
+      event_label: 'Ducking Audio Trial GitHub',
+      file_name: 'DuckingAudioSetup.exe'
+    })">
+    Download trial version
+  </a>
+
+</div>
 
         </div>
       </div>
     </section>
-
 
     <section id="tools">
   <div class="wrap">
@@ -595,42 +626,16 @@ Kontakt
         <div class="box">
           <h2 class="section-title">How to buy?</h2>
           <div class="steps">
-            <div class="step">Click the “Buy Auto Camera” button next to the product description or the button in the purchase section.</div>
+            <div class="step">Choose the tool you want to use and click the “Buy” button next to its description.</div>
             <div class="step">You will be redirected to a secure Stripe checkout where you can pay by card, Apple Pay, Google Pay or other available online payment methods.</div>
-            <div class="step">After payment, you will receive information about downloading and activating the software.</div>
+            <div class="step">After payment, you will receive information about downloading, activating and using the selected software.</div>
           </div>
           <div class="notice">
-            <strong>Price:</strong> Auto Camera costs 199 PLN gross. After purchase, you receive an activation key and a lifetime license.
+            <strong>Note:</strong> Each plugin may have its own price, payment link and download option. Free online tools can be opened directly from the website without installation.
           </div>
         </div>
 
-
-        <div class="box">
-          <h2 class="section-title">Why Auto Camera?</h2>
-
-          <div class="highlight-list">
-            <div class="highlight-item">
-              Save time during podcasts and interviews.
-            </div>
-
-            <div class="highlight-item">
-              Automatic camera switching without an additional operator.
-            </div>
-
-            <div class="highlight-item">
-              Tested during real live productions.
-            </div>
-
-            <div class="highlight-item">
-              Works with the vMix API and supports multiple audio sources.
-            </div>
-
-            <div class="highlight-item">
-              The license is lifetime and assigned to the user.
-            </div>
-          </div>
         </div>
-
 
       </div>
     </section>
