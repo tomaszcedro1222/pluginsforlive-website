@@ -4,14 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Plugins For Live — tools for live production</title>
-  <meta name="description" content="Plugins For Live — browser tools and apps that support live production: Auto Camera, Questions, Rocket Timer, Rocket Prompter and more." />
+  <meta name="description" content="Plugins For Live — browser tools and apps that support live production: Auto Camera, Ducking Audio, Questions, Rocket Timer, Rocket Prompter and more." />
   <!-- Open Graph / Facebook / LinkedIn -->
   <meta property="og:locale" content="en_US" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://pluginsforlive.com/" />
   <meta property="og:site_name" content="Plugins For Live" />
   <meta property="og:title" content="Plugins For Live — tools for live production" />
-  <meta property="og:description" content="Browser tools and apps that support live production: Auto Camera, Questions, Rocket Timer, Rocket Prompter and more." />
+  <meta property="og:description" content="Browser tools and apps that support live production: Auto Camera, Ducking Audio, Questions, Rocket Timer, Rocket Prompter and more." />
   <meta property="og:image" content="https://pluginsforlive.com/logotyppuginy4vmix.png" />
   <meta property="og:image:secure_url" content="https://pluginsforlive.com/logotyppuginy4vmix.png" />
   <meta property="og:image:type" content="image/png" />
@@ -21,7 +21,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://pluginsforlive.com/" />
   <meta name="twitter:title" content="Plugins For Live — tools for live production" />
-  <meta name="twitter:description" content="Browser tools and apps that support live production: Auto Camera, Questions, Rocket Timer, Rocket Prompter and more." />
+  <meta name="twitter:description" content="Browser tools and apps that support live production: Auto Camera, Ducking Audio, Questions, Rocket Timer, Rocket Prompter and more." />
   <meta name="twitter:image" content="https://pluginsforlive.com/logotyppuginy4vmix.png" />
 
   <link rel="canonical" href="https://pluginsforlive.com/" />
@@ -365,7 +365,7 @@ Kup wtyczkę
       <div class="wrap grid">
         <div>
           <h1>Plugins that <span>automate live video production</span>.</h1>
-          <p class="lead">Tools designed to work with vMix. Auto Camera, microphone automix and intelligent floor ducking for simultaneous interpretation. More plugins coming soon.</p>
+          <p class="lead">Tools designed to work with vMix. Auto Camera, microphone automix and Ducking Audio for automatic audio control in vMix. More plugins coming soon.</p>
           <div class="actions">
             <a class="btn" href="#zakup"
 onclick="gtag('event', 'hero_kup_wtyczke', { event_category: 'button' })">
@@ -462,23 +462,35 @@ Kontakt
             </div>
           </div>
 
-          <div class="plugin-item">
-            <h3>🌍 Interpreter Ducking</h3>
+                    <div class="plugin-item">
+            <h3>🎚️ Ducking Audio</h3>
 
             <p>
-              The plugin automatically lowers the floor audio when the interpreter is speaking. Designed for live productions with simultaneous interpretation.
+              Ducking Audio automatically lowers selected audio sources when another source becomes active.
+              It is designed for live productions, podcasts, conferences and simultaneous interpretation workflows
+              where one signal should temporarily reduce the level of another.
             </p>
 
             <ul>
-              <li>Supports PL / ENG interpretation</li>
-              <li>Automatic floor ducking</li>
-              <li>Improved interpreter clarity</li>
-              <li>Ideal for conferences and events</li>
-              <li>Tested during real live productions</li>
+              <li>Automatic audio ducking in vMix</li>
+              <li>Works with selected inputs and audio channels</li>
+              <li>Useful for interpretation, voice-over and live events</li>
+              <li>Adjustable thresholds, hold time and fade times</li>
+              <li>Designed for real live production workflows</li>
             </ul>
 
-            <div class="coming-soon">
-              Coming soon
+            <div class="plugin-actions">
+              <a
+                href="https://github.com/tomaszcedro1222/pluginyvmix/releases/latest/download/DuckingAudioSetup.exe"
+                target="_blank"
+                class="trial-btn"
+                onclick="gtag('event', 'download_trial_ducking_audio', {
+                  event_category: 'download',
+                  event_label: 'Ducking Audio Trial GitHub',
+                  file_name: 'DuckingAudioSetup.exe'
+                })">
+                Download trial version
+              </a>
             </div>
           </div>
 

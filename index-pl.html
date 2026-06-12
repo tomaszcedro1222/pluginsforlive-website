@@ -4,14 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Plugins For Live — narzędzia do transmisji live</title>
-  <meta name="description" content="Plugins For Live — narzędzia online i programy wspierające realizację transmisji live: Auto Camera, Questions, Rocket Timer, Rocket Prompter i więcej." />
+  <meta name="description" content="Plugins For Live — narzędzia online i programy wspierające realizację transmisji live: Auto Camera, Ducking Audio, Questions, Rocket Timer, Rocket Prompter i więcej." />
   <!-- Open Graph / Facebook / LinkedIn -->
   <meta property="og:locale" content="pl_PL" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://pluginsforlive.com/index-pl.html" />
   <meta property="og:site_name" content="Plugins For Live" />
   <meta property="og:title" content="Plugins For Live — narzędzia do transmisji live" />
-  <meta property="og:description" content="Narzędzia online i programy wspierające realizację transmisji live: Auto Camera, Questions, Rocket Timer, Rocket Prompter i więcej." />
+  <meta property="og:description" content="Narzędzia online i programy wspierające realizację transmisji live: Auto Camera, Ducking Audio, Questions, Rocket Timer, Rocket Prompter i więcej." />
   <meta property="og:image" content="https://pluginsforlive.com/logotyppuginy4vmix.png" />
   <meta property="og:image:secure_url" content="https://pluginsforlive.com/logotyppuginy4vmix.png" />
   <meta property="og:image:type" content="image/png" />
@@ -21,7 +21,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://pluginsforlive.com/index-pl.html" />
   <meta name="twitter:title" content="Plugins For Live — narzędzia do transmisji live" />
-  <meta name="twitter:description" content="Narzędzia online i programy wspierające realizację transmisji live: Auto Camera, Questions, Rocket Timer, Rocket Prompter i więcej." />
+  <meta name="twitter:description" content="Narzędzia online i programy wspierające realizację transmisji live: Auto Camera, Ducking Audio, Questions, Rocket Timer, Rocket Prompter i więcej." />
   <meta name="twitter:image" content="https://pluginsforlive.com/logotyppuginy4vmix.png" />
 
   <link rel="canonical" href="https://pluginsforlive.com/index-pl.html" />
@@ -365,7 +365,7 @@ Kup wtyczkę
       <div class="wrap grid">
         <div>
           <h1>Pluginy, które <span>automatyzują realizację video</span>.</h1>
-          <p class="lead">Programy przeznaczone do pracy z vMix. Auto Camera, automix mikrofonów oraz inteligentne ściszanie flooru podczas tłumaczenia symultanicznego. Więcej wtyczek wkrótce.</p>
+          <p class="lead">Programy przeznaczone do pracy z vMix. Auto Camera, automix mikrofonów oraz Ducking Audio do automatycznego sterowania audio w vMix. Więcej wtyczek wkrótce.</p>
           <div class="actions">
             <a class="btn" href="#zakup"
 onclick="gtag('event', 'hero_kup_wtyczke', { event_category: 'button' })">
@@ -466,25 +466,35 @@ Kontakt
             </div>
           </div>
 
-          <div class="plugin-item">
-            <h3>🌍 Interpreter Ducking</h3>
+                    <div class="plugin-item">
+            <h3>🎚️ Ducking Audio</h3>
 
             <p>
-              Plugin automatycznie ścisza floor podczas pracy tłumacza.
-              Rozwiązanie stworzone do transmisji
-              z tłumaczeniem symultanicznym.
+              Ducking Audio automatycznie ścisza wybrane źródła audio, gdy aktywne staje się inne źródło.
+              Program został przygotowany do transmisji live, podcastów, konferencji oraz pracy z tłumaczeniem
+              symultanicznym, gdzie jeden sygnał powinien tymczasowo obniżać poziom drugiego.
             </p>
 
             <ul>
-              <li>Obsługa tłumaczenia PL / ENG</li>
-              <li>Automatyczne ściszanie flooru</li>
-              <li>Lepsza zrozumiałość tłumacza</li>
-              <li>Idealny do konferencji i eventów</li>
-              <li>Przetestowane podczas realnych transmisji live</li>
+              <li>Automatyczne ściszanie audio w vMix</li>
+              <li>Obsługa wybranych inputów i kanałów audio</li>
+              <li>Przydatny przy tłumaczeniu, lektorze i eventach live</li>
+              <li>Regulowane progi, czas podtrzymania i czasy fade</li>
+              <li>Stworzony z myślą o realnych realizacjach live</li>
             </ul>
 
-            <div class="coming-soon">
-              Dostępne niebawem
+            <div class="plugin-actions">
+              <a
+                href="https://github.com/tomaszcedro1222/pluginyvmix/releases/latest/download/DuckingAudioSetup.exe"
+                target="_blank"
+                class="trial-btn"
+                onclick="gtag('event', 'download_trial_ducking_audio', {
+                  event_category: 'download',
+                  event_label: 'Ducking Audio Trial GitHub',
+                  file_name: 'DuckingAudioSetup.exe'
+                })">
+                Pobierz wersję trial
+              </a>
             </div>
           </div>
 
