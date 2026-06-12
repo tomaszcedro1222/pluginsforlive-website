@@ -135,6 +135,7 @@
       grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
       gap:22px;
       margin-top:26px;
+      align-items:stretch;
     }
 
 
@@ -195,6 +196,8 @@
     }
 
     .plugin-item{
+      display:flex;
+      flex-direction:column;
       background:rgba(255,255,255,.055);
       border:1px solid var(--line);
       border-radius:22px;
@@ -234,7 +237,8 @@
       flex-direction:column;
       align-items:center;
       gap:12px;
-      margin-top:22px;
+      margin-top:auto;
+      padding-top:22px;
     }
 
     .plugin-actions .download-btn,
@@ -285,7 +289,7 @@
     }
 
     .coming-soon{
-      margin:22px auto 0 auto;
+      margin:auto auto 0 auto;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -300,7 +304,7 @@
     }
 
 
-    .buy{display:grid;grid-template-columns:1.2fr .8fr;gap:22px;align-items:stretch}
+    .buy{display:grid;grid-template-columns:1fr;gap:22px;align-items:stretch}
     .box{background:rgba(255,255,255,.055);border:1px solid var(--line);border-radius:22px;padding:24px}
     .steps{counter-reset:s}
     .step{display:flex;gap:14px;margin:16px 0;color:var(--muted)}
@@ -381,7 +385,7 @@ Kontakt
         <div class="panel">
           <div class="panel-content">
             <p class="muted">Licencja dożywotnia</p>
-            <div class="big-price">199 zł <small>brutto / wtyczka</small></div>
+            <div class="big-price">Już od 149 zł <small>brutto</small></div>
             <div class="highlight-list">
               <div class="highlight-item">Programy przygotowane do pracy z vMix.</div>
               <div class="highlight-item">Przetestowane podczas wielu godzin liveów i nagrań.</div>
@@ -422,7 +426,7 @@ Kontakt
 
             <div class="plugin-actions">
               <a
-                href="https://buy.stripe.com/3cI5kD3wb0KZ4aM6eN6Na02"
+                href="https://buy.stripe.com/bJe7sL4Af65j6iUgTr6Na05"
                 target="_blank"
                 class="download-btn"
                 onclick="gtag('event', 'kup_auto_camera', { event_category: 'button', event_label: 'Kup Auto Camera' })">
@@ -484,6 +488,17 @@ Kontakt
             </ul>
 
             <div class="plugin-actions">
+              <a
+                href="https://buy.stripe.com/aFa14nd6L0KZfTu1Yx6Na06"
+                target="_blank"
+                class="download-btn"
+                onclick="gtag('event', 'buy_ducking_audio', {
+                  event_category: 'button',
+                  event_label: 'Buy Ducking Audio'
+                })">
+                Kup Ducking Audio — 149 zł brutto
+              </a>
+
               <a
                 href="https://github.com/tomaszcedro1222/pluginyvmix/releases/download/v7.0/DuckingAudioSetup.exe"
                 target="_blank"
@@ -605,40 +620,16 @@ Kontakt
         <div class="box">
           <h2 class="section-title">Jak kupić?</h2>
           <div class="steps">
-            <div class="step">Kliknij przycisk „Kup Auto Camera” przy opisie programu albo przycisk obok w sekcji zakupu.</div>
-            <div class="step">Zostaniesz przeniesiony do bezpiecznej płatności Stripe, gdzie możesz zapłacić kartą, Apple Pay, Google Pay lub dostępnymi metodami płatności online.</div>
-            <div class="step">Po opłaceniu zamówienia otrzymasz informacje dotyczące dalszego pobrania i aktywacji programu.</div>
+            <div class="step">Wybierz narzędzie, które chcesz kupić i kliknij przycisk „Kup” przy jego opisie.</div>
+            <div class="step">Zostaniesz przeniesiony do bezpiecznej płatności Stripe, gdzie możesz zapłacić kartą, Apple Pay, Google Pay lub inną dostępną metodą płatności.</div>
+            <div class="step">Po opłaceniu zamówienia otrzymasz informacje dotyczące pobrania, aktywacji i użytkowania wybranego programu.</div>
           </div>
           <div class="notice">
-            <strong>Cena:</strong> Auto Camera kosztuje 199 zł brutto. Po zakupie otrzymasz klucz aktywacyjny, a licencja jest dożywotnia.
+            <strong>Uwaga:</strong> Każda wtyczka może mieć własną cenę, link do płatności i wersję testową. Darmowe narzędzia online można uruchomić bezpośrednio ze strony.
           </div>
         </div>
 
 
-        <div class="box">
-          <h2 class="section-title">Dlaczego Auto Camera?</h2>
-
-          <div class="highlight-list">
-            <div class="highlight-item">
-              Oszczędność czasu podczas realizacji podcastów i wywiadów.
-            </div>
-
-            <div class="highlight-item">
-              Automatyczne przełączanie kamer bez dodatkowego operatora.
-            </div>
-
-            <div class="highlight-item">
-              Program testowany podczas realnych transmisji live.
-            </div>
-
-            <div class="highlight-item">
-              Działa z vMix API i obsługuje wiele źródeł audio.
-            </div>
-
-            <div class="highlight-item">
-              Licencja jest dożywotnia i przypisana do użytkownika.
-            </div>
-          </div>
         </div>
 
 
