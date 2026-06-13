@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Plugins For Live — tools for live production</title>
-  <meta name="description" content="Plugins For Live — browser tools and apps that support live production: Auto Camera, Ducking Audio, Questions, Rocket Timer, Rocket Prompter and more." />
+  <title>vMix Plugins and Automation Tools | Auto Camera, Ducking Audio | Plugins For Live</title>
+  <meta name="description" content="Professional vMix plugins and tools. Automatic camera switching, audio ducking, automix solutions and free live production utilities." />
   <!-- Open Graph / Facebook / LinkedIn -->
   <meta property="og:locale" content="en_US" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://pluginsforlive.com/" />
   <meta property="og:site_name" content="Plugins For Live" />
-  <meta property="og:title" content="Plugins For Live — tools for live production" />
-  <meta property="og:description" content="Browser tools and apps that support live production: Auto Camera, Ducking Audio, Questions, Rocket Timer, Rocket Prompter and more." />
+  <meta property="og:title" content="vMix Plugins and Automation Tools | Auto Camera, Ducking Audio" />
+  <meta property="og:description" content="Professional vMix plugins and tools. Automatic camera switching, audio ducking, automix solutions and free live production utilities." />
   <meta property="og:image" content="https://pluginsforlive.com/logotyppuginy4vmix.png" />
   <meta property="og:image:secure_url" content="https://pluginsforlive.com/logotyppuginy4vmix.png" />
   <meta property="og:image:type" content="image/png" />
@@ -20,8 +20,8 @@
   <!-- Twitter / X -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:url" content="https://pluginsforlive.com/" />
-  <meta name="twitter:title" content="Plugins For Live — tools for live production" />
-  <meta name="twitter:description" content="Browser tools and apps that support live production: Auto Camera, Ducking Audio, Questions, Rocket Timer, Rocket Prompter and more." />
+  <meta name="twitter:title" content="vMix Plugins and Automation Tools | Auto Camera, Ducking Audio" />
+  <meta name="twitter:description" content="Professional vMix plugins and tools. Automatic camera switching, audio ducking, automix solutions and free live production utilities." />
   <meta name="twitter:image" content="https://pluginsforlive.com/logotyppuginy4vmix.png" />
 
   <link rel="canonical" href="https://pluginsforlive.com/" />
@@ -384,7 +384,7 @@ Buy Plugin
     <header class="hero">
       <div class="wrap grid">
         <div>
-          <h1>Plugins that <span>automate live video production</span>.</h1>
+          <h1>vMix Plugins That <span>Automate Live Video Production</span>.</h1>
           <p class="lead">Tools designed to work with vMix. Auto Camera, microphone automix and Ducking Audio for automatic audio control in vMix. More plugins coming soon.</p>
           <div class="actions">
             <a class="btn" href="#zakup"
@@ -422,7 +422,7 @@ Contact us
 
         <div class="plugins-list">
 
-          <div class="plugin-item">
+          <div class="plugin-item" data-ga-view="view_auto_camera">
             <h3>🎥 Auto Camera</h3>
 
             <p>
@@ -442,7 +442,7 @@ Contact us
                 href="https://buy.stripe.com/bJe7sL4Af65j6iUgTr6Na05"
                 target="_blank"
                 class="download-btn"
-                onclick="gtag('event', 'kup_auto_camera', { event_category: 'button', event_label: 'Kup Auto Camera' })">
+                onclick="gtag('event', 'begin_checkout', { currency: 'USD', value: 69, item_name: 'Auto Camera' })">
                 Buy Auto Camera — $69
               </a>
 
@@ -450,10 +450,13 @@ Contact us
                 href="https://github.com/tomaszcedro1222/pluginyvmix/releases/download/v11.11/AutoCameraSetup.exe"
                 target="_blank"
                 class="trial-btn"
-                onclick="gtag('event', 'download_trial_auto_camera', {
+                onclick="gtag('event', 'trial_interest', {
+                  item_name: 'Auto Camera',
+                  link_url: 'https://github.com/tomaszcedro1222/pluginyvmix/releases/download/v11.11/AutoCameraSetup.exe'
+                }); gtag('event', 'download_trial_auto_camera', {
                   event_category: 'download',
                   event_label: 'Auto Camera Trial GitHub',
-                  file_name: 'Auto.Camera.v11_10.zip',
+                  file_name: 'AutoCameraSetup.exe',
                   link_url: 'https://github.com/tomaszcedro1222/pluginyvmix/releases/download/v11.11/AutoCameraSetup.exe'
                 })">
                 Download trial version
@@ -461,7 +464,7 @@ Contact us
             </div>
           </div>
 
-          <div class="plugin-item">
+          <div class="plugin-item" data-ga-view="view_automix">
             <h3>🎙️ AutoMix</h3>
 
             <p>
@@ -481,7 +484,7 @@ Contact us
             </div>
           </div>
 
-                    <div class="plugin-item">
+                    <div class="plugin-item" data-ga-view="view_ducking_audio">
             <h3>🎚️ Ducking Audio</h3>
 
             <p>
@@ -505,10 +508,7 @@ Contact us
     href="https://buy.stripe.com/4gM14ngiXctHdLm8mV6Na04"
     target="_blank"
     class="download-btn"
-    onclick="gtag('event', 'buy_ducking_audio', {
-      event_category: 'button',
-      event_label: 'Buy Ducking Audio'
-    })">
+    onclick="gtag('event', 'begin_checkout', { currency: 'USD', value: 45, item_name: 'Ducking Audio' })">
     Buy Ducking Audio — $45
   </a>
 
@@ -516,10 +516,14 @@ Contact us
     href="https://github.com/tomaszcedro1222/pluginyvmix/releases/download/v7.0/DuckingAudioSetup.exe"
     target="_blank"
     class="trial-btn"
-    onclick="gtag('event', 'download_trial_ducking_audio', {
+    onclick="gtag('event', 'trial_interest', {
+      item_name: 'Ducking Audio',
+      link_url: 'https://github.com/tomaszcedro1222/pluginyvmix/releases/download/v7.0/DuckingAudioSetup.exe'
+    }); gtag('event', 'download_trial_ducking_audio', {
       event_category: 'download',
       event_label: 'Ducking Audio Trial GitHub',
-      file_name: 'DuckingAudioSetup.exe'
+      file_name: 'DuckingAudioSetup.exe',
+      link_url: 'https://github.com/tomaszcedro1222/pluginyvmix/releases/download/v7.0/DuckingAudioSetup.exe'
     })">
     Download trial version
   </a>
@@ -621,7 +625,7 @@ Contact us
   </div>
     </section>
 
-    <section id="zakup">
+    <section id="zakup" data-ga-view="view_purchase_section">
       <div class="wrap buy">
         <div class="box">
           <h2 class="section-title">How to buy?</h2>
@@ -640,13 +644,13 @@ Contact us
       </div>
     </section>
 
-    <section id="kontakt">
+    <section id="kontakt" data-ga-view="view_contact_section">
       <div class="wrap">
         <div class="box">
           <h2 class="section-title">Contact</h2>
           <p class="contact-text">If you have questions about the plugins or an idea for a vMix plugin, contact me and I will try to help.</p>
           <h3 class="contact-name">Tomasz Cedro</h3>
-          <p class="muted"><strong>plugins4vmix@gmail.com</strong></p>
+          <p class="muted"><strong><a href="mailto:plugins4vmix@gmail.com" onclick="gtag('event', 'contact_email_click', {event_category: 'contact'});">plugins4vmix@gmail.com</a></strong></p>
         </div>
       </div>
     </section>
@@ -677,9 +681,9 @@ Contact us
           <p class="contact-text">
             For matters related to personal data, you can contact me by email:
             <br>
-            <strong>plugins4vmix@gmail.com</strong>
+            <strong><a href="mailto:plugins4vmix@gmail.com" onclick="gtag('event', 'contact_email_click', {event_category: 'contact', contact_location: 'privacy_policy'});">plugins4vmix@gmail.com</a></strong>
 <br>
-            <strong>+48536800099</strong>
+            <strong><a href="tel:+48536800099" onclick="gtag('event', 'contact_phone_click', {event_category: 'contact'});">+48536800099</a></strong>
           </p>
         </div>
       </div>
@@ -691,6 +695,59 @@ Contact us
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Google Analytics: track when important product/section blocks are actually seen.
+    (function () {
+      if (!('IntersectionObserver' in window)) return;
+
+      const trackedElements = document.querySelectorAll('[data-ga-view]');
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const eventName = entry.target.getAttribute('data-ga-view');
+            if (eventName && typeof gtag === 'function') {
+              gtag('event', eventName, {
+                event_category: 'section_view',
+                section_id: entry.target.id || '',
+                visibility_threshold: '50_percent'
+              });
+            }
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      trackedElements.forEach(el => observer.observe(el));
+    })();
+
+    // Google Analytics: track scroll depth once per visit.
+    (function () {
+      const thresholds = [25, 50, 75, 90];
+      const sent = new Set();
+
+      function trackScrollDepth() {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (docHeight <= 0) return;
+
+        const percent = Math.round((scrollTop / docHeight) * 100);
+
+        thresholds.forEach(threshold => {
+          if (percent >= threshold && !sent.has(threshold)) {
+            sent.add(threshold);
+            if (typeof gtag === 'function') {
+              gtag('event', 'scroll_depth', {
+                event_category: 'engagement',
+                percent_scrolled: threshold
+              });
+            }
+          }
+        });
+      }
+
+      window.addEventListener('scroll', trackScrollDepth, { passive: true });
+    })();
+
   </script>
 </body>
 </html>
