@@ -539,6 +539,18 @@
     let isDragging = false;
     let dragStartY = 0;
     let dragStartOffset = 0;
+    let smoothScrollAnimation = null;
+
+    function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+    }
+
+    function cancelSmoothScroll() {
+        if (smoothScrollAnimation !== null) {
+            cancelAnimationFrame(smoothScrollAnimation);
+            smoothScrollAnimation = null;
+        }
+    }
 
     function defaultShortcuts() {
         const output = {};
@@ -650,6 +662,37 @@
         textContent.style.transform = `translateY(${-offsetY}px)`;
     }
 
+    function smoothScrollTo(targetY, duration = 170) {
+        cancelSmoothScroll();
+
+        const startY = offsetY;
+        const distance = targetY - startY;
+
+        if (Math.abs(distance) < 0.5 || duration <= 0) {
+            offsetY = targetY;
+            updateTextPosition();
+            return;
+        }
+
+        const startTime = performance.now();
+
+        function step(now) {
+            const progress = Math.min(1, (now - startTime) / duration);
+            offsetY = startY + distance * easeOutCubic(progress);
+            updateTextPosition();
+
+            if (progress < 1) {
+                smoothScrollAnimation = requestAnimationFrame(step);
+            } else {
+                offsetY = targetY;
+                updateTextPosition();
+                smoothScrollAnimation = null;
+            }
+        }
+
+        smoothScrollAnimation = requestAnimationFrame(step);
+    }
+
     function updateUi() {
         speedValue.textContent = speed.toFixed(2);
         fontValue.textContent = fontSize;
@@ -681,6 +724,7 @@
     }
 
     function resetScroll() {
+        cancelSmoothScroll();
         offsetY = 0;
         updateTextPosition();
     }
@@ -762,9 +806,16 @@
         updateUi();
     }
 
-    function scrollByAmount(amount) {
-        offsetY = Math.max(0, offsetY + amount);
-        updateTextPosition();
+    function scrollByAmount(amount, smooth = true) {
+        const targetY = Math.max(0, offsetY + amount);
+
+        if (smooth) {
+            smoothScrollTo(targetY, 170);
+        } else {
+            cancelSmoothScroll();
+            offsetY = targetY;
+            updateTextPosition();
+        }
     }
 
     function toggleMirror() {
@@ -844,6 +895,7 @@
             if (lastTimestamp === null) lastTimestamp = timestamp;
             const delta = timestamp - lastTimestamp;
             lastTimestamp = timestamp;
+            cancelSmoothScroll();
             offsetY += delta * speed * 0.06;
             updateTextPosition();
         } else {
