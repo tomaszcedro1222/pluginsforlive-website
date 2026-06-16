@@ -396,6 +396,8 @@
     <button id="mirrorBtn">Mirror: OFF</button>
     <button id="fullscreenBtn">Fullscreen</button>
     <button id="shortcutsBtn">Shortcuts</button>
+    <button id="infoBtn">Info</button>
+    <button id="pluginsBtn">pluginsforlive.com</button>
 
     <div class="control-group">
         <span class="control-label">Speed</span>
@@ -470,6 +472,41 @@
     </div>
 </div>
 
+
+
+<div class="modal-backdrop" id="infoBackdrop">
+    <div class="modal">
+        <div class="modal-header">
+            <div class="modal-title">Rocket Prompter</div>
+            <button id="closeInfoBtn">Close</button>
+        </div>
+        <div class="shortcuts-body" style="line-height:1.7; font-size:16px;">
+            <h2 style="color:var(--accent); margin-top:0;">Rocket Prompter</h2>
+            <p>
+                Free teleprompter for livestreams, podcasts, conferences,
+                presentations and video productions.
+            </p>
+            <p><b>Features:</b></p>
+            <ul>
+                <li>Automatic smooth scrolling</li>
+                <li>Touch screen scrolling</li>
+                <li>Wireless remote and custom shortcuts support</li>
+                <li>Mirror mode</li>
+                <li>Fullscreen mode</li>
+                <li>Adjustable speed, text size and margins</li>
+            </ul>
+            <p>
+                More free tools and plugins:<br>
+                <b>www.pluginsforlive.com</b>
+            </p>
+        </div>
+        <div class="modal-footer">
+            <button class="primary" id="pluginsInfoBtn">Open pluginsforlive.com</button>
+            <button id="closeInfoBtn2">Close</button>
+        </div>
+    </div>
+</div>
+
 <script>
 (function () {
     const root = document.documentElement;
@@ -493,6 +530,12 @@
     const mirrorBtn = document.getElementById('mirrorBtn');
     const fullscreenBtn = document.getElementById('fullscreenBtn');
     const shortcutsBtn = document.getElementById('shortcutsBtn');
+    const infoBtn = document.getElementById('infoBtn');
+    const pluginsBtn = document.getElementById('pluginsBtn');
+    const infoBackdrop = document.getElementById('infoBackdrop');
+    const closeInfoBtn = document.getElementById('closeInfoBtn');
+    const closeInfoBtn2 = document.getElementById('closeInfoBtn2');
+    const pluginsInfoBtn = document.getElementById('pluginsInfoBtn');
     const closeShortcutsBtn = document.getElementById('closeShortcutsBtn');
     const closeShortcutsBtn2 = document.getElementById('closeShortcutsBtn2');
     const restoreShortcutsBtn = document.getElementById('restoreShortcutsBtn');
@@ -719,7 +762,7 @@
     }
 
     function toggleRunning() {
-        if (modalBackdrop.classList.contains('show') || shortcutsBackdrop.classList.contains('show')) return;
+        if (modalBackdrop.classList.contains('show') || shortcutsBackdrop.classList.contains('show') || infoBackdrop.classList.contains('show')) return;
         setRunning(!isRunning);
     }
 
@@ -789,6 +832,25 @@
         waitingForAction = null;
         shortcutsBackdrop.classList.remove('show');
         stage.focus({ preventScroll: true });
+    }
+
+    function openInfo() {
+        const wasRunning = isRunning;
+        setRunning(false);
+        infoBackdrop.dataset.wasRunning = wasRunning ? '1' : '0';
+        infoBackdrop.classList.add('show');
+    }
+
+    function closeInfo() {
+        const shouldResume = infoBackdrop.dataset.wasRunning === '1';
+        infoBackdrop.classList.remove('show');
+        infoBackdrop.dataset.wasRunning = '0';
+        stage.focus({ preventScroll: true });
+        if (shouldResume && hasText()) setRunning(true);
+    }
+
+    function openPluginsForLive() {
+        window.open('https://pluginsforlive.com', '_blank', 'noopener');
     }
 
     function changeSpeed(delta) {
@@ -895,9 +957,13 @@
             if (lastTimestamp === null) lastTimestamp = timestamp;
             const delta = timestamp - lastTimestamp;
             lastTimestamp = timestamp;
-            cancelSmoothScroll();
-            offsetY += delta * speed * 0.06;
-            updateTextPosition();
+
+            // Manual moves from remote / keyboard / touch remain possible while the text is running.
+            // During a smooth manual nudge or a finger drag, auto-scroll waits briefly and then continues.
+            if (!isDragging && smoothScrollAnimation === null) {
+                offsetY += delta * speed * 0.06;
+                updateTextPosition();
+            }
         } else {
             lastTimestamp = null;
         }
@@ -934,6 +1000,11 @@
     mirrorBtn.addEventListener('click', toggleMirror);
     fullscreenBtn.addEventListener('click', enterFullscreen);
     shortcutsBtn.addEventListener('click', openShortcuts);
+    infoBtn.addEventListener('click', openInfo);
+    pluginsBtn.addEventListener('click', openPluginsForLive);
+    closeInfoBtn.addEventListener('click', closeInfo);
+    closeInfoBtn2.addEventListener('click', closeInfo);
+    pluginsInfoBtn.addEventListener('click', openPluginsForLive);
     closeShortcutsBtn.addEventListener('click', closeShortcuts);
     closeShortcutsBtn2.addEventListener('click', closeShortcuts);
 
@@ -975,11 +1046,12 @@
             e.preventDefault();
             if (modalBackdrop.classList.contains('show')) closeModal();
             else if (shortcutsBackdrop.classList.contains('show')) closeShortcuts();
+            else if (infoBackdrop.classList.contains('show')) closeInfo();
             else setRunning(false);
             return;
         }
 
-        if (modalBackdrop.classList.contains('show') || shortcutsBackdrop.classList.contains('show')) return;
+        if (modalBackdrop.classList.contains('show') || shortcutsBackdrop.classList.contains('show') || infoBackdrop.classList.contains('show')) return;
 
         const action = findActionByEvent(e);
         if (action) {
@@ -999,15 +1071,20 @@
         if (e.target === shortcutsBackdrop) closeShortcuts();
     });
 
+    infoBackdrop.addEventListener('click', (e) => {
+        if (e.target === infoBackdrop) closeInfo();
+    });
+
     document.addEventListener('wheel', (e) => {
-        if (modalBackdrop.classList.contains('show') || shortcutsBackdrop.classList.contains('show')) return;
+        if (modalBackdrop.classList.contains('show') || shortcutsBackdrop.classList.contains('show') || infoBackdrop.classList.contains('show')) return;
         e.preventDefault();
         scrollByAmount(e.deltaY);
     }, { passive: false });
 
     function startDrag(clientY) {
         isDragging = true;
-        setRunning(false);
+        cancelSmoothScroll();
+        lastTimestamp = null;
         dragStartY = clientY;
         dragStartOffset = offsetY;
         textContent.classList.add('dragging');
@@ -1023,12 +1100,13 @@
     function stopDrag() {
         if (!isDragging) return;
         isDragging = false;
+        lastTimestamp = null;
         textContent.classList.remove('dragging');
     }
 
     stage.addEventListener('mousedown', (e) => {
         if (e.button !== 0) return;
-        if (modalBackdrop.classList.contains('show') || shortcutsBackdrop.classList.contains('show')) return;
+        if (modalBackdrop.classList.contains('show') || shortcutsBackdrop.classList.contains('show') || infoBackdrop.classList.contains('show')) return;
         e.preventDefault();
         startDrag(e.clientY);
     });
@@ -1043,7 +1121,7 @@
 
     stage.addEventListener('touchstart', (e) => {
         if (!e.touches || !e.touches[0]) return;
-        if (modalBackdrop.classList.contains('show') || shortcutsBackdrop.classList.contains('show')) return;
+        if (modalBackdrop.classList.contains('show') || shortcutsBackdrop.classList.contains('show') || infoBackdrop.classList.contains('show')) return;
         e.preventDefault();
         startDrag(e.touches[0].clientY);
     }, { passive: false });
