@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>ROCKET PROMPTER</title>
+<title>Rocket Prompter</title>
 <style>
     * {
         box-sizing: border-box;
@@ -54,29 +54,18 @@
         border-bottom: 1px solid var(--border);
         flex-wrap: wrap;
         user-select: none;
-        transition: opacity 0.25s ease;
     }
 
     .brand {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-weight: 900;
-        letter-spacing: 0.8px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
         color: var(--accent);
-        margin-right: 10px;
+        margin-right: 8px;
         white-space: nowrap;
-        font-size: 18px;
-    }
-
-    .brand-logo {
-        width: 34px;
-        height: 34px;
-        object-fit: contain;
-        display: block;
     }
 
     button {
+        border: none;
         background: var(--panel2);
         color: var(--text);
         border: 1px solid var(--border);
@@ -93,15 +82,16 @@
         transform: scale(0.97);
     }
 
-    button.primary, button.active {
+    button.primary {
         background: var(--accent);
         color: #000;
         border-color: var(--accent2);
     }
 
-    button.danger {
-        background: #2a1010;
-        border-color: #743030;
+    button.active {
+        background: var(--accent);
+        color: #000;
+        border-color: var(--accent2);
     }
 
     .control-group {
@@ -122,7 +112,7 @@
     }
 
     .value {
-        min-width: 52px;
+        min-width: 56px;
         text-align: center;
         font-weight: 800;
         color: var(--accent2);
@@ -134,9 +124,6 @@
         inset: 0;
         overflow: hidden;
         background: #000;
-        outline: none;
-        touch-action: none;
-        overscroll-behavior: none;
     }
 
     .scroll-wrap {
@@ -145,7 +132,6 @@
         padding-left: var(--side-margin);
         padding-right: var(--side-margin);
         transform-origin: center center;
-        touch-action: none;
     }
 
     .scroll-wrap.mirror {
@@ -154,11 +140,9 @@
 
     #textContent {
         position: absolute;
-        top: 88vh;
+        top: 42vh;
         left: var(--side-margin);
         right: var(--side-margin);
-        width: auto;
-        max-width: calc(100vw - (var(--side-margin) * 2));
         white-space: pre-wrap;
         overflow-wrap: anywhere;
         word-break: break-word;
@@ -169,13 +153,6 @@
         text-align: left;
         text-shadow: 0 0 10px rgba(255,255,255,0.12);
         will-change: transform;
-        cursor: grab;
-        user-select: none;
-        touch-action: none;
-    }
-
-    #textContent.dragging {
-        cursor: grabbing;
     }
 
     .hint {
@@ -218,16 +195,10 @@
         overflow: hidden;
     }
 
-    .shortcuts-modal {
-        width: min(900px, 100%);
-        height: min(820px, 92vh);
-    }
-
     .modal-header {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        gap: 12px;
         padding: 14px;
         border-bottom: 1px solid var(--border);
         background: #151515;
@@ -259,54 +230,6 @@
         padding: 14px;
         border-top: 1px solid var(--border);
         background: #151515;
-        flex-wrap: wrap;
-    }
-
-    .shortcuts-body {
-        flex: 1;
-        overflow: auto;
-        padding: 14px;
-        background: #070707;
-    }
-
-    .shortcuts-info {
-        color: var(--muted);
-        font-size: 14px;
-        margin-bottom: 12px;
-        line-height: 1.4;
-    }
-
-    .shortcuts-table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .shortcuts-table th,
-    .shortcuts-table td {
-        border-bottom: 1px solid var(--border);
-        padding: 10px;
-        text-align: left;
-        vertical-align: middle;
-        font-size: 14px;
-    }
-
-    .shortcuts-table th {
-        color: var(--accent2);
-        background: #111;
-        position: sticky;
-        top: 0;
-    }
-
-    .key-badge {
-        display: inline-block;
-        min-width: 100px;
-        padding: 7px 10px;
-        border: 1px solid var(--border);
-        border-radius: 8px;
-        background: #151515;
-        color: #fff;
-        font-weight: 800;
-        text-align: center;
     }
 
     .empty-message {
@@ -336,12 +259,6 @@
         .brand {
             width: 100%;
             margin-bottom: 2px;
-            font-size: 17px;
-        }
-
-        .brand-logo {
-            width: 30px;
-            height: 30px;
         }
 
         button {
@@ -358,26 +275,16 @@
         }
 
         .value {
-            min-width: 44px;
+            min-width: 36px;
         }
 
         #textContent {
-            top: 90vh;
+            top: 45vh;
         }
 
         .hint {
             font-size: 12px;
             width: 90%;
-        }
-
-        .shortcuts-table th,
-        .shortcuts-table td {
-            padding: 8px 6px;
-            font-size: 12px;
-        }
-
-        .key-badge {
-            min-width: 76px;
         }
     }
 </style>
@@ -385,22 +292,18 @@
 <body>
 
 <div class="topbar" id="topbar">
-    <div class="brand">
-        <img src="logorocket.png" alt="Rocket logo" class="brand-logo">
-        <span>ROCKET PROMPTER</span>
-    </div>
+    <div class="brand">ROCKET PROMPTER</div>
 
     <button class="primary" id="openTextBtn">Paste text</button>
     <button id="startBtn">Start / Pause</button>
     <button id="resetBtn">Reset</button>
     <button id="mirrorBtn">Mirror: OFF</button>
     <button id="fullscreenBtn">Fullscreen</button>
-    <button id="shortcutsBtn">Shortcuts</button>
 
     <div class="control-group">
         <span class="control-label">Speed</span>
         <button id="speedDown">−</button>
-        <span class="value" id="speedValue">1.00</span>
+        <span class="value" id="speedValue">1.0</span>
         <button id="speedUp">+</button>
     </div>
 
@@ -419,14 +322,14 @@
     </div>
 </div>
 
-<div class="stage" id="stage" tabindex="0">
+<div class="stage">
     <div class="scroll-wrap" id="scrollWrap">
         <div id="textContent"></div>
     </div>
     <div class="empty-message" id="emptyMessage">Click “Paste text” and add your prompter text</div>
 </div>
 
-<div class="hint" id="hint">Space = start / pause • Arrows / mouse wheel = scroll • Drag text with mouse or touch • Shortcuts = custom keys</div>
+<div class="hint" id="hint">Space = start / pause • Esc = close text window • Controls hide in fullscreen after a moment</div>
 
 <div class="modal-backdrop" id="modalBackdrop">
     <div class="modal">
@@ -442,47 +345,15 @@
     </div>
 </div>
 
-<div class="modal-backdrop" id="shortcutsBackdrop">
-    <div class="modal shortcuts-modal">
-        <div class="modal-header">
-            <div class="modal-title">Shortcuts</div>
-            <button id="closeShortcutsBtn">Close</button>
-        </div>
-        <div class="shortcuts-body">
-            <div class="shortcuts-info" id="shortcutsInfo">
-                Click <b>Set</b>, then press any key. Shortcuts are saved in this browser.
-            </div>
-            <table class="shortcuts-table">
-                <thead>
-                    <tr>
-                        <th>Function</th>
-                        <th>Current key</th>
-                        <th>Set</th>
-                    </tr>
-                </thead>
-                <tbody id="shortcutsTableBody"></tbody>
-            </table>
-        </div>
-        <div class="modal-footer">
-            <button class="danger" id="restoreShortcutsBtn">Restore defaults</button>
-            <button id="closeShortcutsBtn2">Close</button>
-        </div>
-    </div>
-</div>
-
 <script>
 (function () {
     const root = document.documentElement;
     const topbar = document.getElementById('topbar');
-    const stage = document.getElementById('stage');
     const textContent = document.getElementById('textContent');
     const emptyMessage = document.getElementById('emptyMessage');
     const modalBackdrop = document.getElementById('modalBackdrop');
-    const shortcutsBackdrop = document.getElementById('shortcutsBackdrop');
     const textInput = document.getElementById('textInput');
     const scrollWrap = document.getElementById('scrollWrap');
-    const shortcutsTableBody = document.getElementById('shortcutsTableBody');
-    const shortcutsInfo = document.getElementById('shortcutsInfo');
 
     const openTextBtn = document.getElementById('openTextBtn');
     const closeModalBtn = document.getElementById('closeModalBtn');
@@ -492,10 +363,6 @@
     const resetBtn = document.getElementById('resetBtn');
     const mirrorBtn = document.getElementById('mirrorBtn');
     const fullscreenBtn = document.getElementById('fullscreenBtn');
-    const shortcutsBtn = document.getElementById('shortcutsBtn');
-    const closeShortcutsBtn = document.getElementById('closeShortcutsBtn');
-    const closeShortcutsBtn2 = document.getElementById('closeShortcutsBtn2');
-    const restoreShortcutsBtn = document.getElementById('restoreShortcutsBtn');
 
     const speedDown = document.getElementById('speedDown');
     const speedUp = document.getElementById('speedUp');
@@ -507,85 +374,24 @@
     const marginUp = document.getElementById('marginUp');
     const marginValue = document.getElementById('marginValue');
 
-    const STORAGE_KEY = 'rocketPrompterShortcutsV2';
-
-    const actions = [
-        { id: 'toggleRunning', label: 'Start / Pause', defaultKey: 'Space' },
-        { id: 'speedUp', label: 'Speed +', defaultKey: 'ArrowRight' },
-        { id: 'speedDown', label: 'Speed -', defaultKey: 'ArrowLeft' },
-        { id: 'scrollUp', label: 'Fast scroll up', defaultKey: 'ArrowUp' },
-        { id: 'scrollDown', label: 'Fast scroll down', defaultKey: 'ArrowDown' },
-        { id: 'mirror', label: 'Mirror ON / OFF', defaultKey: 'KeyM' },
-        { id: 'fullscreen', label: 'Fullscreen ON / OFF', defaultKey: 'KeyF' },
-        { id: 'openText', label: 'Open text editor', defaultKey: 'KeyT' },
-        { id: 'reset', label: 'Reset position', defaultKey: 'KeyR' },
-        { id: 'fontUp', label: 'Text size +', defaultKey: 'PageUp' },
-        { id: 'fontDown', label: 'Text size -', defaultKey: 'PageDown' },
-        { id: 'marginUp', label: 'Margins +', defaultKey: 'BracketRight' },
-        { id: 'marginDown', label: 'Margins -', defaultKey: 'BracketLeft' },
-        { id: 'openShortcuts', label: 'Open shortcuts', defaultKey: 'Slash' }
-    ];
-
-    let shortcuts = {};
-    let waitingForAction = null;
     let isRunning = false;
     let isMirror = false;
     let lastTimestamp = null;
     let offsetY = 0;
-    let speed = 1.00;
+    let speed = 20.0;
     let fontSize = 64;
     let margin = 12;
     let hideControlsTimer = null;
-    let isDragging = false;
-    let dragStartY = 0;
-    let dragStartOffset = 0;
-
-    function defaultShortcuts() {
-        const output = {};
-        actions.forEach(action => output[action.id] = action.defaultKey);
-        return output;
-    }
-
-    function loadShortcuts() {
-        try {
-            const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-            shortcuts = Object.assign(defaultShortcuts(), saved || {});
-        } catch (e) {
-            shortcuts = defaultShortcuts();
-        }
-    }
-
-    function saveShortcuts() {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(shortcuts));
-    }
-
-    function formatKey(code) {
-        const names = {
-            Space: 'Space',
-            ArrowUp: '↑',
-            ArrowDown: '↓',
-            ArrowLeft: '←',
-            ArrowRight: '→',
-            PageUp: 'Page Up',
-            PageDown: 'Page Down',
-            BracketLeft: '[',
-            BracketRight: ']',
-            Slash: '/',
-            Escape: 'Esc'
-        };
-        if (names[code]) return names[code];
-        if (code.startsWith('Key')) return code.replace('Key', '');
-        if (code.startsWith('Digit')) return code.replace('Digit', '');
-        if (code.startsWith('Numpad')) return code.replace('Numpad', 'Numpad ');
-        return code;
-    }
+    let keyboardScrollDirection = 0;
+    let keyboardScrollSpeed = 1500; // px na sekundę podczas trzymania strzałki
+    let lastKeyboardScrollTimestamp = null;
 
     function updateTextPosition() {
         textContent.style.transform = `translateY(${-offsetY}px)`;
     }
 
     function updateUi() {
-        speedValue.textContent = speed.toFixed(2);
+        speedValue.textContent = Math.round(speed);
         fontValue.textContent = fontSize;
         marginValue.textContent = margin;
         root.style.setProperty('--font-size', fontSize + 'px');
@@ -602,15 +408,14 @@
     }
 
     function setRunning(value) {
-        if (!hasText() && value) return;
+        if (!hasText()) return;
         isRunning = value;
         lastTimestamp = null;
         updateUi();
-        stage.focus({ preventScroll: true });
     }
 
     function toggleRunning() {
-        if (modalBackdrop.classList.contains('show') || shortcutsBackdrop.classList.contains('show')) return;
+        if (modalBackdrop.classList.contains('show')) return;
         setRunning(!isRunning);
     }
 
@@ -628,82 +433,54 @@
 
     function closeModal() {
         modalBackdrop.classList.remove('show');
-        stage.focus({ preventScroll: true });
-    }
-
-    function fixPolishMojibake(text) {
-        // Fixes the most common UTF-8/Windows-1250 mojibake produced while copying Polish text.
-        const replacements = {
-            'Ä…': 'ą', 'Ä†': 'Ć', 'Ä‡': 'ć', 'Ä™': 'ę', 'Å�': 'Ł', 'Å‚': 'ł',
-            'Å„': 'ń', 'Ã³': 'ó', 'Ã“': 'Ó', 'Å›': 'ś', 'Åš': 'Ś', 'Å¼': 'ż',
-            'Å»': 'Ż', 'Åº': 'ź', 'Å¹': 'Ź', 'Åš': 'Ś', 'Ä„': 'Ą', 'Ä˜': 'Ę',
-            'Åƒ': 'Ń', 'Â ': ' ', 'â€“': '–', 'â€”': '—', 'â€ž': '„', 'â€œ': '“',
-            'â€ť': '”', 'â€ś': '“', 'â€™': '’', 'â€˜': '‘', 'â€¦': '…'
-        };
-
-        let fixed = text.normalize('NFC');
-        Object.keys(replacements).forEach(bad => {
-            fixed = fixed.split(bad).join(replacements[bad]);
-        });
-        return fixed;
-    }
-
-    function insertPlainTextIntoTextarea(textarea, value) {
-        const start = textarea.selectionStart || 0;
-        const end = textarea.selectionEnd || 0;
-        const current = textarea.value;
-        textarea.value = current.slice(0, start) + value + current.slice(end);
-        const cursor = start + value.length;
-        textarea.setSelectionRange(cursor, cursor);
     }
 
     function applyText() {
-        const value = fixPolishMojibake(textInput.value).trim();
-        textInput.value = value;
+        const value = textInput.value.trim();
         textContent.textContent = value;
         emptyMessage.classList.toggle('hidden', value.length > 0);
         resetScroll();
         closeModal();
     }
 
-    function openShortcuts() {
-        isRunning = false;
-        updateUi();
-        waitingForAction = null;
-        renderShortcuts();
-        shortcutsInfo.innerHTML = 'Click <b>Set</b>, then press any key. Shortcuts are saved in this browser.';
-        shortcutsBackdrop.classList.add('show');
-    }
-
-    function closeShortcuts() {
-        waitingForAction = null;
-        shortcutsBackdrop.classList.remove('show');
-        stage.focus({ preventScroll: true });
-    }
-
-    function changeSpeed(delta) {
-        speed = Math.max(0, Math.min(20, +(speed + delta).toFixed(2)));
-        updateUi();
-    }
+function changeSpeed(delta) {
+    speed = Math.max(0, Math.min(400, speed + delta));
+    updateUi();
+}
 
     function changeFont(delta) {
-        fontSize = Math.max(24, Math.min(220, fontSize + delta));
+        fontSize = Math.max(24, Math.min(180, fontSize + delta));
         updateUi();
     }
 
     function changeMargin(delta) {
-        margin = Math.max(0, Math.min(40, margin + delta));
+        margin = Math.max(0, Math.min(35, margin + delta));
         updateUi();
     }
 
-    function scrollByAmount(amount) {
-        offsetY = Math.max(0, offsetY + amount);
-        updateTextPosition();
-    }
+    function loop(timestamp) {
+        if (isRunning) {
+            if (lastTimestamp === null) lastTimestamp = timestamp;
+            const delta = timestamp - lastTimestamp;
+            lastTimestamp = timestamp;
+            offsetY += delta * (speed / 20) * 0.06;
+            updateTextPosition();
+        } else {
+            lastTimestamp = null;
+        }
 
-    function toggleMirror() {
-        isMirror = !isMirror;
-        updateUi();
+        if (keyboardScrollDirection !== 0) {
+            if (lastKeyboardScrollTimestamp === null) lastKeyboardScrollTimestamp = timestamp;
+            const keyDelta = timestamp - lastKeyboardScrollTimestamp;
+            lastKeyboardScrollTimestamp = timestamp;
+            offsetY += keyboardScrollDirection * keyboardScrollSpeed * (keyDelta / 1000);
+            offsetY = Math.max(0, offsetY);
+            updateTextPosition();
+        } else {
+            lastKeyboardScrollTimestamp = null;
+        }
+
+        requestAnimationFrame(loop);
     }
 
     function enterFullscreen() {
@@ -713,77 +490,6 @@
         } else if (document.fullscreenElement && document.exitFullscreen) {
             document.exitFullscreen();
         }
-    }
-
-    function runAction(actionId) {
-        const map = {
-            toggleRunning: toggleRunning,
-            speedUp: () => changeSpeed(0.05),
-            speedDown: () => changeSpeed(-0.05),
-            scrollUp: () => scrollByAmount(-320),
-            scrollDown: () => scrollByAmount(320),
-            mirror: toggleMirror,
-            fullscreen: enterFullscreen,
-            openText: openModal,
-            reset: () => { setRunning(false); resetScroll(); },
-            fontUp: () => changeFont(4),
-            fontDown: () => changeFont(-4),
-            marginUp: () => changeMargin(1),
-            marginDown: () => changeMargin(-1),
-            openShortcuts: openShortcuts
-        };
-
-        if (map[actionId]) map[actionId]();
-    }
-
-    function findActionByCode(code) {
-        return actions.find(action => shortcuts[action.id] === code);
-    }
-
-    function renderShortcuts() {
-        shortcutsTableBody.innerHTML = '';
-
-        actions.forEach(action => {
-            const tr = document.createElement('tr');
-
-            const tdLabel = document.createElement('td');
-            tdLabel.textContent = action.label;
-
-            const tdKey = document.createElement('td');
-            const badge = document.createElement('span');
-            badge.className = 'key-badge';
-            badge.textContent = formatKey(shortcuts[action.id]);
-            tdKey.appendChild(badge);
-
-            const tdSet = document.createElement('td');
-            const btn = document.createElement('button');
-            btn.textContent = waitingForAction === action.id ? 'Press any key...' : 'Set';
-            btn.classList.toggle('primary', waitingForAction === action.id);
-            btn.addEventListener('click', () => {
-                waitingForAction = action.id;
-                shortcutsInfo.innerHTML = `Press any key for: <b>${action.label}</b>`;
-                renderShortcuts();
-            });
-            tdSet.appendChild(btn);
-
-            tr.appendChild(tdLabel);
-            tr.appendChild(tdKey);
-            tr.appendChild(tdSet);
-            shortcutsTableBody.appendChild(tr);
-        });
-    }
-
-    function loop(timestamp) {
-        if (isRunning) {
-            if (lastTimestamp === null) lastTimestamp = timestamp;
-            const delta = timestamp - lastTimestamp;
-            lastTimestamp = timestamp;
-            offsetY += delta * speed * 0.06;
-            updateTextPosition();
-        } else {
-            lastTimestamp = null;
-        }
-        requestAnimationFrame(loop);
     }
 
     function hideControlsSoon() {
@@ -799,36 +505,17 @@
         }
     }
 
-    textInput.addEventListener('paste', (e) => {
-        const clipboard = e.clipboardData || window.clipboardData;
-        if (!clipboard) return;
-        e.preventDefault();
-        const pastedText = clipboard.getData('text/plain');
-        insertPlainTextIntoTextarea(textInput, fixPolishMojibake(pastedText));
-    });
-
     openTextBtn.addEventListener('click', openModal);
     closeModalBtn.addEventListener('click', closeModal);
     applyTextBtn.addEventListener('click', applyText);
     clearTextBtn.addEventListener('click', () => { textInput.value = ''; textInput.focus(); });
     startBtn.addEventListener('click', toggleRunning);
     resetBtn.addEventListener('click', () => { setRunning(false); resetScroll(); });
-    mirrorBtn.addEventListener('click', toggleMirror);
+    mirrorBtn.addEventListener('click', () => { isMirror = !isMirror; updateUi(); });
     fullscreenBtn.addEventListener('click', enterFullscreen);
-    shortcutsBtn.addEventListener('click', openShortcuts);
-    closeShortcutsBtn.addEventListener('click', closeShortcuts);
-    closeShortcutsBtn2.addEventListener('click', closeShortcuts);
 
-    restoreShortcutsBtn.addEventListener('click', () => {
-        shortcuts = defaultShortcuts();
-        saveShortcuts();
-        waitingForAction = null;
-        shortcutsInfo.innerHTML = 'Default shortcuts restored.';
-        renderShortcuts();
-    });
-
-    speedDown.addEventListener('click', () => changeSpeed(-0.05));
-    speedUp.addEventListener('click', () => changeSpeed(0.05));
+    speedDown.addEventListener('click', () => changeSpeed(-1));
+    speedUp.addEventListener('click', () => changeSpeed(1));
     fontDown.addEventListener('click', () => changeFont(-4));
     fontUp.addEventListener('click', () => changeFont(4));
     marginDown.addEventListener('click', () => changeMargin(-1));
@@ -837,116 +524,58 @@
     document.addEventListener('keydown', (e) => {
         const isTyping = document.activeElement === textInput;
 
-        if (waitingForAction) {
+        if (e.code === 'Space' && !isTyping) {
             e.preventDefault();
-            e.stopPropagation();
-            shortcuts[waitingForAction] = e.code;
-            saveShortcuts();
-            shortcutsInfo.innerHTML = `Saved: <b>${formatKey(e.code)}</b>`;
-            waitingForAction = null;
-            renderShortcuts();
-            return;
+            toggleRunning();
         }
 
-        if (isTyping) {
-            if (e.key === 'Escape') closeModal();
-            return;
+        if (!isTyping && !modalBackdrop.classList.contains('show')) {
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                keyboardScrollDirection = 1;
+            }
+
+            if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                keyboardScrollDirection = -1;
+            }
         }
 
         if (e.key === 'Escape') {
-            e.preventDefault();
             if (modalBackdrop.classList.contains('show')) closeModal();
-            else if (shortcutsBackdrop.classList.contains('show')) closeShortcuts();
             else setRunning(false);
-            return;
+        }
+    });
+
+    document.addEventListener('keyup', (e) => {
+        if (e.key === 'ArrowDown' && keyboardScrollDirection === 1) {
+            keyboardScrollDirection = 0;
         }
 
-        if (modalBackdrop.classList.contains('show') || shortcutsBackdrop.classList.contains('show')) return;
-
-        const action = findActionByCode(e.code);
-        if (action) {
-            e.preventDefault();
-            e.stopPropagation();
-            runAction(action.id);
+        if (e.key === 'ArrowUp' && keyboardScrollDirection === -1) {
+            keyboardScrollDirection = 0;
         }
-    }, true);
+    });
 
-    stage.addEventListener('click', () => stage.focus({ preventScroll: true }));
+    document.addEventListener('wheel', (e) => {
+        if (modalBackdrop.classList.contains('show')) return;
+        e.preventDefault();
+        offsetY += e.deltaY * 1.2;
+        offsetY = Math.max(0, offsetY);
+        updateTextPosition();
+        hideControlsSoon();
+    }, { passive: false });
 
     modalBackdrop.addEventListener('click', (e) => {
         if (e.target === modalBackdrop) closeModal();
     });
 
-    shortcutsBackdrop.addEventListener('click', (e) => {
-        if (e.target === shortcutsBackdrop) closeShortcuts();
-    });
-
-    document.addEventListener('wheel', (e) => {
-        if (modalBackdrop.classList.contains('show') || shortcutsBackdrop.classList.contains('show')) return;
-        e.preventDefault();
-        scrollByAmount(e.deltaY);
-    }, { passive: false });
-
-    function startDrag(clientY) {
-        isDragging = true;
-        setRunning(false);
-        dragStartY = clientY;
-        dragStartOffset = offsetY;
-        textContent.classList.add('dragging');
-        stage.focus({ preventScroll: true });
-    }
-
-    function moveDrag(clientY) {
-        const delta = clientY - dragStartY;
-        offsetY = Math.max(0, dragStartOffset - delta);
-        updateTextPosition();
-    }
-
-    function stopDrag() {
-        if (!isDragging) return;
-        isDragging = false;
-        textContent.classList.remove('dragging');
-    }
-
-    stage.addEventListener('mousedown', (e) => {
-        if (e.button !== 0) return;
-        if (modalBackdrop.classList.contains('show') || shortcutsBackdrop.classList.contains('show')) return;
-        e.preventDefault();
-        startDrag(e.clientY);
-    });
-
-    document.addEventListener('mousemove', (e) => {
-        if (!isDragging) return;
-        e.preventDefault();
-        moveDrag(e.clientY);
-    });
-
-    document.addEventListener('mouseup', stopDrag);
-
-    stage.addEventListener('touchstart', (e) => {
-        if (!e.touches || !e.touches[0]) return;
-        if (modalBackdrop.classList.contains('show') || shortcutsBackdrop.classList.contains('show')) return;
-        e.preventDefault();
-        startDrag(e.touches[0].clientY);
-    }, { passive: false });
-
-    document.addEventListener('touchmove', (e) => {
-        if (!isDragging || !e.touches || !e.touches[0]) return;
-        e.preventDefault();
-        moveDrag(e.touches[0].clientY);
-    }, { passive: false });
-
-    document.addEventListener('touchend', stopDrag);
-    document.addEventListener('touchcancel', stopDrag);
-
     document.addEventListener('mousemove', hideControlsSoon);
     document.addEventListener('touchstart', hideControlsSoon, { passive: true });
     document.addEventListener('fullscreenchange', hideControlsSoon);
 
-    loadShortcuts();
     updateUi();
     updateTextPosition();
-    stage.focus({ preventScroll: true });
     requestAnimationFrame(loop);
 })();
 </script>
