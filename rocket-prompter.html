@@ -4,6 +4,23 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>ROCKET PROMPTER</title>
+<link rel="icon" type="image/png" href="https://pluginsforlive.com/logorocket.png">
+<link rel="apple-touch-icon" href="https://pluginsforlive.com/logorocket.png">
+
+<meta property="og:title" content="Rocket Prompter">
+<meta property="og:description" content="Free teleprompter for live streaming, podcasts and video productions.">
+<meta property="og:image" content="https://pluginsforlive.com/logorocket.png">
+<meta property="og:type" content="website">
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8RVYVMY0"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-QS8RVYVMY0');
+</script>
 <style>
     * {
         box-sizing: border-box;
@@ -386,7 +403,7 @@
 
 <div class="topbar" id="topbar">
     <div class="brand">
-        <img src="logorocket.png" alt="Rocket logo" class="brand-logo">
+        <img src="https://pluginsforlive.com/logorocket.png" alt="Rocket logo" class="brand-logo">
         <span>ROCKET PROMPTER</span>
     </div>
 
@@ -614,6 +631,12 @@
         localStorage.setItem(STORAGE_KEY, JSON.stringify(shortcuts));
     }
 
+    function trackEvent(eventName) {
+        if (typeof gtag === 'function') {
+            gtag('event', eventName);
+        }
+    }
+
     function cleanKeyValue(value) {
         return String(value === undefined || value === null ? '' : value).replace(/\|/g, '/');
     }
@@ -763,6 +786,7 @@
 
     function toggleRunning() {
         if (modalBackdrop.classList.contains('show') || shortcutsBackdrop.classList.contains('show') || infoBackdrop.classList.contains('show')) return;
+        if (!isRunning) trackEvent('start_prompter');
         setRunning(!isRunning);
     }
 
@@ -814,12 +838,14 @@
         const value = fixPolishMojibake(textInput.value).trim();
         textInput.value = value;
         textContent.textContent = value;
+        if (value.length > 0) trackEvent('paste_text');
         emptyMessage.classList.toggle('hidden', value.length > 0);
         resetScroll();
         closeModal();
     }
 
     function openShortcuts() {
+        trackEvent('open_shortcuts');
         isRunning = false;
         updateUi();
         waitingForAction = null;
@@ -881,6 +907,7 @@
     }
 
     function toggleMirror() {
+        if (!isMirror) trackEvent('mirror_enabled');
         isMirror = !isMirror;
         updateUi();
     }
@@ -888,6 +915,7 @@
     function enterFullscreen() {
         const el = document.documentElement;
         if (!document.fullscreenElement && el.requestFullscreen) {
+            trackEvent('fullscreen_enabled');
             el.requestFullscreen();
         } else if (document.fullscreenElement && document.exitFullscreen) {
             document.exitFullscreen();
