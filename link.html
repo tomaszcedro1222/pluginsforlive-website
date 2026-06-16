@@ -1178,6 +1178,98 @@
       transform: none !important;
     }
 
+
+    .studio.lightsOff {
+      filter: brightness(.42) contrast(1.16);
+    }
+
+    .studio.lightsOff .softbox .head {
+      background: linear-gradient(90deg, #1d2027 0 35%, #08090c 36% 42%, #1d2027 43% 75%, #08090c 76%);
+      box-shadow: none;
+    }
+
+    .studio.lightsOff .slats::before,
+    .studio.lightsOff .slats::after,
+    .studio.lightsOff .neon,
+    .studio.lightsOff .screen {
+      opacity: .55;
+    }
+
+    .softbox {
+      cursor: pointer;
+    }
+
+    .softbox .clickHint,
+    .camera .dragHint,
+    .screen .screenHint {
+      position: absolute;
+      left: 50%;
+      top: -28px;
+      transform: translateX(-50%);
+      padding: 5px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.88);
+      color: #111827;
+      font-size: 10px;
+      font-weight: 900;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity .25s ease;
+      pointer-events: none;
+    }
+
+    .softbox:hover .clickHint,
+    .camera:hover .dragHint,
+    .screen:hover .screenHint {
+      opacity: 1;
+    }
+
+    .camera {
+      cursor: grab;
+      touch-action: none;
+    }
+
+    .camera.dragging {
+      cursor: grabbing;
+      z-index: 150;
+      transition: none;
+    }
+
+    .screen {
+      cursor: pointer;
+    }
+
+    .screenLogoSmall {
+      margin-top: 8px;
+      font-size: clamp(10px, 1.1vw, 14px);
+      font-weight: 950;
+      letter-spacing: .18em;
+      opacity: .72;
+    }
+
+    .controlToast {
+      position: absolute;
+      left: 50%;
+      bottom: 4vh;
+      transform: translateX(-50%) translateY(120px);
+      z-index: 160;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.92);
+      color: #111827;
+      font-size: 13px;
+      font-weight: 900;
+      box-shadow: 0 14px 28px rgba(0,0,0,.25);
+      opacity: 0;
+      transition: opacity .35s ease, transform .35s ease;
+      pointer-events: none;
+    }
+
+    .controlToast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
     @media (max-width: 820px) {
       .screen {
         min-width: 285px;
@@ -1266,25 +1358,29 @@
     <div class="neon rec">● REC</div>
     <div class="neon air">ON AIR</div>
 
-    <section class="screen">
+    <section id="mainScreen" class="screen">
+      <div class="screenHint">kliknij ekran</div>
       <div class="screenRec">REC</div>
       <div class="screenContent">
         <div id="screenTitle" class="screenTitle">LINK VISUALS</div>
         <div id="screenSub" class="screenSub">PODCAST & VIDEO STUDIO</div>
         <div id="screenBadge" class="screenBadge">TWORZYMY HISTORIE, KTÓRE DZIAŁAJĄ</div>
+        <div id="screenLogoSmall" class="screenLogoSmall">LINK VISUALS</div>
       </div>
     </section>
 
-    <div class="softbox left"><div class="head"></div><div class="stand"></div></div>
-    <div class="softbox right"><div class="head"></div><div class="stand"></div></div>
+    <div class="softbox left"><div class="clickHint">światło ON/OFF</div><div class="head"></div><div class="stand"></div></div>
+    <div class="softbox right"><div class="clickHint">światło ON/OFF</div><div class="head"></div><div class="stand"></div></div>
 
-    <div class="camera left">
+    <div class="camera left draggableCamera">
+      <div class="dragHint">przeciągnij kamerę</div>
       <div class="lens"></div>
       <div class="camBody"></div>
       <div class="tripod"></div>
     </div>
 
-    <div class="camera right">
+    <div class="camera right draggableCamera">
+      <div class="dragHint">przeciągnij kamerę</div>
       <div class="lens"></div>
       <div class="camBody"></div>
       <div class="tripod"></div>
@@ -1335,6 +1431,7 @@
     </div>
 
     <div id="lightFlash" class="lightFlash"></div>
+    <div id="controlToast" class="controlToast">Interakcja</div>
   </main>
 
   <script>
@@ -1349,6 +1446,11 @@
     const statusBoard = document.getElementById('statusBoard');
     const lightFlash = document.getElementById('lightFlash');
     const fullscreenBtn = document.getElementById('fullscreenBtn');
+    const mainScreen = document.getElementById('mainScreen');
+    const screenLogoSmall = document.getElementById('screenLogoSmall');
+    const controlToast = document.getElementById('controlToast');
+    const draggableCameras = document.querySelectorAll('.draggableCamera');
+    const softboxes = document.querySelectorAll('.softbox');
 
     const fallback = {
       latitude: 52.2297,
@@ -1374,6 +1476,18 @@
       ['PODCAST STARTING', 'FOTELE · KANAPA · STÓŁ OKRĄGŁY', 'SETUP DOPASOWANY DO ROZMOWY'],
       ['LIVE IN 5 MIN', 'SPRAWDZAMY KAMERY I DŹWIĘK', 'LINK VISUALS ON AIR']
     ];
+
+    const screenLogos = [
+      ['LINK VISUALS', 'PODCAST & VIDEO STUDIO', 'PRODUKCJA LIVE · PODCASTY · WYWIADY', 'LINK VISUALS'],
+      ['STUDIO DOBRYCH PRAKTYK', 'ROZMOWY · EDUKACJA · EKSPERCI', 'DOBRE TREŚCI W DOBRYM KADRZE', 'STUDIO DOBRYCH PRAKTYK'],
+      ['ALAB LABORATORIA', 'WIEDZA · ZDROWIE · EKSPERCI', 'LIVE · WYWIAD · KONFERENCJA', 'ALAB'],
+      ['HIPPO', 'PODCAST · VIDEO · SOCIAL', 'DUŻE POMYSŁY W MAŁYM STUDIU', 'HIPPO'],
+      ['WYWIADY', 'PYTANIA · ODPOWIEDZI · HISTORIE', 'KAMERA GOTOWA DO ROZMOWY', 'INTERVIEW MODE'],
+      ['PODCASTY', 'MIKROFONY · KAMERY · ŚWIATŁO', 'BRZMI DOBRZE I WYGLĄDA DOBRZE', 'PODCAST MODE'],
+      ['LIVE', 'ON AIR · STREAM · REALIZACJA', 'NADAJEMY NA ŻYWO', 'LIVE MODE']
+    ];
+
+    let screenLogoIndex = 0;
 
     const boardTexts = [
       'PROMPTER READY<br>CAMERAS READY<br>LIGHTS READY',
@@ -1501,7 +1615,28 @@
       screenTitle.textContent = slide[0];
       screenSub.textContent = slide[1];
       screenBadge.textContent = slide[2];
+      screenLogoSmall.textContent = slide[0];
       statusBoard.innerHTML = randomFrom(boardTexts);
+    }
+
+    function nextScreenLogo() {
+      screenLogoIndex = (screenLogoIndex + 1) % screenLogos.length;
+      const slide = screenLogos[screenLogoIndex];
+      screenTitle.textContent = slide[0];
+      screenSub.textContent = slide[1];
+      screenBadge.textContent = slide[2];
+      screenLogoSmall.textContent = slide[3];
+      say('Ekran zmieniony: ' + slide[0] + '.');
+      showControlToast('Ekran: ' + slide[0]);
+    }
+
+    function showControlToast(text) {
+      controlToast.textContent = text;
+      controlToast.classList.add('show');
+      clearTimeout(showControlToast.timer);
+      showControlToast.timer = setTimeout(() => {
+        controlToast.classList.remove('show');
+      }, 2200);
     }
 
     function flashLight() {
@@ -1618,6 +1753,71 @@
       showFullscreenButton();
     }
 
+
+    function toggleStudioLights() {
+      studio.classList.toggle('lightsOff');
+      const off = studio.classList.contains('lightsOff');
+      say(off ? 'Zgasiłem część świateł. Klimat: nocny wywiad premium.' : 'Światła wróciły. Teraz każdy wygląda jak ekspert.');
+      showControlToast(off ? 'Światła zgaszone' : 'Światła włączone');
+      if (!off) flashLight();
+    }
+
+    softboxes.forEach(box => {
+      box.addEventListener('pointerdown', event => {
+        event.stopPropagation();
+        toggleStudioLights();
+      });
+    });
+
+    mainScreen.addEventListener('pointerdown', event => {
+      event.stopPropagation();
+      nextScreenLogo();
+    });
+
+    draggableCameras.forEach(camera => {
+      let dragging = false;
+      let offsetX = 0;
+      let offsetY = 0;
+
+      camera.addEventListener('pointerdown', event => {
+        event.stopPropagation();
+        dragging = true;
+        camera.classList.add('dragging');
+        camera.setPointerCapture(event.pointerId);
+
+        const rect = camera.getBoundingClientRect();
+        offsetX = event.clientX - rect.left;
+        offsetY = event.clientY - rect.top;
+
+        camera.style.left = rect.left + 'px';
+        camera.style.top = rect.top + 'px';
+        camera.style.right = 'auto';
+        camera.style.bottom = 'auto';
+        camera.style.transform = camera.classList.contains('left') ? 'scale(1.25)' : 'scale(1)';
+        showControlToast('Przeciągasz kamerę');
+      });
+
+      camera.addEventListener('pointermove', event => {
+        if (!dragging) return;
+        const x = Math.max(-40, Math.min(window.innerWidth - 60, event.clientX - offsetX));
+        const y = Math.max(40, Math.min(window.innerHeight - 90, event.clientY - offsetY));
+        camera.style.left = x + 'px';
+        camera.style.top = y + 'px';
+      });
+
+      function stopDrag(event) {
+        if (!dragging) return;
+        dragging = false;
+        camera.classList.remove('dragging');
+        try { camera.releasePointerCapture(event.pointerId); } catch(e) {}
+        say('Kamera przestawiona. Kadr sam się nie zrobi, ale już jest bliżej.');
+        showControlToast('Kamera ustawiona');
+      }
+
+      camera.addEventListener('pointerup', stopDrag);
+      camera.addEventListener('pointercancel', stopDrag);
+    });
+
     fullscreenBtn.addEventListener('pointerdown', event => event.stopPropagation());
     fullscreenBtn.addEventListener('click', event => {
       event.stopPropagation();
@@ -1644,7 +1844,7 @@
 
     setInterval(updateDayNight, 60 * 1000);
     setInterval(() => fetchWeather(lastWeatherPlace), 10 * 60 * 1000);
-    setInterval(setScreenRandom, 9000);
+    setInterval(setScreenRandom, 18000);
 
     setInterval(() => {
       if (!currentTask) {
