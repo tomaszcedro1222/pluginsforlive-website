@@ -361,7 +361,7 @@ const autoActions=['cameras','lights','rgb','vmix','blinds','setup','coffee','mi
 setInterval(()=>{if(!busy&&Math.random()>.68)restOnSofa()},22000);
 setInterval(()=>{if(!busy){const lines=['Statyw stoi stabilnie, bo ma trzy argumenty.','Kamera ma obiektywne spojrzenie.','Prompter nie zapomina tekstu. Najwyżej go przewija.','Mikrofon niesie się lepiej niż ja przed kawą.','Światło dobre, humor lepszy.'];say(lines[Math.floor(Math.random()*lines.length)])}},18000);
 setInterval(()=>{applyHourlyDecay();updateHp()},60000);
-updateDayNight();applyHourlyDecay();applySetup();applyScreenLogo();restoreVmixState();windowBox.classList.add('open');updateHp();tryLocation();showFullscreenButton();say('Dbaj o ludka. Jak HP spada, ludek robi się coraz brudniejszy.');
+updateDayNight();applyHourlyDecay();applySetup();applyScreenLogo();restoreVmixState();windowBox.classList.add('open');updateHp();tryLocation();showFullscreenButton();say('Dbaj o ludka. Jak HP spada, daj mu coś do roboty.');
 setInterval(updateDayNight,60000);setInterval(tryLocation,600000);
 </script>
 </body>
