@@ -206,6 +206,26 @@
       border-color:rgba(87,212,255,.45);
     }
 
+
+
+    .plugin-title{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin:0 0 14px;
+      font-size:26px;
+      line-height:1.2;
+    }
+
+    .plugin-icon{
+      width:44px;
+      height:44px;
+      border-radius:12px;
+      object-fit:cover;
+      flex:0 0 44px;
+      box-shadow:0 0 18px rgba(87,212,255,.22);
+    }
+
     .plugin-item h3{
       margin:0 0 14px;
       font-size:26px;
@@ -370,8 +390,8 @@
         <a href="#polityka-prywatnosci">Privacy Policy</a>
       </div>
       <div class="lang-switch" aria-label="Language selection">
-        <a href="index.html" class="active">EN</a>
-        <a href="index-pl.html">PL</a>
+        <a href="index.html" class="active" onclick="gtag('event', 'language_switch_en', { event_category: 'language', language: 'en' })">EN</a>
+        <a href="index-pl.html" onclick="gtag('event', 'language_switch_pl', { event_category: 'language', language: 'pl' })">PL</a>
       </div>
       <a class="btn secondary" href="#zakup"
 onclick="gtag('event', 'menu_kup_wtyczke', { event_category: 'navigation' })">
@@ -423,7 +443,7 @@ Contact us
         <div class="plugins-list">
 
           <div class="plugin-item" data-ga-view="view_auto_camera">
-            <h3>🎥 Auto Camera</h3>
+            <h3 class="plugin-title"><img src="logotyppuginy4vmix.png" alt="Auto Camera icon" class="plugin-icon">Auto Camera</h3>
 
             <p>
               The plugin automatically switches cameras based on the person currently speaking. It is ideal for podcasts, debates, interviews and multi-camera live productions. In the free version, the app works for 10 minutes after launch. After the trial ends, you can restart it to keep using it.
@@ -442,7 +462,7 @@ Contact us
                 href="https://buy.stripe.com/bJe7sL4Af65j6iUgTr6Na05"
                 target="_blank"
                 class="download-btn"
-                onclick="gtag('event', 'begin_checkout', { currency: 'USD', value: 69, item_name: 'Auto Camera' })">
+                onclick="gtag('event', 'begin_checkout', { currency: 'USD', value: 69, item_name: 'Auto Camera' }); gtag('event', 'stripe_checkout_click', { event_category: 'checkout', item_name: 'Auto Camera', currency: 'USD', value: 69, link_url: 'https://buy.stripe.com/bJe7sL4Af65j6iUgTr6Na05' })">
                 Buy Auto Camera — $69
               </a>
 
@@ -465,7 +485,7 @@ Contact us
           </div>
 
           <div class="plugin-item" data-ga-view="view_automix">
-            <h3>🎙️ AutoMix</h3>
+            <h3 class="plugin-title"><img src="automix.png" alt="AutoMix icon" class="plugin-icon">AutoMix</h3>
 
             <p>
               Intelligent microphone automix that works similarly to professional audio automixers. The plugin automatically manages audio levels.
@@ -507,7 +527,7 @@ Contact us
           </div>
 
                     <div class="plugin-item" data-ga-view="view_ducking_audio">
-            <h3>🎚️ Ducking Audio</h3>
+            <h3 class="plugin-title"><img src="Ducking%20Audio.png" alt="Ducking Audio icon" class="plugin-icon">Ducking Audio</h3>
 
             <p>
               Ducking Audio automatically lowers selected audio sources when another source becomes active.
@@ -530,7 +550,7 @@ Contact us
     href="https://buy.stripe.com/4gM14ngiXctHdLm8mV6Na04"
     target="_blank"
     class="download-btn"
-    onclick="gtag('event', 'begin_checkout', { currency: 'USD', value: 45, item_name: 'Ducking Audio' })">
+    onclick="gtag('event', 'begin_checkout', { currency: 'USD', value: 45, item_name: 'Ducking Audio' }); gtag('event', 'stripe_checkout_click', { event_category: 'checkout', item_name: 'Ducking Audio', currency: 'USD', value: 45, link_url: 'https://buy.stripe.com/4gM14ngiXctHdLm8mV6Na04' })">
     Buy Ducking Audio — $45
   </a>
 
@@ -770,6 +790,190 @@ Contact us
       window.addEventListener('scroll', trackScrollDepth, { passive: true });
     })();
 
+
+
+    // Google Analytics: enhanced marketing and sales tracking.
+    (function () {
+      const PRODUCT_PRICES = {
+        'auto_camera': { item_name: 'Auto Camera', value: 69, currency: 'USD' },
+        'autocamera': { item_name: 'Auto Camera', value: 69, currency: 'USD' },
+        'auto_mix': { item_name: 'AutoMix', value: 69, currency: 'USD' },
+        'automix': { item_name: 'AutoMix', value: 69, currency: 'USD' },
+        'ducking_audio': { item_name: 'Ducking Audio', value: 45, currency: 'USD' },
+        'duckingaudio': { item_name: 'Ducking Audio', value: 45, currency: 'USD' }
+      };
+
+      function sendGAEvent(eventName, params) {
+        if (typeof gtag !== 'function') return;
+        gtag('event', eventName, Object.assign({
+          page_title: document.title,
+          page_location: window.location.href,
+          page_path: window.location.pathname,
+          site_language: document.documentElement.lang || 'en'
+        }, params || {}));
+      }
+
+      function normalizeProductName(text) {
+        const source = String(text || '').toLowerCase();
+        if (source.includes('auto camera') || source.includes('autocamera')) return 'Auto Camera';
+        if (source.includes('automix') || source.includes('auto mix')) return 'AutoMix';
+        if (source.includes('ducking')) return 'Ducking Audio';
+        if (source.includes('rocket prompter')) return 'Rocket Prompter';
+        if (source.includes('rocket timer')) return 'Rocket Timer';
+        if (source.includes('questions')) return 'Questions app';
+        return String(text || '').trim() || 'unknown';
+      }
+
+      function getFileNameFromUrl(url) {
+        try {
+          return decodeURIComponent(new URL(url, window.location.href).pathname.split('/').pop() || '');
+        } catch (e) {
+          return '';
+        }
+      }
+
+      // Track all useful link clicks in one place.
+      document.querySelectorAll('a[href]').forEach(link => {
+        link.addEventListener('click', function () {
+          const rawHref = link.getAttribute('href') || '';
+          const href = link.href || rawHref;
+          const label = (link.textContent || '').trim();
+          let url;
+          try { url = new URL(href, window.location.href); } catch (e) { url = null; }
+
+          if (rawHref.startsWith('#')) {
+            sendGAEvent('anchor_navigation', {
+              event_category: 'navigation',
+              event_label: rawHref,
+              link_text: label,
+              target_section: rawHref.replace('#', '')
+            });
+            return;
+          }
+
+          if (rawHref.includes('index-pl.html')) {
+            sendGAEvent('language_switch', { event_category: 'language', event_label: 'PL', language: 'pl' });
+          }
+          if (rawHref.includes('index.html')) {
+            sendGAEvent('language_switch', { event_category: 'language', event_label: 'EN', language: 'en' });
+          }
+
+          if (rawHref.startsWith('mailto:')) {
+            sendGAEvent('contact_email_click', {
+              event_category: 'contact',
+              event_label: rawHref.replace('mailto:', ''),
+              link_url: rawHref
+            });
+          }
+
+          if (rawHref.startsWith('tel:')) {
+            sendGAEvent('contact_phone_click', {
+              event_category: 'contact',
+              event_label: rawHref.replace('tel:', ''),
+              link_url: rawHref
+            });
+          }
+
+          if (!url) return;
+
+          const isExternal = url.hostname && url.hostname !== window.location.hostname;
+          const fileName = getFileNameFromUrl(url.href);
+          const fileExtension = (fileName.split('.').pop() || '').toLowerCase();
+          const downloadableExtensions = ['exe', 'zip', 'pdf', 'dmg', 'pkg', 'msi'];
+          const productName = normalizeProductName(label + ' ' + url.href);
+
+          if (url.hostname.includes('buy.stripe.com')) {
+            sendGAEvent('stripe_checkout_click', {
+              event_category: 'checkout',
+              event_label: label,
+              item_name: productName,
+              link_url: url.href
+            });
+          }
+
+          if (url.hostname.includes('github.com')) {
+            sendGAEvent('github_release_click', {
+              event_category: 'download',
+              event_label: label,
+              item_name: productName,
+              file_name: fileName,
+              link_url: url.href
+            });
+          }
+
+          if (downloadableExtensions.includes(fileExtension)) {
+            sendGAEvent('file_download', {
+              event_category: 'download',
+              event_label: fileName,
+              item_name: productName,
+              file_name: fileName,
+              file_extension: fileExtension,
+              link_url: url.href
+            });
+          }
+
+          if (isExternal) {
+            sendGAEvent('outbound_link_click', {
+              event_category: 'outbound',
+              event_label: url.hostname,
+              link_text: label,
+              link_url: url.href
+            });
+          }
+        });
+      });
+
+      // Track time spent on the page.
+      [15, 30, 60, 120].forEach(seconds => {
+        window.setTimeout(() => {
+          sendGAEvent('engaged_time', {
+            event_category: 'engagement',
+            seconds_on_page: seconds
+          });
+        }, seconds * 1000);
+      });
+
+      // Track when a visitor comes back to the tab after leaving it.
+      let hiddenAt = null;
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) {
+          hiddenAt = Date.now();
+          sendGAEvent('page_hidden', { event_category: 'engagement' });
+        } else {
+          const awaySeconds = hiddenAt ? Math.round((Date.now() - hiddenAt) / 1000) : 0;
+          sendGAEvent('page_visible_again', {
+            event_category: 'engagement',
+            away_seconds: awaySeconds
+          });
+        }
+      });
+
+      // Optional purchase tracking for Stripe success return pages.
+      // Configure Stripe success URL like: https://pluginsforlive.com/?payment=success&product=auto_camera
+      (function trackStripeSuccessReturn() {
+        const params = new URLSearchParams(window.location.search);
+        const paymentStatus = (params.get('payment') || params.get('status') || '').toLowerCase();
+        const productKey = (params.get('product') || params.get('purchase') || '').toLowerCase();
+        const product = PRODUCT_PRICES[productKey];
+        if (!product || !['success', 'paid', 'completed'].includes(paymentStatus)) return;
+
+        const transactionId = params.get('session_id') || params.get('transaction_id') || `${productKey}_${Date.now()}`;
+        const storageKey = `ga_purchase_${transactionId}`;
+        if (sessionStorage.getItem(storageKey)) return;
+        sessionStorage.setItem(storageKey, '1');
+
+        sendGAEvent('purchase', {
+          transaction_id: transactionId,
+          currency: product.currency,
+          value: product.value,
+          items: [{
+            item_name: product.item_name,
+            price: product.value,
+            quantity: 1
+          }]
+        });
+      })();
+    })();
   </script>
 </body>
 </html>
