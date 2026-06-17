@@ -92,11 +92,19 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#05070a;col
 .worker.dirty1 .dirt{opacity:.35}.worker.dirty2 .dirt{opacity:.7}.worker.dirty3 .dirt{opacity:1}
 .hpWrap{position:absolute;left:50%;top:-26px;width:86px;height:13px;transform:translateX(-50%);border-radius:999px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.38);overflow:hidden}.hpFill{height:100%;width:100%;border-radius:999px;background:var(--hp);transition:width .5s ease,background .5s ease}
 .speech{position:absolute;left:50%;bottom:138px;transform:translateX(-50%);width:max-content;max-width:min(340px,calc(100vw - 28px));padding:10px 12px;border-radius:15px 15px 15px 2px;background:rgba(255,255,255,.95);color:#142033;font-size:13px;font-weight:850;line-height:1.25;box-shadow:0 10px 20px rgba(0,0,0,.18);opacity:0;pointer-events:none;z-index:3;text-align:center;transition:opacity .35s ease}.speech.show{opacity:1}
-.hair{position:absolute;top:-4px;left:17px;width:38px;height:18px;background:#19100b;border-radius:18px 18px 8px 8px;transform:rotate(-5deg)}.personHead{position:absolute;top:0;left:18px;width:34px;height:34px;border-radius:50%;background:#ffd5ae}.eye{position:absolute;top:13px;left:24px;width:5px;height:5px;background:#142033;border-radius:50%}.eye2{position:absolute;top:13px;left:36px;width:5px;height:5px;background:#142033;border-radius:50%}.personBody{position:absolute;top:38px;left:13px;width:44px;height:48px;border-radius:13px 13px 9px 9px;background:#0a0b0e;border:1px solid rgba(255,255,255,.12)}.personBody:after{content:"LV";position:absolute;left:0;right:0;top:11px;text-align:center;color:white;font-size:13px;font-weight:950;letter-spacing:.08em}.arm,.leg{position:absolute;border-radius:999px;transform-origin:top center}.arm{top:45px;width:9px;height:38px;background:#ffd5ae}.arm.left{left:6px}.arm.right{right:6px}.leg{top:84px;width:10px;height:43px;background:#050505}.leg.left{left:20px}.leg.right{right:20px}.worker.walking .arm.left,.worker.walking .leg.right{animation:swing .55s ease-in-out infinite}.worker.walking .arm.right,.worker.walking .leg.left{animation:swing .55s ease-in-out infinite reverse}@keyframes swing{0%,100%{transform:rotate(24deg)}50%{transform:rotate(-24deg)}}
+.hair{position:absolute;top:-6px;left:15px;width:40px;height:14px;background:#19100b;border-radius:18px 18px 6px 6px;transform:rotate(-5deg);z-index:2}.personHead{position:absolute;top:0;left:18px;width:34px;height:34px;border-radius:50%;background:#ffd5ae}.eye{position:absolute;top:13px;left:23px;width:5px;height:5px;background:#142033;border-radius:50%;z-index:3}.eye2{position:absolute;top:13px;left:36px;width:5px;height:5px;background:#142033;border-radius:50%;z-index:3}.mouth{position:absolute;left:50%;top:23px;width:12px;height:6px;margin-left:-6px;border-bottom:2px solid #7a3f3f;border-radius:0 0 12px 12px;z-index:3}.personBody{position:absolute;top:38px;left:13px;width:44px;height:48px;border-radius:13px 13px 9px 9px;background:#0a0b0e;border:1px solid rgba(255,255,255,.12)}.personBody:after{content:"LV";position:absolute;left:0;right:0;top:11px;text-align:center;color:white;font-size:13px;font-weight:950;letter-spacing:.08em}.arm,.leg{position:absolute;border-radius:999px;transform-origin:top center}.arm{top:45px;width:9px;height:38px;background:#ffd5ae}.arm.left{left:6px}.arm.right{right:6px}.leg{top:84px;width:10px;height:43px;background:#050505}.leg.left{left:20px}.leg.right{right:20px}.worker.walking .arm.left,.worker.walking .leg.right{animation:swing .55s ease-in-out infinite}.worker.walking .arm.right,.worker.walking .leg.left{animation:swing .55s ease-in-out infinite reverse}@keyframes swing{0%,100%{transform:rotate(24deg)}50%{transform:rotate(-24deg)}}
 .worker.sit .personBody{transform:translateY(18px)}.worker.sit .personHead,.worker.sit .hair{transform:translateY(14px)}.worker.sit .arm{transform:rotate(55deg)}.worker.sit .leg{top:103px;height:27px;transform:rotate(72deg)}.worker.sofaSit .personBody{transform:translateY(23px) rotate(-12deg)}.worker.sofaSit .personHead,.worker.sofaSit .hair{transform:translateY(18px) rotate(-8deg)}.worker.sofaSit .arm{transform:rotate(70deg)}.worker.sofaSit .leg{top:103px;height:27px;transform:rotate(78deg)}
 
 .actionPanel{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:130;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:min(980px,calc(100vw - 20px))}
 .actionPanel button{border:1px solid rgba(255,255,255,.18);padding:9px 12px;border-radius:999px;background:rgba(4,8,14,.72);color:#fff;font-weight:900;font-size:12px;cursor:pointer;backdrop-filter:blur(10px);touch-action:manipulation;-webkit-tap-highlight-color:transparent}.actionPanel button:hover{background:rgba(255,255,255,.18)}.actionPanel button:disabled{opacity:.45;cursor:not-allowed}
+
+
+.mainScreen{cursor:pointer}
+.game.lightsOff{filter:brightness(.34) contrast(1.12)}
+.game.lightsOff .softbox .head{background:#10131a!important;box-shadow:none!important}
+.game.lightsOff .neon{opacity:.35}
+.screenTapHint{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);font-size:10px;font-weight:900;letter-spacing:.12em;opacity:.45}
+.worker.goingByTap{z-index:180}
 
 @media(max-width:850px){.screen{min-width:280px}.slats{left:24%;width:48%}.shelf{opacity:.35}.window{right:10px;top:11vh;min-width:140px;width:145px;height:160px}.tempTV{right:18px;top:31vh;width:120px;height:65px;font-size:12px}.computer{left:8px;top:43vh;transform:scale(.72);transform-origin:left top}.softbox.left{left:-40px;transform:rotate(18deg) scale(.7)}.softbox.right{right:-48px;transform:rotate(-20deg) scaleX(-1) scale(.7)}.camera.c1{left:-45px;transform:scale(.78)}.camera.c2{right:-42px;transform:scale(.75)}.camera.c3{display:none}.chair{min-width:115px;width:26vw}.sofa{width:270px}.stats{left:10px;top:10px;padding:10px 12px;min-width:160px}.stats .logo{font-size:15px}.statsText{font-size:12px}.fullscreenBtn{right:10px;top:10px}.actionPanel{bottom:8px}.actionPanel button{font-size:11px;padding:8px 9px}}
 </style>
@@ -107,7 +115,7 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#05070a;col
 <section class="stats"><div class="logo">LINK VISUALS</div><div id="statsText" class="statsText">Ładowanie studia…</div><div class="globalHp"><div id="globalHpFill" class="globalHpFill"></div></div></section>
 <button id="fullscreenBtn" class="fullscreenBtn" type="button">⛶ Fullscreen</button>
 <div class="neon rec">● REC</div><div class="neon air">ON AIR</div>
-<section class="mainScreen"><div><div class="screenTitle">LINK VISUALS</div><div class="screenSub">STUDIO CARE GAME</div><div class="screenBadge">DBAJ O LUDKA I STUDIO</div></div></section>
+<section id="mainScreen" class="mainScreen"><div><div id="screenTitle" class="screenTitle">LINK VISUALS</div><div id="screenSub" class="screenSub">STUDIO CARE GAME</div><div id="screenBadge" class="screenBadge">DBAJ O LUDKA I STUDIO</div><div class="screenTapHint">KLIKNIJ EKRAN</div></div></section>
 <div class="window"><div class="windowSky"><div class="sunMoon"></div><div class="cloud"></div></div></div>
 <div id="tempTV" class="tempTV">--°C<br>na zewnątrz</div>
 <div class="computer"><div id="monitor" class="monitor">OFF</div><div class="monitorStand"></div><div class="desk"></div><div class="keyboard"></div></div>
@@ -117,13 +125,20 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#05070a;col
 <div class="setup"><div id="chairLeft" class="chair left"><div class="back"></div><div class="seat"></div><div class="leg one"></div><div class="leg two"></div></div><div id="chairRight" class="chair right"><div class="back"></div><div class="seat"></div><div class="leg one"></div><div class="leg two"></div></div><div id="sofa" class="sofa"><div class="sofaBack"></div><div class="sofaSeat"></div><div class="sofaArm left"></div><div class="sofaArm right"></div></div><div class="table"><div class="coffeeCup"></div></div></div>
 <div class="mic left"></div><div class="mic right"></div>
 <div id="clients" class="clients"><div class="client a"><div class="clientHead"></div><div class="clientBody"></div><div class="clientLeg one"></div><div class="clientLeg two"></div></div><div class="client b"><div class="clientHead"></div><div class="clientBody"></div><div class="clientLeg one"></div><div class="clientLeg two"></div></div></div>
-<div id="worker" class="worker"><div class="hpWrap"><div id="hpFill" class="hpFill"></div></div><div id="speech" class="speech">Studio gotowe?</div><div class="dirt"></div><div class="hair"></div><div class="personHead"><div class="eye"></div><div class="eye2"></div></div><div class="personBody"></div><div class="arm left"></div><div class="arm right"></div><div class="leg left"></div><div class="leg right"></div></div>
+<div id="worker" class="worker"><div class="hpWrap"><div id="hpFill" class="hpFill"></div></div><div id="speech" class="speech">Studio gotowe?</div><div class="dirt"></div><div class="hair"></div><div class="personHead"><div class="eye"></div><div class="eye2"></div><div class="mouth"></div></div><div class="personBody"></div><div class="arm left"></div><div class="arm right"></div><div class="leg left"></div><div class="leg right"></div></div>
 <nav class="actionPanel"><button data-action="cameras">Ustaw kamery +20 HP</button><button data-action="lights">Włącz światła</button><button data-action="vmix">Uruchom vMixa +20 HP</button><button data-action="setup">Przestaw setup +20 HP</button><button data-action="coffee">Wypij kawę +20 HP</button><button data-action="mics">Sprawdź mikrofony</button><button data-action="in">Wpuść klientów</button><button data-action="out">Wypuść klientów</button></nav>
 </main>
 <script>
-const game=document.getElementById('game'),worker=document.getElementById('worker'),speech=document.getElementById('speech'),hpFill=document.getElementById('hpFill'),globalHpFill=document.getElementById('globalHpFill'),statsText=document.getElementById('statsText'),monitor=document.getElementById('monitor'),tempTV=document.getElementById('tempTV'),fullscreenBtn=document.getElementById('fullscreenBtn'),buttons=document.querySelectorAll('.actionPanel button'),cameras=document.querySelectorAll('.draggableCamera'),clients=document.getElementById('clients'),sofa=document.getElementById('sofa'),chairLeft=document.getElementById('chairLeft'),chairRight=document.getElementById('chairRight'),softLeft=document.getElementById('softLeft'),softRight=document.getElementById('softRight');
-let hp=Number(localStorage.getItem('lv_hp')||100),lastHpTick=Number(localStorage.getItem('lv_last_hp_tick')||Date.now()),busy=false,setupMode=localStorage.getItem('lv_setup')||'chairs',speechTimer,fullscreenHideTimer;
+const game=document.getElementById('game'),worker=document.getElementById('worker'),speech=document.getElementById('speech'),hpFill=document.getElementById('hpFill'),globalHpFill=document.getElementById('globalHpFill'),statsText=document.getElementById('statsText'),monitor=document.getElementById('monitor'),tempTV=document.getElementById('tempTV'),fullscreenBtn=document.getElementById('fullscreenBtn'),buttons=document.querySelectorAll('.actionPanel button'),cameras=document.querySelectorAll('.draggableCamera'),clients=document.getElementById('clients'),sofa=document.getElementById('sofa'),chairLeft=document.getElementById('chairLeft'),chairRight=document.getElementById('chairRight'),softLeft=document.getElementById('softLeft'),softRight=document.getElementById('softRight'),mainScreen=document.getElementById('mainScreen'),screenTitle=document.getElementById('screenTitle'),screenSub=document.getElementById('screenSub'),screenBadge=document.getElementById('screenBadge');
+let hp=Number(localStorage.getItem('lv_hp')||100),lastHpTick=Number(localStorage.getItem('lv_last_hp_tick')||Date.now()),busy=false,setupMode=localStorage.getItem('lv_setup')||'chairs',speechTimer,fullscreenHideTimer,autoActionIndex=0,screenLogoIndex=Number(localStorage.getItem('lv_screen_logo_index')||0);
 const fallback={latitude:52.2297,longitude:21.0122};
+const screenNames=[
+  {title:'ALAB LABORATORIA',sub:'STUDIO · LIVE · EKSPERCI',badge:'REALIZACJA ROZMÓW I NAGRAŃ'},
+  {title:'LINK VISUALS',sub:'PODCAST · VIDEO · LIVE',badge:'STUDIO CARE GAME'},
+  {title:'LIVE',sub:'ON AIR · STREAM · REALIZACJA',badge:'NADAJEMY NA ŻYWO'}
+];
+function applyScreenLogo(){const item=screenNames[screenLogoIndex%screenNames.length];screenTitle.textContent=item.title;screenSub.textContent=item.sub;screenBadge.textContent=item.badge;localStorage.setItem('lv_screen_logo_index',String(screenLogoIndex%screenNames.length));}
+function nextScreenLogo(){screenLogoIndex=(screenLogoIndex+1)%screenNames.length;applyScreenLogo();say('Ekran zmieniony: '+screenNames[screenLogoIndex].title+'.');}
 function clamp(v,min,max){return Math.max(min,Math.min(max,v))}
 function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
 function say(text){speech.textContent=text;speech.classList.add('show');requestAnimationFrame(()=>{const rect=speech.getBoundingClientRect();let dx=0;if(rect.left<10)dx=10-rect.left;if(rect.right>innerWidth-10)dx=(innerWidth-10)-rect.right;speech.style.marginLeft=dx+'px'});clearTimeout(speechTimer);speechTimer=setTimeout(()=>{speech.classList.remove('show');speech.style.marginLeft='0px'},10000)}
@@ -136,7 +151,7 @@ function moveWorker(left,bottom='13vh',scale=1){worker.classList.remove('sit','s
 async function arrive(){await sleep(1150);worker.classList.remove('walking')}
 function applySetup(){if(setupMode==='sofa'){sofa.classList.add('on');chairLeft.style.display='none';chairRight.style.display='none'}else{sofa.classList.remove('on');chairLeft.style.display='block';chairRight.style.display='block'}localStorage.setItem('lv_setup',setupMode)}
 async function actionCameras(){if(busy)return;setBusy(true);say('Ustawiam trzy kamery. Kadr sam się nie zrobi.');const spots=[['10vw','19vh'],['75vw','17vh'],['58vw','25vh']];for(let i=0;i<cameras.length;i++){moveWorker(spots[i][0],spots[i][1]);await arrive();const cam=cameras[i];cam.style.left=`calc(${spots[i][0]} - 35px)`;cam.style.bottom=spots[i][1];cam.style.right='auto';cam.style.top='auto';cam.style.transform=i===0?'scale(1.1)':i===2?'scale(.85)':'scale(1)';say(`Kamera ${i+1} ustawiona.`);await sleep(1200)}addHp(20);say('Kamery ustawione. +20 HP');setBusy(false)}
-async function actionLights(){if(busy)return;setBusy(true);say('Idę włączyć światła.');moveWorker('15vw','32vh');await arrive();document.documentElement.style.setProperty('--wallLight','1');softLeft.classList.remove('off');softRight.classList.remove('off');say('Światła włączone. Teraz każdy wygląda jak ekspert.');await sleep(1200);setBusy(false)}
+async function actionLights(){if(busy)return;setBusy(true);const off=game.classList.contains('lightsOff');say(off?'Idę zapalić światła.':'Idę zgasić światła.');moveWorker('15vw','32vh');await arrive();if(off){document.documentElement.style.setProperty('--wallLight','1');softLeft.classList.remove('off');softRight.classList.remove('off');game.classList.remove('lightsOff');say('Światła zapalone. Studio znowu wygląda premium.')}else{document.documentElement.style.setProperty('--wallLight','0');softLeft.classList.add('off');softRight.classList.add('off');game.classList.add('lightsOff');say('Światła zgaszone. Robi się klimat nocnego wywiadu.')}await sleep(2200);setBusy(false)}
 async function actionVmix(){if(busy)return;setBusy(true);say('Uruchamiam vMixa na komputerze.');moveWorker('9vw','35vh');await arrive();monitor.classList.add('on');monitor.textContent='vMix';addHp(20);say('vMix uruchomiony. +20 HP');await sleep(1200);setBusy(false)}
 async function actionSetup(){if(busy)return;setBusy(true);say('Przestawiam setup. Meble robią cardio.');moveWorker('40vw','14vh');await arrive();chairLeft.style.opacity='0';chairRight.style.opacity='0';sofa.style.opacity='0';await sleep(700);setupMode=setupMode==='chairs'?'sofa':'chairs';applySetup();await sleep(300);chairLeft.style.opacity='1';chairRight.style.opacity='1';sofa.style.opacity='1';addHp(20);say(setupMode==='sofa'?'Setup zmieniony na kanapę. +20 HP':'Setup zmieniony na fotele. +20 HP');setBusy(false)}
 async function actionCoffee(){if(busy)return;setBusy(true);say('Idę po kawę przy czarnym stoliku.');moveWorker('49vw','10vh');await arrive();worker.classList.add('sit');addHp(20);say('Kawa to nie napój. To tryb produkcyjny. +20 HP');await sleep(3000);worker.classList.remove('sit');setBusy(false)}
@@ -168,6 +183,34 @@ document.querySelectorAll('.actionPanel button').forEach(btn=>{
     runAction(btn.dataset.action);
   }, {passive:false});
 });
+
+mainScreen.addEventListener('click', e=>{e.preventDefault();e.stopPropagation();nextScreenLogo();});
+mainScreen.addEventListener('touchend', e=>{e.preventDefault();e.stopPropagation();nextScreenLogo();},{passive:false});
+
+async function moveWorkerToTap(clientX,clientY){
+  if(busy) return;
+  const x=clamp(clientX-35,0,window.innerWidth-70);
+  const yFromBottom=clamp(window.innerHeight-clientY-63,70,window.innerHeight-170);
+  worker.classList.remove('sit','sofaSit');
+  worker.classList.add('walking','goingByTap');
+  worker.style.left=x+'px';
+  worker.style.bottom=yFromBottom+'px';
+  worker.style.transform='scale(1)';
+  say('Idę tam, gdzie kliknąłeś.');
+  await sleep(1150);
+  worker.classList.remove('walking','goingByTap');
+}
+
+game.addEventListener('click', e=>{
+  if(e.target.closest('.actionPanel')||e.target.closest('.camera')||e.target.closest('#fullscreenBtn')||e.target.closest('#mainScreen')) return;
+  moveWorkerToTap(e.clientX,e.clientY);
+});
+game.addEventListener('touchend', e=>{
+  if(e.target.closest('.actionPanel')||e.target.closest('.camera')||e.target.closest('#fullscreenBtn')||e.target.closest('#mainScreen')) return;
+  const t=e.changedTouches&&e.changedTouches[0];
+  if(t) moveWorkerToTap(t.clientX,t.clientY);
+},{passive:true});
+
 cameras.forEach(camera=>{let dragging=false,offsetX=0,offsetY=0;camera.addEventListener('pointerdown',e=>{if(busy)return;e.stopPropagation();dragging=true;camera.classList.add('dragging');camera.setPointerCapture(e.pointerId);const r=camera.getBoundingClientRect();offsetX=e.clientX-r.left;offsetY=e.clientY-r.top;camera.style.left=r.left+'px';camera.style.top=r.top+'px';camera.style.right='auto';camera.style.bottom='auto'});camera.addEventListener('pointermove',e=>{if(!dragging)return;camera.style.left=clamp(e.clientX-offsetX,-40,innerWidth-60)+'px';camera.style.top=clamp(e.clientY-offsetY,40,innerHeight-90)+'px'});function stop(e){if(!dragging)return;dragging=false;camera.classList.remove('dragging');try{camera.releasePointerCapture(e.pointerId)}catch(err){}say('Kamera przestawiona palcem. Kadr dostał nowe życie.')}camera.addEventListener('pointerup',stop);camera.addEventListener('pointercancel',stop)});
 function isRain(code){return[51,53,55,61,63,65,80,81,82,95,96,99].includes(Number(code))}
 function updateDayNight(){const h=new Date().getHours();game.classList.toggle('night',h<6||h>=20)}
@@ -176,10 +219,11 @@ function tryLocation(){if(!navigator.geolocation){fetchWeather();return}navigato
 function showFullscreenButton(){fullscreenBtn.classList.remove('hidden');clearTimeout(fullscreenHideTimer);fullscreenHideTimer=setTimeout(()=>fullscreenBtn.classList.add('hidden'),10000)}
 async function toggleFullscreen(){try{if(!document.fullscreenElement){await document.documentElement.requestFullscreen();fullscreenBtn.textContent='⛶ Wyjdź'}else{await document.exitFullscreen();fullscreenBtn.textContent='⛶ Fullscreen'}}catch(e){}showFullscreenButton()}
 fullscreenBtn.addEventListener('pointerdown',e=>e.stopPropagation());fullscreenBtn.addEventListener('click',e=>{e.stopPropagation();toggleFullscreen()});document.addEventListener('fullscreenchange',()=>{fullscreenBtn.textContent=document.fullscreenElement?'⛶ Wyjdź':'⛶ Fullscreen';showFullscreenButton()});['pointermove','pointerdown','keydown'].forEach(ev=>window.addEventListener(ev,showFullscreenButton,{passive:true}));
+const autoActions=['cameras','lights','vmix','setup','coffee','mics','in','out'];async function autoLoop(){if(!busy){const action=autoActions[autoActionIndex%autoActions.length];autoActionIndex++;runAction(action)}setTimeout(autoLoop,15000)}setTimeout(autoLoop,5000);
 setInterval(()=>{if(!busy&&Math.random()>.68)restOnSofa()},22000);
 setInterval(()=>{if(!busy){const lines=['Statyw stoi stabilnie, bo ma trzy argumenty.','Kamera ma obiektywne spojrzenie.','Prompter nie zapomina tekstu. Najwyżej go przewija.','Mikrofon niesie się lepiej niż ja przed kawą.','Światło dobre, humor lepszy.'];say(lines[Math.floor(Math.random()*lines.length)])}},18000);
 setInterval(()=>{applyHourlyDecay();updateHp()},60000);
-updateDayNight();applyHourlyDecay();applySetup();updateHp();tryLocation();showFullscreenButton();say('Dbaj o ludka. Jak HP spada, ludek robi się coraz brudniejszy.');
+updateDayNight();applyHourlyDecay();applySetup();applyScreenLogo();updateHp();tryLocation();showFullscreenButton();say('Dbaj o ludka. Jak HP spada, ludek robi się coraz brudniejszy.');
 setInterval(updateDayNight,60000);setInterval(tryLocation,600000);
 </script>
 </body>
