@@ -140,6 +140,7 @@
       display:grid;
       grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
       gap:22px;
+      justify-content:stretch;
       margin-top:26px;
     }
 
@@ -224,8 +225,27 @@
       flex:0 0 44px;
       box-shadow:0 0 18px rgba(87,212,255,.22);
     }
+    .product-screenshot{
+      width:100%;
+      height:220px;
+      object-fit:contain;
+      object-position:center center;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.14);
+      box-shadow:0 14px 34px rgba(0,0,0,.34);
+      margin:2px 0 18px;
+      background:
+        radial-gradient(circle at 20% 0%,rgba(87,212,255,.10),transparent 38%),
+        rgba(5,9,19,.82);
+      padding:10px;
+    }
 
-    .plugin-item h3{
+    .product-screenshot:hover{
+      border-color:rgba(87,212,255,.42);
+      transform:scale(1.01);
+      transition:.25s;
+    }
+.plugin-item h3{
       margin:0 0 14px;
       font-size:26px;
     }
@@ -360,6 +380,7 @@
       .hero{padding-top:52px}
       h1{letter-spacing:-1.4px}
       .lead{font-size:18px}
+      .product-screenshot{height:180px}
     }
   </style>
 
@@ -417,17 +438,19 @@ Contact us
           </div>
         </div>
 
-        <div class="panel">
-          <div class="panel-content">
-            <p class="muted">Lifetime license</p>
-            <div class="big-price">$69 <small>starting price</small></div>
-            <div class="highlight-list">
-              <div class="highlight-item">Tools prepared for vMix workflows.</div>
-              <div class="highlight-item">Tested during many hours of live streams and recordings.</div>
-              <div class="highlight-item">After purchase, you receive an individual lifetime activation key.</div>
+        <div class="hero-side">
+          <div class="panel">
+            <div class="panel-content">
+              <p class="muted">Lifetime license</p>
+              <div class="big-price">$45 <small>starting price</small></div>
+              <div class="highlight-list">
+                <div class="highlight-item">Tools prepared for vMix workflows.</div>
+                <div class="highlight-item">Tested during many hours of live streams and recordings.</div>
+                <div class="highlight-item">After purchase, you receive an individual lifetime activation key.</div>
+              </div>
             </div>
           </div>
-        </div>
+</div>
       </div>
     </header>
 
@@ -443,6 +466,7 @@ Contact us
 
           <div class="plugin-item" data-ga-view="view_auto_camera">
             <h3 class="plugin-title"><img src="logotyppuginy4vmix.png" alt="Auto Camera icon" class="plugin-icon">Auto Camera</h3>
+            <img src="auto_camera_interface.jpg" alt="Auto Camera interface screenshot" class="product-screenshot">
 
             <p>
               The plugin automatically switches cameras based on the person currently speaking. It is ideal for podcasts, debates, interviews and multi-camera live productions. In the free version, the app works for 10 minutes after launch. After the trial ends, you can restart it to keep using it.
@@ -485,6 +509,7 @@ Contact us
 
           <div class="plugin-item" data-ga-view="view_automix">
             <h3 class="plugin-title"><img src="automix.png" alt="AutoMix icon" class="plugin-icon">AutoMix</h3>
+            <img src="auto_mix_interface.jpg" alt="AutoMix interface screenshot" class="product-screenshot">
 
             <p>
               Intelligent microphone automix that works similarly to professional audio automixers. The plugin automatically manages audio levels.
@@ -527,6 +552,7 @@ Contact us
 
                     <div class="plugin-item" data-ga-view="view_ducking_audio">
             <h3 class="plugin-title"><img src="Ducking%20Audio.png" alt="Ducking Audio icon" class="plugin-icon">Ducking Audio</h3>
+            <img src="ducking_app_interface.jpg" alt="Ducking Audio interface screenshot" class="product-screenshot">
 
             <p>
               Ducking Audio automatically lowers selected audio sources when another source becomes active.
