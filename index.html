@@ -382,7 +382,36 @@
       .lead{font-size:18px}
       .product-screenshot{height:180px}
     }
-  </style>
+  
+    .lightbox{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.92);
+      z-index:9999;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      cursor:pointer;
+    }
+
+    .lightbox.active{
+      display:flex;
+    }
+
+    .lightbox img{
+      max-width:95vw;
+      max-height:95vh;
+      border-radius:16px;
+      box-shadow:0 20px 80px rgba(0,0,0,.6);
+      background:#111;
+    }
+
+    .product-screenshot{
+      cursor:zoom-in !important;
+    }
+
+</style>
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8RVYVMY0"></script>
@@ -1000,5 +1029,38 @@ Contact us
       })();
     })();
   </script>
+
+<div class="lightbox" id="imageLightbox">
+  <img id="lightboxImage" src="" alt="Preview">
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+
+  const lightbox = document.getElementById('imageLightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+
+  document.querySelectorAll('.product-screenshot').forEach(img => {
+    img.addEventListener('click', function(){
+      lightboxImage.src = this.src;
+      lightbox.classList.add('active');
+
+      if (typeof gtag === 'function') {
+        gtag('event','screenshot_zoom',{
+          event_category:'engagement',
+          image:this.src
+        });
+      }
+    });
+  });
+
+  lightbox.addEventListener('click', function(){
+    lightbox.classList.remove('active');
+  });
+
+});
+</script>
+
 </body>
 </html>
