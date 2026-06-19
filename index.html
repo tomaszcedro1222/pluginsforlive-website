@@ -78,10 +78,6 @@
       box-shadow:0 0 20px rgba(87,212,255,.22);
     }
 
-    .lang-switch{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:800;color:var(--muted)}
-    .lang-switch a{padding:7px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.05);transition:.25s}
-    .lang-switch a:hover,.lang-switch a.active{color:#06101d;background:linear-gradient(135deg,var(--brand),var(--brand2));border-color:transparent}
-
     .links{display:flex;gap:18px;color:var(--muted);font-size:14px}
     .links a:hover{color:var(--text)}
 
@@ -376,7 +372,6 @@
     @media(max-width:860px){
       .grid,.buy{grid-template-columns:1fr}
       .links{display:none}
-      .lang-switch{margin-left:auto}
       .hero{padding-top:52px}
       h1{letter-spacing:-1.4px}
       .lead{font-size:18px}
@@ -437,10 +432,6 @@
         <a href="#zakup">Purchase</a>
         <a href="#kontakt">Contact</a>
         <a href="#polityka-prywatnosci">Privacy Policy</a>
-      </div>
-      <div class="lang-switch" aria-label="Language selection">
-        <a href="index.html" class="active" onclick="gtag('event', 'language_switch_en', { event_category: 'language', language: 'en' })">EN</a>
-        <a href="index-pl.html" onclick="gtag('event', 'language_switch_pl', { event_category: 'language', language: 'pl' })">PL</a>
       </div>
       <a class="btn secondary" href="#zakup"
 onclick="gtag('event', 'menu_kup_wtyczke', { event_category: 'navigation' })">
@@ -680,17 +671,13 @@ Contact us
         <div class="box">
           <h2 class="section-title">How to buy?</h2>
           <div class="steps">
-            <div class="step">Choose the tool you want to use and click the “Buy” button next to its description.</div>
-            <div class="step">You will be redirected to a secure Stripe checkout where you can pay by card, Apple Pay, Google Pay or other available online payment methods.</div>
-            <div class="step">After payment, you will receive information about downloading, activating and using the selected software subscription.</div>
-          </div>
-          <div class="notice">
-            <strong>Note:</strong> Each plugin may have its own subscription price, payment link and download option. Free online tools can be opened directly from the website without installation.
+            <div class="step">Choose the tool you want to use.</div>
+            <div class="step">You will be redirected to Stripe, a secure payment provider.</div>
+            <div class="step">After subscribing, you will receive an email with your program activation key.</div>
+            <div class="step">In the program, click the Activate button, enter the email address you used during payment, and type in your activation key.</div>
+            <div class="step">That’s it. Your work just became much more enjoyable!</div>
           </div>
         </div>
-
-        </div>
-
       </div>
     </section>
 
@@ -857,13 +844,6 @@ Contact us
               target_section: rawHref.replace('#', '')
             });
             return;
-          }
-
-          if (rawHref.includes('index-pl.html')) {
-            sendGAEvent('language_switch', { event_category: 'language', event_label: 'PL', language: 'pl' });
-          }
-          if (rawHref.includes('index.html')) {
-            sendGAEvent('language_switch', { event_category: 'language', event_label: 'EN', language: 'en' });
           }
 
           if (rawHref.startsWith('mailto:')) {
