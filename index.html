@@ -105,21 +105,40 @@
     .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
 
     .panel{
-      background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.035));
-      border:1px solid var(--line);
+      background:
+        linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.065)),
+        rgba(16,24,39,.92);
+      border:1px solid rgba(255,255,255,.22);
       border-radius:var(--radius);
-      box-shadow:var(--shadow);
-      padding:28px;
+      box-shadow:var(--shadow),0 0 44px rgba(87,212,255,.12);
+      padding:30px;
       position:relative;
       overflow:hidden;
     }
-    .panel:before{content:"";position:absolute;inset:-80px -120px auto auto;width:240px;height:240px;border-radius:50%;background:rgba(87,212,255,.18);filter:blur(10px)}
+    .panel:before{content:"";position:absolute;inset:-80px -120px auto auto;width:260px;height:260px;border-radius:50%;background:rgba(87,212,255,.24);filter:blur(10px)}
+    .panel:after{content:"";position:absolute;inset:auto -80px -120px auto;width:220px;height:220px;border-radius:50%;background:rgba(141,124,255,.18);filter:blur(14px)}
     .panel-content{position:relative;z-index:1}
-    .highlight-list{display:grid;gap:14px;margin-top:22px}
-    .highlight-item{display:flex;gap:12px;color:var(--muted);align-items:flex-start}
-    .highlight-item:before{content:"✓";flex:0 0 28px;height:28px;border-radius:50%;display:grid;place-items:center;background:rgba(74,222,128,.12);color:var(--ok);font-weight:900}
+    .hero-card-title{
+      margin:0 0 14px;
+      color:#ffffff;
+      font-size:30px;
+      line-height:1.12;
+      font-weight:950;
+      letter-spacing:-.8px;
+      text-shadow:0 2px 20px rgba(87,212,255,.18);
+    }
+    .hero-card-text{
+      margin:0;
+      color:#eaf3ff;
+      font-size:17px;
+      line-height:1.55;
+      font-weight:650;
+    }
+    .highlight-list{display:grid;gap:13px;margin-top:22px}
+    .highlight-item{display:flex;gap:12px;color:#f1f6ff;align-items:flex-start;font-weight:700}
+    .highlight-item:before{content:"✓";flex:0 0 28px;height:28px;border-radius:50%;display:grid;place-items:center;background:rgba(74,222,128,.22);color:#7dffac;font-weight:950;box-shadow:0 0 18px rgba(74,222,128,.16)}
     .big-price{font-size:52px;font-weight:950;letter-spacing:-1.5px;margin:8px 0 0}
-    .big-price small{font-size:18px;color:var(--muted);font-weight:700}
+    .big-price small{font-size:18px;color:#d9e6f7;font-weight:800}
 
     section{padding:56px 0}
     .section-title{font-size:38px;letter-spacing:-1.2px;margin:0 0 12px}
@@ -461,12 +480,13 @@ Contact us
         <div class="hero-side">
           <div class="panel">
             <div class="panel-content">
-              <p class="muted">Subscription license</p>
-              <div class="big-price">$9.99 <small>/ month starting price</small></div>
+              <h2 class="hero-card-title">See how much vMix can do for you.</h2>
+              <p class="hero-card-text">Start with Auto Camera — a plugin that automatically switches cameras based on who is speaking.</p>
               <div class="highlight-list">
-                <div class="highlight-item">Tools prepared for vMix workflows.</div>
-                <div class="highlight-item">Tested during many hours of live streams and recordings.</div>
-                <div class="highlight-item">After purchase, you receive an individual subscription activation key.</div>
+                <div class="highlight-item">Detects who is speaking.</div>
+                <div class="highlight-item">Switches cameras automatically.</div>
+                <div class="highlight-item">Perfect for podcasts, interviews and studio talks.</div>
+                <div class="highlight-item">Try the free 14-day trial before subscribing.</div>
               </div>
             </div>
           </div>
