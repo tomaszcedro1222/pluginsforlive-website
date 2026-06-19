@@ -470,12 +470,12 @@ Contact us
         <div class="hero-side">
           <div class="panel">
             <div class="panel-content">
-              <p class="muted">Lifetime license</p>
-              <div class="big-price">$45 <small>starting price</small></div>
+              <p class="muted">Subscription license</p>
+              <div class="big-price">$9.99 <small>/ month starting price</small></div>
               <div class="highlight-list">
                 <div class="highlight-item">Tools prepared for vMix workflows.</div>
                 <div class="highlight-item">Tested during many hours of live streams and recordings.</div>
-                <div class="highlight-item">After purchase, you receive an individual lifetime activation key.</div>
+                <div class="highlight-item">After purchase, you receive an individual subscription activation key.</div>
               </div>
             </div>
           </div>
@@ -511,11 +511,11 @@ Contact us
 
             <div class="plugin-actions">
               <a
-                href="https://buy.stripe.com/bJe7sL4Af65j6iUgTr6Na05"
+                href="https://buy.stripe.com/8x25kD8Qv65j0YAeLj6Na08"
                 target="_blank"
                 class="download-btn"
-                onclick="gtag('event', 'begin_checkout', { currency: 'USD', value: 69, item_name: 'Auto Camera' }); gtag('event', 'stripe_checkout_click', { event_category: 'checkout', item_name: 'Auto Camera', currency: 'USD', value: 69, link_url: 'https://buy.stripe.com/bJe7sL4Af65j6iUgTr6Na05' })">
-                Buy Auto Camera — $69
+                onclick="gtag('event', 'begin_checkout', { currency: 'USD', value: 9.99, item_name: 'Auto Camera' }); gtag('event', 'stripe_checkout_click', { event_category: 'checkout', item_name: 'Auto Camera', currency: 'USD', value: 9.99, link_url: 'https://buy.stripe.com/8x25kD8Qv65j0YAeLj6Na08' })">
+                Auto Camera — $9.99 / month
               </a>
 
               <a
@@ -553,29 +553,7 @@ Contact us
             </ul>
 
             <div class="plugin-actions">
-              <a
-                href="https://buy.stripe.com/3cI8wP7Mr9hvcHibz76Na07"
-                target="_blank"
-                class="download-btn"
-                onclick="gtag('event', 'begin_checkout', { currency: 'USD', value: 69, item_name: 'AutoMix' }); gtag('event', 'click_buy_automix', { event_category: 'button', event_label: 'AutoMix Stripe payment', currency: 'USD', value: 69, link_url: 'https://buy.stripe.com/3cI8wP7Mr9hvcHibz76Na07' })">
-                Buy AutoMix — $69
-              </a>
-
-              <a
-                href="https://github.com/tomaszcedro1222/pluginyvmix/releases/download/AutoMix/AutoMix.zip"
-                target="_blank"
-                class="trial-btn"
-                onclick="gtag('event', 'trial_interest', {
-                  item_name: 'AutoMix',
-                  link_url: 'https://github.com/tomaszcedro1222/pluginyvmix/releases/download/AutoMix/AutoMix.zip'
-                }); gtag('event', 'download_trial_automix', {
-                  event_category: 'download',
-                  event_label: 'AutoMix Trial GitHub',
-                  file_name: 'AutoMix.zip',
-                  link_url: 'https://github.com/tomaszcedro1222/pluginyvmix/releases/download/AutoMix/AutoMix.zip'
-                })">
-                Download trial version
-              </a>
+              <div class="coming-soon">available soon</div>
             </div>
           </div>
 
@@ -599,31 +577,7 @@ Contact us
 
             
 <div class="plugin-actions">
-
-  <a
-    href="https://buy.stripe.com/4gM14ngiXctHdLm8mV6Na04"
-    target="_blank"
-    class="download-btn"
-    onclick="gtag('event', 'begin_checkout', { currency: 'USD', value: 45, item_name: 'Ducking Audio' }); gtag('event', 'stripe_checkout_click', { event_category: 'checkout', item_name: 'Ducking Audio', currency: 'USD', value: 45, link_url: 'https://buy.stripe.com/4gM14ngiXctHdLm8mV6Na04' })">
-    Buy Ducking Audio — $45
-  </a>
-
-  <a
-    href="https://github.com/tomaszcedro1222/pluginyvmix/releases/download/v7.0/DuckingAudioSetup.exe"
-    target="_blank"
-    class="trial-btn"
-    onclick="gtag('event', 'trial_interest', {
-      item_name: 'Ducking Audio',
-      link_url: 'https://github.com/tomaszcedro1222/pluginyvmix/releases/download/v7.0/DuckingAudioSetup.exe'
-    }); gtag('event', 'download_trial_ducking_audio', {
-      event_category: 'download',
-      event_label: 'Ducking Audio Trial GitHub',
-      file_name: 'DuckingAudioSetup.exe',
-      link_url: 'https://github.com/tomaszcedro1222/pluginyvmix/releases/download/v7.0/DuckingAudioSetup.exe'
-    })">
-    Download trial version
-  </a>
-
+  <div class="coming-soon">available soon</div>
 </div>
 
         </div>
@@ -728,10 +682,10 @@ Contact us
           <div class="steps">
             <div class="step">Choose the tool you want to use and click the “Buy” button next to its description.</div>
             <div class="step">You will be redirected to a secure Stripe checkout where you can pay by card, Apple Pay, Google Pay or other available online payment methods.</div>
-            <div class="step">After payment, you will receive information about downloading, activating and using the selected software.</div>
+            <div class="step">After payment, you will receive information about downloading, activating and using the selected software subscription.</div>
           </div>
           <div class="notice">
-            <strong>Note:</strong> Each plugin may have its own price, payment link and download option. Free online tools can be opened directly from the website without installation.
+            <strong>Note:</strong> Each plugin may have its own subscription price, payment link and download option. Free online tools can be opened directly from the website without installation.
           </div>
         </div>
 
@@ -849,8 +803,8 @@ Contact us
     // Google Analytics: enhanced marketing and sales tracking.
     (function () {
       const PRODUCT_PRICES = {
-        'auto_camera': { item_name: 'Auto Camera', value: 69, currency: 'USD' },
-        'autocamera': { item_name: 'Auto Camera', value: 69, currency: 'USD' },
+        'auto_camera': { item_name: 'Auto Camera', value: 9.99, currency: 'USD' },
+        'autocamera': { item_name: 'Auto Camera', value: 9.99, currency: 'USD' },
         'auto_mix': { item_name: 'AutoMix', value: 69, currency: 'USD' },
         'automix': { item_name: 'AutoMix', value: 69, currency: 'USD' },
         'ducking_audio': { item_name: 'Ducking Audio', value: 45, currency: 'USD' },
