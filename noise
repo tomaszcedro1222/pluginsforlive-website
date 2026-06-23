@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>White Noise Generator</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+body{
+    margin:0;
+    padding:20px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:#10151f;
+    color:#fff;
+}
+
+.container{
+    max-width:500px;
+    margin:auto;
+}
+
+.card{
+    background:#1b2333;
+    padding:20px;
+    border-radius:18px;
+    margin-bottom:16px;
+}
+
+h1{
+    text-align:center;
+}
+
+button{
+    width:100%;
+    padding:18px;
+    border:none;
+    border-radius:14px;
+    font-size:18px;
+    font-weight:600;
+    background:#2e7dff;
+    color:white;
+    cursor:pointer;
+}
+
+button:active{
+    transform:scale(0.98);
+}
+
+label{
+    display:block;
+    margin:18px 0 8px;
+    font-size:15px;
+}
+
+input[type=range]{
+    width:100%;
+    height:40px;
+}
+
+select{
+    width:100%;
+    padding:14px;
+    border-radius:10px;
+    border:none;
+    font-size:16px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>🎧 White Noise</h1>
+
+    <div class="card">
+        <button id="toggleBtn">Włącz szum</button>
+
+        <label>Rodzaj szumu</label>
+        <select id="noiseType">
+            <option value="white">Biały</option>
+            <option value="pink">Różowy</option>
+            <option value="brown">Brązowy</option>
+        </select>
+
+        <label>Głośność</label>
+        <input id="volume" type="range" min="0" max="100" value="40">
+
+        <label>Niskie tony</label>
+        <input id="bass" type="range" min="-30" max="30" value="0">
+
+        <label>Wysokie tony</label>
+        <input id="treble" type="range" min="-30" max="30" value="0">
+    </div>
+
+</div>
+
+<script>
+
+let audioCtx;
+let source;
+let gainNode;
+let bassFilter;
+let trebleFilter;
+let playing=false;
+
+const btn=document.getElementById("toggleBtn");
+
+function createNoiseBuffer(type){
+
+    const bufferSize = 2 * 44100;
+    const buffer = audioCtx.createBuffer(1, bufferSize, 44100);
+    const output = buffer.getChannelData(0);
+
+    if(type==="white"){
+        for(let i=0;i<bufferSize;i++){
+            output[i]=Math.random()*2-1;
+        }
+    }
+
+    if(type==="pink"){
+        let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+
+        for(let i=0;i<bufferSize;i++){
+            const white=Math.random()*2-1;
+            b0=0.99886*b0+white*0.0555179;
+            b1=0.99332*b1+white*0.0750759;
+            b2=0.96900*b2+white*0.1538520;
+            b3=0.86650*b3+white*0.3104856;
+            b4=0.55000*b4+white*0.5329522;
+            b5=-0.7616*b5-white*0.0168980;
+            output[i]=b0+b1+b2+b3+b4+b5+b6+white*0.5362;
+            output[i]*=0.11;
+            b6=white*0.115926;
+        }
+    }
+
+    if(type==="brown"){
+        let lastOut=0;
+
+        for(let i=0;i<bufferSize;i++){
+            let white=Math.random()*2-1;
+            output[i]=(lastOut+(0.02*white))/1.02;
+            lastOut=output[i];
+            output[i]*=3.5;
+        }
+    }
+
+    return buffer;
+}
+
+function startNoise(){
+
+    if(!audioCtx){
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    if(audioCtx.state==="suspended"){
+        audioCtx.resume();
+    }
+
+    gainNode = audioCtx.createGain();
+
+    bassFilter = audioCtx.createBiquadFilter();
+    bassFilter.type="lowshelf";
+    bassFilter.frequency.value=250;
+
+    trebleFilter = audioCtx.createBiquadFilter();
+    trebleFilter.type="highshelf";
+    trebleFilter.frequency.value=3000;
+
+    source = audioCtx.createBufferSource();
+    source.buffer = createNoiseBuffer(
+        document.getElementById("noiseType").value
+    );
+
+    source.loop=true;
+
+    source.connect(bassFilter);
+    bassFilter.connect(trebleFilter);
+    trebleFilter.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    updateControls();
+
+    source.start();
+
+    playing=true;
+    btn.textContent="Wyłącz szum";
+}
+
+function stopNoise(){
+
+    if(source){
+        source.stop();
+        source.disconnect();
+    }
+
+    playing=false;
+    btn.textContent="Włącz szum";
+}
+
+btn.addEventListener("click",()=>{
+
+    if(!playing){
+        startNoise();
+    }else{
+        stopNoise();
+    }
+
+});
+
+function updateControls(){
+
+    if(!gainNode) return;
+
+    gainNode.gain.value =
+        document.getElementById("volume").value/100;
+
+    bassFilter.gain.value =
+        document.getElementById("bass").value;
+
+    trebleFilter.gain.value =
+        document.getElementById("treble").value;
+}
+
+document.getElementById("volume")
+.addEventListener("input",updateControls);
+
+document.getElementById("bass")
+.addEventListener("input",updateControls);
+
+document.getElementById("treble")
+.addEventListener("input",updateControls);
+
+document.getElementById("noiseType")
+.addEventListener("change",()=>{
+
+    if(playing){
+        stopNoise();
+        startNoise();
+    }
+
+});
+
+</script>
+
+</body>
+</html>
