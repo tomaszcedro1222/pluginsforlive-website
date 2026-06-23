@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>White Noise Generator</title>
+
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+
+body{
+    margin:0;
+    padding:20px;
+    min-height:100vh;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:linear-gradient(180deg,#0f172a,#1e293b);
+    color:white;
+}
+
+.container{max-width:520px;margin:0 auto}
+h1{text-align:center;margin-bottom:22px}
+
+.card{
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.10);
+    border-radius:22px;
+    padding:22px;
+    margin-bottom:18px;
+    backdrop-filter:blur(10px);
+}
+
+button{
+    width:100%;
+    border:none;
+    border-radius:16px;
+    padding:18px;
+    font-size:20px;
+    font-weight:700;
+    color:white;
+    background:#2563eb;
+    cursor:pointer;
+    touch-action:manipulation;
+}
+
+button:active{transform:scale(.98)}
+
+label{
+    display:flex;
+    justify-content:space-between;
+    margin-top:22px;
+    margin-bottom:8px;
+    font-size:16px;
+    font-weight:700;
+}
+
+select{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    font-size:17px;
+}
+
+input[type="range"]{
+    width:100%;
+    height:48px;
+    touch-action:pan-y;
+}
+
+.value{opacity:.85}
+
+.preset-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+    margin-top:12px;
+}
+
+.preset{
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.16);
+    font-size:17px;
+    padding:16px;
+}
+
+.note{
+    margin-top:20px;
+    opacity:.65;
+    font-size:15px;
+    line-height:1.45;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🎧 White Noise</h1>
+
+    <div class="card">
+        <button id="toggleBtn">Włącz szum</button>
+
+        <label>Rodzaj szumu</label>
+        <select id="noiseType">
+            <option value="white">Biały</option>
+            <option value="pink">Różowy</option>
+            <option value="brown">Brązowy</option>
+        </select>
+
+        <label>Głośność <span class="value"><span id="volumeVal">40</span>%</span></label>
+        <input type="range" id="volume" min="0" max="100" value="40">
+
+        <label>Niskie tony <span class="value"><span id="bassVal">0</span>dB</span></label>
+        <input type="range" id="bass" min="-30" max="30" value="0">
+
+        <label>Wysokie tony <span class="value"><span id="trebleVal">0</span>dB</span></label>
+        <input type="range" id="treble" min="-30" max="30" value="0">
+
+        <label>Ciemny / jasny <span class="value"><span id="brightnessVal">0</span></span></label>
+        <input type="range" id="brightness" min="-50" max="50" value="0">
+
+        <label>Delikatne falowanie <span class="value"><span id="movementVal">0</span>%</span></label>
+        <input type="range" id="movement" min="0" max="100" value="0">
+
+        <label>Presety</label>
+        <div class="preset-grid">
+            <button class="preset" onclick="setPreset('sleep')">Sen</button>
+            <button class="preset" onclick="setPreset('focus')">Skupienie</button>
+            <button class="preset" onclick="setPreset('deep')">Głęboki</button>
+            <button class="preset" onclick="setPreset('bright')">Jasny</button>
+        </div>
+
+        <div class="note">
+            Na iPhonie i Androidzie dźwięk uruchamia się dopiero po dotknięciu przycisku „Włącz szum”.
+        </div>
+    </div>
+
+    <div class="note">
+        Ustawienia zapisują się automatycznie w tej przeglądarce.
+    </div>
+</div>
+
+<script>
+let audioCtx=null;
+let source=null;
+let gainNode=null;
+let bassFilter=null;
+let trebleFilter=null;
+let brightnessFilter=null;
+let lfo=null;
+let lfoGain=null;
+let playing=false;
+
+const btn=document.getElementById("toggleBtn");
+
+const controls=[
+    "noiseType","volume","bass","treble","brightness","movement"
+];
+
+function saveSettings(){
+    const data={};
+    controls.forEach(id=>data[id]=document.getElementById(id).value);
+    localStorage.setItem("whiteNoiseSettings",JSON.stringify(data));
+}
+
+function loadSettings(){
+    const saved=localStorage.getItem("whiteNoiseSettings");
+    if(!saved) return;
+    const data=JSON.parse(saved);
+    controls.forEach(id=>{
+        if(data[id]!==undefined) document.getElementById(id).value=data[id];
+    });
+}
+
+async function ensureAudioContext(){
+    if(!audioCtx){
+        audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+    }
+    if(audioCtx.state!=="running"){
+        await audioCtx.resume();
+    }
+}
+
+function createNoiseBuffer(type){
+    const length=audioCtx.sampleRate*2;
+    const buffer=audioCtx.createBuffer(1,length,audioCtx.sampleRate);
+    const data=buffer.getChannelData(0);
+
+    if(type==="white"){
+        for(let i=0;i<length;i++) data[i]=Math.random()*2-1;
+    }
+
+    if(type==="pink"){
+        let b0=0,b1=0,b2=0,b3=0,b4=0,b5=0,b6=0;
+        for(let i=0;i<length;i++){
+            let white=Math.random()*2-1;
+            b0=.99886*b0+white*.0555179;
+            b1=.99332*b1+white*.0750759;
+            b2=.96900*b2+white*.1538520;
+            b3=.86650*b3+white*.3104856;
+            b4=.55000*b4+white*.5329522;
+            b5=-.7616*b5-white*.0168980;
+            data[i]=b0+b1+b2+b3+b4+b5+b6+white*.5362;
+            data[i]*=.11;
+            b6=white*.115926;
+        }
+    }
+
+    if(type==="brown"){
+        let lastOut=0;
+        for(let i=0;i<length;i++){
+            let white=Math.random()*2-1;
+            data[i]=(lastOut+.02*white)/1.02;
+            lastOut=data[i];
+            data[i]*=3.5;
+        }
+    }
+
+    return buffer;
+}
+
+function updateControls(){
+    volumeVal.textContent=volume.value;
+    bassVal.textContent=bass.value;
+    trebleVal.textContent=treble.value;
+    brightnessVal.textContent=brightness.value;
+    movementVal.textContent=movement.value;
+
+    saveSettings();
+
+    if(!gainNode) return;
+
+    gainNode.gain.value=volume.value/100;
+    bassFilter.gain.value=bass.value;
+    trebleFilter.gain.value=treble.value;
+
+    brightnessFilter.gain.value=brightness.value/2;
+
+    if(lfoGain){
+        lfoGain.gain.value=(movement.value/100)*0.18;
+    }
+}
+
+async function startNoise(){
+    await ensureAudioContext();
+
+    gainNode=audioCtx.createGain();
+
+    bassFilter=audioCtx.createBiquadFilter();
+    bassFilter.type="lowshelf";
+    bassFilter.frequency.value=250;
+
+    trebleFilter=audioCtx.createBiquadFilter();
+    trebleFilter.type="highshelf";
+    trebleFilter.frequency.value=3500;
+
+    brightnessFilter=audioCtx.createBiquadFilter();
+    brightnessFilter.type="highshelf";
+    brightnessFilter.frequency.value=1200;
+
+    source=audioCtx.createBufferSource();
+    source.buffer=createNoiseBuffer(noiseType.value);
+    source.loop=true;
+
+    source.connect(bassFilter);
+    bassFilter.connect(trebleFilter);
+    trebleFilter.connect(brightnessFilter);
+    brightnessFilter.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    lfo=audioCtx.createOscillator();
+    lfo.frequency.value=0.08;
+
+    lfoGain=audioCtx.createGain();
+    lfoGain.gain.value=(movement.value/100)*0.18;
+
+    lfo.connect(lfoGain);
+    lfoGain.connect(gainNode.gain);
+    lfo.start();
+
+    updateControls();
+
+    source.start(0);
+
+    playing=true;
+    btn.textContent="Wyłącz szum";
+}
+
+function stopNoise(){
+    try{
+        if(source) source.stop();
+        if(lfo) lfo.stop();
+    }catch(e){}
+
+    source=null;
+    lfo=null;
+    lfoGain=null;
+
+    playing=false;
+    btn.textContent="Włącz szum";
+}
+
+async function toggleNoise(e){
+    if(e) e.preventDefault();
+
+    if(!playing){
+        await startNoise();
+    }else{
+        stopNoise();
+    }
+}
+
+btn.addEventListener("click",toggleNoise);
+btn.addEventListener("touchend",toggleNoise,{passive:false});
+
+controls.forEach(id=>{
+    document.getElementById(id).addEventListener("input",updateControls);
+    document.getElementById(id).addEventListener("change",async()=>{
+        updateControls();
+
+        if(id==="noiseType" && playing){
+            stopNoise();
+            await startNoise();
+        }
+    });
+});
+
+function setPreset(name){
+    if(name==="sleep"){
+        noiseType.value="brown";
+        volume.value=30;
+        bass.value=18;
+        treble.value=-18;
+        brightness.value=-35;
+        movement.value=15;
+    }
+
+    if(name==="focus"){
+        noiseType.value="pink";
+        volume.value=38;
+        bass.value=0;
+        treble.value=8;
+        brightness.value=15;
+        movement.value=4;
+    }
+
+    if(name==="deep"){
+        noiseType.value="brown";
+        volume.value=45;
+        bass.value=30;
+        treble.value=-25;
+        brightness.value=-45;
+        movement.value=20;
+    }
+
+    if(name==="bright"){
+        noiseType.value="white";
+        volume.value=35;
+        bass.value=-12;
+        treble.value=25;
+        brightness.value=40;
+        movement.value=0;
+    }
+
+    updateControls();
+
+    if(playing){
+        stopNoise();
+        startNoise();
+    }
+}
+
+loadSettings();
+updateControls();
+</script>
+
+</body>
+</html>
