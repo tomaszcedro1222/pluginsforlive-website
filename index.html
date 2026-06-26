@@ -457,16 +457,122 @@
       cursor:zoom-in !important;
     }
 
+
+    .cookie-banner{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform:translateX(-50%);
+      z-index:10000;
+      width:min(920px,calc(100% - 28px));
+      padding:18px;
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.18);
+      background:rgba(10,16,29,.96);
+      box-shadow:0 20px 70px rgba(0,0,0,.55);
+      backdrop-filter:blur(18px);
+      display:none;
+      gap:16px;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .cookie-banner.show{display:flex}
+
+    .cookie-banner p{
+      margin:0;
+      color:#dce9ff;
+      font-size:14px;
+      line-height:1.45;
+    }
+
+    .cookie-banner strong{color:#ffffff}
+
+    .cookie-actions{
+      display:flex;
+      gap:10px;
+      flex:0 0 auto;
+      align-items:center;
+    }
+
+    .cookie-btn{
+      border:0;
+      border-radius:999px;
+      padding:11px 16px;
+      font-weight:850;
+      cursor:pointer;
+      white-space:nowrap;
+      color:#06101d;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+    }
+
+    .cookie-btn.reject{
+      background:rgba(255,255,255,.08);
+      color:var(--text);
+      border:1px solid var(--line);
+    }
+
+    .cookie-link{
+      color:#d8e9ff;
+      text-decoration:underline;
+      text-underline-offset:4px;
+      font-weight:750;
+      white-space:nowrap;
+    }
+
+    @media(max-width:700px){
+      .cookie-banner{
+        bottom:10px;
+        width:calc(100% - 20px);
+        padding:16px;
+        border-radius:18px;
+        flex-direction:column;
+        align-items:stretch;
+      }
+
+      .cookie-actions{
+        width:100%;
+        display:grid;
+        grid-template-columns:1fr 1fr;
+      }
+
+      .cookie-link{
+        grid-column:1 / -1;
+        text-align:center;
+        padding-top:2px;
+      }
+
+      .cookie-btn{
+        width:100%;
+        padding:12px 14px;
+      }
+    }
+
 </style>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8RVYVMY0"></script>
+<!-- Google Analytics loads only after cookie consent. -->
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  window.pflAnalyticsEnabled = false;
 
-  gtag('config', 'G-QS8RVYVMY0');
+  function gtag(){
+    if (window.pflAnalyticsEnabled) {
+      window.dataLayer.push(arguments);
+    }
+  }
+
+  function loadPflAnalytics(){
+    if (window.pflAnalyticsEnabled) return;
+    window.pflAnalyticsEnabled = true;
+
+    var gaScript = document.createElement('script');
+    gaScript.async = true;
+    gaScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-QS8RVYVMY0';
+    document.head.appendChild(gaScript);
+
+    gtag('js', new Date());
+    gtag('config', 'G-QS8RVYVMY0', { anonymize_ip: true });
+  }
 </script>
 
 </head>
@@ -1075,6 +1181,47 @@ document.addEventListener('DOMContentLoaded', function(){
 
 });
 </script>
+
+
+  <div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite" aria-label="Cookie consent">
+    <p>
+      <strong>We use cookies for analytics.</strong><br>
+      We use Google Analytics to understand website traffic and improve Plugins For Live. You can accept or reject analytics cookies.
+    </p>
+    <div class="cookie-actions">
+      <button class="cookie-btn" type="button" id="acceptCookies">Accept</button>
+      <button class="cookie-btn reject" type="button" id="rejectCookies">Reject</button>
+      <a class="cookie-link" href="privacy-policy.html">Privacy Policy</a>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      var storageKey = 'pfl_cookie_consent';
+      var banner = document.getElementById('cookieBanner');
+      var acceptBtn = document.getElementById('acceptCookies');
+      var rejectBtn = document.getElementById('rejectCookies');
+      var savedChoice = localStorage.getItem(storageKey);
+
+      if (savedChoice === 'accepted') {
+        loadPflAnalytics();
+      } else if (savedChoice !== 'rejected') {
+        banner.classList.add('show');
+      }
+
+      acceptBtn.addEventListener('click', function(){
+        localStorage.setItem(storageKey, 'accepted');
+        banner.classList.remove('show');
+        loadPflAnalytics();
+        gtag('event', 'cookie_consent_accept', { event_category: 'privacy' });
+      });
+
+      rejectBtn.addEventListener('click', function(){
+        localStorage.setItem(storageKey, 'rejected');
+        banner.classList.remove('show');
+      });
+    })();
+  </script>
 
 </body>
 </html>
