@@ -12,8 +12,8 @@
   <meta property="og:site_name" content="Plugins For Live" />
   <meta property="og:title" content="vMix Plugins and Automation Tools | Plugins For Live" />
   <meta property="og:description" content="Auto Camera, Ducking Audio and smart automation tools for live productions in vMix." />
-  <meta property="og:image" content="https://pluginsforlive.com/social-preview.jpg" />
-  <meta property="og:image:secure_url" content="https://pluginsforlive.com/social-preview.jpg" />
+  <meta property="og:image" content="https://pluginsforlive.com/assets/images/social/social-preview.jpg" />
+  <meta property="og:image:secure_url" content="https://pluginsforlive.com/assets/images/social/social-preview.jpg" />
   <meta property="og:image:type" content="image/jpeg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
@@ -24,12 +24,12 @@
   <meta name="twitter:url" content="https://pluginsforlive.com/" />
   <meta name="twitter:title" content="vMix Plugins and Automation Tools | Plugins For Live" />
   <meta name="twitter:description" content="Auto Camera, Ducking Audio and smart automation tools for live productions in vMix." />
-  <meta name="twitter:image" content="https://pluginsforlive.com/social-preview.jpg" />
+  <meta name="twitter:image" content="https://pluginsforlive.com/assets/images/social/social-preview.jpg" />
   <meta name="twitter:image:alt" content="Plugins For Live — vMix plugins and automation tools" />
 
   <link rel="canonical" href="https://pluginsforlive.com/" />
 
-<link rel="icon" type="image/png" href="logotyppuginy4vmix.png" />
+<link rel="icon" type="image/png" href="assets/images/branding/plugins-for-live-logo.png" />
   <style>
     :root{
       --bg:#070b14;
@@ -125,6 +125,18 @@
     .panel:before{content:"";position:absolute;inset:-80px -120px auto auto;width:260px;height:260px;border-radius:50%;background:rgba(87,212,255,.24);filter:blur(10px)}
     .panel:after{content:"";position:absolute;inset:auto -80px -120px auto;width:220px;height:220px;border-radius:50%;background:rgba(141,124,255,.18);filter:blur(14px)}
     .panel-content{position:relative;z-index:1}
+    .video-panel{
+      padding:0;
+      aspect-ratio:16 / 9;
+      background:#02050a;
+    }
+    .video-panel:before,.video-panel:after{display:none}
+    .hero-video{
+      display:block;
+      width:100%;
+      height:100%;
+      border:0;
+    }
     .hero-card-title{
       margin:0 0 14px;
       color:#ffffff;
@@ -597,7 +609,7 @@
   <nav class="nav">
     <div class="wrap navin">
       <a class="logo" href="#">
-        <img src="logotyppuginy4vmix.png" alt="Plugins For Live logo" class="logo-img">
+        <img src="assets/images/branding/plugins-for-live-logo.png" alt="Plugins For Live logo" class="logo-img">
         pluginsforlive.com
       </a>
       <div class="links">
@@ -638,17 +650,16 @@ Contact us
         </div>
 
         <div class="hero-side">
-          <div class="panel">
-            <div class="panel-content">
-              <h2 class="hero-card-title">See how much vMix can do for you.</h2>
-              <p class="hero-card-text">Start with Auto Camera — a plugin that automatically switches cameras based on who is speaking.</p>
-              <div class="highlight-list">
-                <div class="highlight-item">Detects who is speaking.</div>
-                <div class="highlight-item">Switches cameras automatically.</div>
-                <div class="highlight-item">Perfect for podcasts, interviews and studio talks.</div>
-                <div class="highlight-item">Try the free 14-day trial before subscribing.</div>
-              </div>
-            </div>
+          <div class="panel video-panel">
+            <iframe
+              class="hero-video"
+              src="https://www.youtube-nocookie.com/embed/355FK-nuVlA?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=355FK-nuVlA&amp;playsinline=1&amp;rel=0&amp;modestbranding=1"
+              title="Auto Camera automatically switching three cameras during a conversation"
+              allow="autoplay; encrypted-media; picture-in-picture"
+              referrerpolicy="strict-origin-when-cross-origin"
+              loading="eager"
+              allowfullscreen>
+            </iframe>
           </div>
 </div>
       </div>
@@ -665,9 +676,9 @@ Contact us
         <div class="plugins-list">
 
           <div class="plugin-item" data-ga-view="view_auto_camera">
-            <h3 class="plugin-title"><img src="logotyppuginy4vmix.png" alt="Auto Camera icon" class="plugin-icon">Auto Camera</h3>
+            <h3 class="plugin-title"><img src="assets/images/branding/plugins-for-live-logo.png" alt="Auto Camera icon" class="plugin-icon">Auto Camera</h3>
             <p class="publisher-note">Publisher: AZ Tomasz Cedro under the Plugins For Live brand.</p>
-            <img src="auto_camera_interface.jpg" alt="Auto Camera interface screenshot" class="product-screenshot">
+            <img src="assets/images/products/auto-camera/interface.jpg" alt="Auto Camera interface screenshot" class="product-screenshot">
 
             <p>
               The plugin automatically switches cameras based on the person currently speaking. It is ideal for podcasts, debates, interviews and multi-camera live productions. In the free version, the app works for 10 minutes after launch. After the trial ends, you can restart it to keep using it.
@@ -709,9 +720,9 @@ Contact us
           </div>
 
           <div class="plugin-item" data-ga-view="view_automix">
-            <h3 class="plugin-title"><img src="automix.png" alt="AutoMix icon" class="plugin-icon">AutoMix</h3>
+            <h3 class="plugin-title"><img src="assets/images/products/automix/icon.png" alt="AutoMix icon" class="plugin-icon">AutoMix</h3>
             <p class="publisher-note">Publisher: AZ Tomasz Cedro under the Plugins For Live brand.</p>
-            <img src="auto_mix_interface.jpg" alt="AutoMix interface screenshot" class="product-screenshot">
+            <img src="assets/images/products/automix/interface.jpg" alt="AutoMix interface screenshot" class="product-screenshot">
 
             <p>
               Intelligent microphone automix that works similarly to professional audio automixers. The plugin automatically manages audio levels.
@@ -731,9 +742,9 @@ Contact us
           </div>
 
                     <div class="plugin-item" data-ga-view="view_ducking_audio">
-            <h3 class="plugin-title"><img src="Ducking%20Audio.png" alt="Ducking Audio icon" class="plugin-icon">Ducking Audio</h3>
+            <h3 class="plugin-title"><img src="assets/images/products/ducking-audio/icon.png" alt="Ducking Audio icon" class="plugin-icon">Ducking Audio</h3>
             <p class="publisher-note">Publisher: AZ Tomasz Cedro under the Plugins For Live brand.</p>
-            <img src="ducking_app_interface.jpg" alt="Ducking Audio interface screenshot" class="product-screenshot">
+            <img src="assets/images/products/ducking-audio/interface.jpg" alt="Ducking Audio interface screenshot" class="product-screenshot">
 
             <p>
               Ducking Audio automatically lowers selected audio sources when another source becomes active.
