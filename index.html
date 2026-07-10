@@ -83,6 +83,10 @@
 
     .links{display:flex;gap:18px;color:var(--muted);font-size:14px}
     .links a:hover{color:var(--text)}
+    .lang-switch{display:flex;align-items:center;gap:4px;padding:4px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.06)}
+    .lang-switch a{min-width:34px;padding:6px 9px;border-radius:999px;color:var(--muted);font-size:13px;font-weight:850;text-align:center}
+    .lang-switch a:hover{color:var(--text)}
+    .lang-switch a.active{background:linear-gradient(135deg,var(--brand),var(--brand2));color:#06101d}
 
     .btn{
       display:inline-flex;
@@ -423,6 +427,8 @@
     @media(max-width:860px){
       .grid,.buy{grid-template-columns:1fr}
       .links{display:none}
+      .navin{gap:8px}
+      .logo{margin-right:auto}
       .hero{padding-top:52px}
       h1{letter-spacing:-1.4px}
       .lead{font-size:18px}
@@ -550,6 +556,17 @@
 
 </style>
 
+<script>
+  (function () {
+    var savedLanguage = localStorage.getItem('pfl_language');
+    var browserLanguage = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
+    var preferredLanguage = savedLanguage || (browserLanguage.toLowerCase().startsWith('pl') ? 'pl' : 'en');
+    if (preferredLanguage === 'pl') {
+      window.location.replace('pl/index-pl.html');
+    }
+  })();
+</script>
+
 <!-- Google Analytics loads only after cookie consent. -->
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -590,6 +607,10 @@
         <a href="#kontakt">Contact</a>
         <a href="pages/publisher.html">Publisher</a>
         <a href="pages/privacy-policy.html">Privacy Policy</a>
+      </div>
+      <div class="lang-switch" aria-label="Choose language">
+        <a href="index.html" class="active" lang="en" aria-current="page" onclick="localStorage.setItem('pfl_language','en')">EN</a>
+        <a href="pl/index-pl.html" lang="pl" onclick="localStorage.setItem('pfl_language','pl')">PL</a>
       </div>
       <a class="btn secondary" href="#zakup"
 onclick="gtag('event', 'menu_kup_wtyczke', { event_category: 'navigation' })">
