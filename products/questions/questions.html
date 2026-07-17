@@ -6,6 +6,23 @@
 <title>Questions App for Live Productions | Plugins For Live</title>
 <meta name="description" content="Free browser app for collecting and displaying audience questions during live productions, webinars and podcasts." />
 <link rel="canonical" href="https://pluginsforlive.com/products/questions/questions.html" />
+<meta name="robots" content="index,follow,max-image-preview:large" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Plugins For Live" />
+<meta property="og:url" content="https://pluginsforlive.com/products/questions/questions.html" />
+<meta property="og:title" content="Questions App for Live Productions" />
+<meta property="og:description" content="Collect and display audience questions during webinars, podcasts and live productions." />
+<meta property="og:image" content="https://pluginsforlive.com/assets/images/social/social-preview.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Questions App for Live Productions" />
+<meta name="twitter:description" content="A free browser tool for displaying audience questions during live productions." />
+<meta name="twitter:image" content="https://pluginsforlive.com/assets/images/social/social-preview.jpg" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+  {"@type":"Organization","@id":"https://pluginsforlive.com/#organization","name":"Plugins For Live","legalName":"AZ Tomasz Cedro","url":"https://pluginsforlive.com/"},
+  {"@type":"WebApplication","@id":"https://pluginsforlive.com/products/questions/questions.html#app","name":"Questions App","url":"https://pluginsforlive.com/products/questions/questions.html","description":"Free browser app for collecting and displaying audience questions during live productions, webinars and podcasts.","applicationCategory":"MultimediaApplication","applicationSubCategory":"Live production audience interaction","operatingSystem":"Any","browserRequirements":"Requires a modern web browser with JavaScript enabled.","isAccessibleForFree":true,"inLanguage":"en","image":"https://pluginsforlive.com/assets/images/social/social-preview.jpg","publisher":{"@id":"https://pluginsforlive.com/#organization"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://pluginsforlive.com/products/questions/questions.html"}}
+]}
+</script>
 
 <style>
 :root{
@@ -175,7 +192,6 @@ body.frame-on .frame{
 }
 
 .question-text{
-  outline:none;
   min-height:1.14em;
 }
 
@@ -213,7 +229,6 @@ body.delete-mode .question:hover{
   border-radius:9px;
   padding:0 13px;
   font-size:18px;
-  outline:none;
 }
 
 #questionInput::placeholder{
@@ -222,7 +237,11 @@ body.delete-mode .question:hover{
 
 #questionInput:focus{
   border-color:#888;
+  outline:3px solid #fff;
+  outline-offset:2px;
 }
+
+button:focus-visible,.marker:focus-visible,.question-text:focus-visible{outline:3px solid #fff;outline-offset:2px}
 
 .modal-bg{
   display:none;
@@ -354,13 +373,13 @@ body.delete-mode .question:hover{
   <button type="button" data-action="add">Add</button>
 </div>
 
-<div class="modal-bg" id="infoModal">
+<div class="modal-bg" id="infoModal" role="dialog" aria-modal="true" aria-labelledby="questions-info-title">
   <div class="modal">
-    <h1>Questions</h1>
+    <h1 id="questions-info-title">Questions</h1>
     <p><strong>Work-in-progress app for displaying questions to hosts during live productions.</strong></p>
-    <p>Developed by Tomasz Cedro — RocketCam.</p>
+    <p>Developed and published by AZ Tomasz Cedro under the Plugins For Live brand.</p>
     <p>Working version: 1.6 mobile hard fix</p>
-    <p>Other plugins are available at <strong>www.pluginsforlive.com</strong>.</p>
+    <p>Other plugins are available at <a href="https://pluginsforlive.com/">pluginsforlive.com</a>.</p>
     <p>The website includes free plugins as well as selected paid plugins.</p>
     <p class="small">Press Enter in the bottom field to add a question. Tap the dash to apply the selected color. Delete mode: tap Delete, then tap the question you want to remove.</p>
     <button type="button" data-action="close-info">Close</button>

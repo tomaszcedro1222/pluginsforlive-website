@@ -67,7 +67,14 @@
     }
 
     a{color:inherit;text-decoration:none}
+    button,input,select,textarea{font:inherit}
+    a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{
+      outline:3px solid var(--brand);
+      outline-offset:3px;
+    }
     .wrap{width:min(1120px,calc(100% - 36px));margin:0 auto}
+    .skip-link{position:fixed;left:14px;top:-80px;z-index:20000;padding:11px 15px;border-radius:10px;background:#fff;color:#07101c;font-weight:900}
+    .skip-link:focus{top:14px}
 
     .nav{
       position:sticky;
@@ -532,9 +539,13 @@
 
     @media(max-width:860px){
       .grid,.buy{grid-template-columns:1fr}
-      .links{display:none}
+      .links{max-width:45vw;gap:8px;overflow-x:auto;white-space:nowrap;scrollbar-width:thin}
+      .links a{display:inline-flex;align-items:center;min-height:44px;padding:0 5px}
       .navin{gap:8px}
       .logo{margin-right:auto}
+      .logo{font-size:0}
+      .lang-switch a{min-width:44px;min-height:44px;display:grid;place-items:center;padding:5px}
+      .navin>.btn{display:none}
       .hero{padding-top:52px}
       h1{letter-spacing:-1.4px}
       .lead{font-size:18px}
@@ -564,6 +575,7 @@
       box-shadow:0 20px 80px rgba(0,0,0,.6);
       background:#111;
     }
+    .lightbox-close{position:absolute;right:16px;top:16px;min-width:48px;min-height:48px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:#101827;color:#fff;font-size:26px;cursor:pointer}
 
     .product-screenshot{
       cursor:zoom-in !important;
@@ -660,6 +672,16 @@
       }
     }
 
+    @media(max-width:560px){
+      .navin{flex-wrap:wrap;padding:8px 0}
+      .links{order:3;max-width:none;width:100%;justify-content:center}
+    }
+
+    @media(prefers-reduced-motion:reduce){
+      html{scroll-behavior:auto}
+      *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+    }
+
 </style>
 
 <!-- Google Analytics loads only after cookie consent. -->
@@ -689,7 +711,8 @@
 
 </head>
 <body>
-  <nav class="nav">
+  <a class="skip-link" href="#main-content">Przejdź do głównej treści</a>
+  <nav class="nav" aria-label="Nawigacja główna">
     <div class="wrap navin">
       <a class="logo" href="#">
         <img src="../assets/images/branding/plugins-for-live-logo.png" alt="Plugins For Live logo" class="logo-img">
@@ -714,7 +737,7 @@ Kup wtyczkę
     </div>
   </nav>
 
-  <main>
+  <main id="main-content">
     <header class="hero">
       <div class="wrap grid">
         <div>
@@ -770,7 +793,7 @@ Skontaktuj się
           <div class="plugin-item" data-ga-view="view_auto_camera">
             <h3 class="plugin-title"><img src="../assets/images/branding/plugins-for-live-logo.png" alt="Auto Camera icon" class="plugin-icon">Auto Camera</h3>
             <p class="publisher-note">Wydawca: AZ Tomasz Cedro pod marką Plugins For Live.</p>
-            <img src="../assets/images/products/auto-camera/interface.jpg" alt="Zrzut ekranu interfejsu Auto Camera" class="product-screenshot">
+            <img src="../assets/images/products/auto-camera/interface.jpg" alt="Zrzut ekranu interfejsu Auto Camera" class="product-screenshot" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Powiększ zrzut interfejsu Auto Camera">
 
             <p>
               Wtyczka automatycznie przełącza kamery zależnie od tego, kto aktualnie mówi. Idealnie sprawdza się w podcastach, debatach, wywiadach i wielokamerowych produkcjach na żywo. W wersji bezpłatnej aplikacja działa przez 10 minut od uruchomienia. Po zakończeniu okresu próbnego możesz uruchomić ją ponownie i dalej z niej korzystać.
@@ -815,7 +838,7 @@ Skontaktuj się
           <div class="plugin-item" data-ga-view="view_automix">
             <h3 class="plugin-title"><img src="../assets/images/products/automix/icon.png" alt="AutoMix icon" class="plugin-icon">AutoMix</h3>
             <p class="publisher-note">Wydawca: AZ Tomasz Cedro pod marką Plugins For Live.</p>
-            <img src="../assets/images/products/automix/interface.jpg" alt="Zrzut ekranu interfejsu AutoMix" class="product-screenshot">
+            <img src="../assets/images/products/automix/interface.jpg" alt="Zrzut ekranu interfejsu AutoMix" class="product-screenshot" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Powiększ zrzut interfejsu AutoMix">
 
             <p>
               Inteligentny automix mikrofonów działający podobnie do profesjonalnych automikserów audio. Wtyczka automatycznie zarządza poziomami dźwięku.
@@ -838,7 +861,7 @@ Skontaktuj się
                     <div class="plugin-item" data-ga-view="view_ducking_audio">
             <h3 class="plugin-title"><img src="../assets/images/products/ducking-audio/icon.png" alt="Ducking Audio icon" class="plugin-icon">Ducking Audio</h3>
             <p class="publisher-note">Wydawca: AZ Tomasz Cedro pod marką Plugins For Live.</p>
-            <img src="../assets/images/products/ducking-audio/interface.jpg" alt="Zrzut ekranu interfejsu Ducking Audio" class="product-screenshot">
+            <img src="../assets/images/products/ducking-audio/interface.jpg" alt="Zrzut ekranu interfejsu Ducking Audio" class="product-screenshot" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Powiększ zrzut interfejsu Ducking Audio">
 
             <p>
               Ducking Audio automatycznie ścisza wybrane źródła dźwięku, gdy inne źródło staje się aktywne.
@@ -1277,7 +1300,8 @@ Skontaktuj się
     })();
   </script>
 
-<div class="lightbox" id="imageLightbox">
+<div class="lightbox" id="imageLightbox" role="dialog" aria-modal="true" aria-label="Podgląd obrazu" aria-hidden="true">
+  <button class="lightbox-close" type="button" aria-label="Zamknij podgląd obrazu">×</button>
   <img id="lightboxImage" src="" alt="Preview">
 </div>
 
@@ -1321,23 +1345,37 @@ document.addEventListener('DOMContentLoaded', function(){
   const lightbox = document.getElementById('imageLightbox');
   const lightboxImage = document.getElementById('lightboxImage');
 
-  document.querySelectorAll('.product-screenshot').forEach(img => {
-    img.addEventListener('click', function(){
+  let lightboxTrigger = null;
+  function openLightbox(img){
+      lightboxTrigger = img;
       lightboxImage.src = this.src;
+      lightboxImage.alt = this.alt;
       lightbox.classList.add('active');
+      lightbox.setAttribute('aria-hidden', 'false');
+      lightbox.querySelector('.lightbox-close').focus();
 
       if (typeof gtag === 'function') {
         gtag('event','screenshot_zoom',{
           event_category:'engagement',
-          image:this.src
+          image:img.src
         });
       }
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('active');
+    lightbox.setAttribute('aria-hidden', 'true');
+    lightboxImage.src = '';
+    if (lightboxTrigger) lightboxTrigger.focus();
+  }
+  document.querySelectorAll('.product-screenshot').forEach(img => {
+    img.addEventListener('click', function(){ openLightbox.call(this, this); });
+    img.addEventListener('keydown', function(event){
+      if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openLightbox.call(this, this); }
     });
   });
 
-  lightbox.addEventListener('click', function(){
-    lightbox.classList.remove('active');
-  });
+  lightbox.addEventListener('click', function(event){ if (event.target !== lightboxImage) closeLightbox(); });
+  document.addEventListener('keydown', function(event){ if (event.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox(); });
 
 });
 </script>
