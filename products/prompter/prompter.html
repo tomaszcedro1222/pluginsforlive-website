@@ -1,18 +1,31 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Rocket Prompter for Live Productions | Plugins For Live</title>
 <meta name="description" content="Free browser teleprompter with smooth scrolling for live streams, webinars, presentations and video recordings." />
 <link rel="canonical" href="https://pluginsforlive.com/products/prompter/prompter.html" />
+<meta name="robots" content="index,follow,max-image-preview:large" />
 <link rel="icon" type="image/png" href="https://pluginsforlive.com/assets/images/branding/rocket-logo.png">
 <link rel="apple-touch-icon" href="https://pluginsforlive.com/assets/images/branding/rocket-logo.png">
 
-<meta property="og:title" content="Rocket Prompter">
+<meta property="og:site_name" content="Plugins For Live">
+<meta property="og:url" content="https://pluginsforlive.com/products/prompter/prompter.html">
+<meta property="og:title" content="Rocket Prompter for Live Productions">
 <meta property="og:description" content="Free teleprompter for live streaming, podcasts and video productions.">
-<meta property="og:image" content="https://pluginsforlive.com/assets/images/branding/rocket-logo.png">
+<meta property="og:image" content="https://pluginsforlive.com/assets/images/social/social-preview.jpg">
 <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rocket Prompter for Live Productions">
+<meta name="twitter:description" content="A free browser teleprompter for live streaming, podcasts and video productions.">
+<meta name="twitter:image" content="https://pluginsforlive.com/assets/images/social/social-preview.jpg">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+  {"@type":"Organization","@id":"https://pluginsforlive.com/#organization","name":"Plugins For Live","legalName":"AZ Tomasz Cedro","url":"https://pluginsforlive.com/"},
+  {"@type":"WebApplication","@id":"https://pluginsforlive.com/products/prompter/prompter.html#app","name":"Rocket Prompter","url":"https://pluginsforlive.com/products/prompter/prompter.html","description":"Free browser teleprompter for live streaming, podcasts and video productions.","applicationCategory":"MultimediaApplication","applicationSubCategory":"Teleprompter","operatingSystem":"Any","browserRequirements":"Requires a modern web browser with JavaScript enabled.","isAccessibleForFree":true,"inLanguage":"en","image":"https://pluginsforlive.com/assets/images/social/social-preview.jpg","publisher":{"@id":"https://pluginsforlive.com/#organization"},"offers":{"@type":"Offer","price":"0","priceCurrency":"USD","availability":"https://schema.org/InStock","url":"https://pluginsforlive.com/products/prompter/prompter.html"}}
+]}
+</script>
 
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QS8RVYVMY0"></script>
@@ -153,10 +166,12 @@ gtag('config', 'G-QS8RVYVMY0');
         inset: 0;
         overflow: hidden;
         background: #000;
-        outline: none;
         touch-action: none;
         overscroll-behavior: none;
     }
+
+    button:focus-visible, textarea:focus-visible, .stage:focus-visible, a:focus-visible { outline:3px solid var(--accent2); outline-offset:3px; }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { transition-duration:.01ms!important; animation-duration:.01ms!important; } }
 
     .scroll-wrap {
         position: absolute;
@@ -493,14 +508,14 @@ gtag('config', 'G-QS8RVYVMY0');
 
 
 
-<div class="modal-backdrop" id="infoBackdrop">
+<div class="modal-backdrop" id="infoBackdrop" role="dialog" aria-modal="true" aria-labelledby="prompter-info-title">
     <div class="modal">
         <div class="modal-header">
             <div class="modal-title">Rocket Prompter</div>
             <button id="closeInfoBtn">Close</button>
         </div>
         <div class="shortcuts-body" style="line-height:1.7; font-size:16px;">
-            <h2 style="color:var(--accent); margin-top:0;">Rocket Prompter</h2>
+            <h1 id="prompter-info-title" style="color:var(--accent); margin-top:0;">Rocket Prompter</h1>
             <p>
                 Free teleprompter for livestreams, podcasts, conferences,
                 presentations and video productions.
@@ -516,7 +531,7 @@ gtag('config', 'G-QS8RVYVMY0');
             </ul>
             <p>
                 More free tools and plugins:<br>
-                <b>www.pluginsforlive.com</b>
+                <a href="https://pluginsforlive.com/"><b>pluginsforlive.com</b></a>
             </p>
         </div>
         <div class="modal-footer">

@@ -27,6 +27,11 @@ body{
 
 img{max-width:100%;height:auto}
 a{color:inherit}
+button,input,select,textarea{font:inherit}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{
+  outline:3px solid var(--brand);
+  outline-offset:3px;
+}
 .wrap{width:min(1120px,calc(100% - 36px));margin:0 auto}
 .skip-link{position:absolute;left:18px;top:-80px;z-index:100;padding:10px 14px;border-radius:10px;background:#fff;color:#07101c;font-weight:800}
 .skip-link:focus{top:12px}
@@ -93,14 +98,19 @@ h3{margin:0 0 9px;font-size:21px;line-height:1.2}
   .hero-grid,.split{grid-template-columns:1fr}
   .facts{grid-template-columns:repeat(2,1fr)}
   .cards{grid-template-columns:1fr}
-  .navlinks{display:none}
+  .navin{min-height:64px;gap:10px}
+  .navlinks{max-width:48vw;gap:8px;overflow-x:auto;scrollbar-width:thin;white-space:nowrap}
+  .navlinks a{min-height:44px;display:inline-flex;align-items:center;padding:0 5px}
   .hero{padding-top:38px}
   h1{letter-spacing:-1.5px}
 }
 
 @media(max-width:560px){
   .wrap{width:min(100% - 24px,1120px)}
+  .navin{flex-wrap:wrap;padding:8px 0}
   .logo span{display:none}
+  .navlinks{order:3;max-width:none;width:100%;justify-content:center}
+  .language-link{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;padding:7px}
   .facts{grid-template-columns:1fr}
   .hero-actions .button{width:100%}
   .panel,.cta{padding:22px}
