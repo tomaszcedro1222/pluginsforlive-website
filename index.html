@@ -17,6 +17,9 @@
   />
 
   <link rel="canonical" href="https://pluginsforlive.com/" />
+  <link rel="alternate" hreflang="en" href="https://pluginsforlive.com/" />
+  <link rel="alternate" hreflang="pl" href="https://pluginsforlive.com/pl/" />
+  <link rel="alternate" hreflang="x-default" href="https://pluginsforlive.com/" />
 
   <!-- Open Graph / Facebook / LinkedIn -->
   <meta property="og:locale" content="en_US" />
@@ -60,8 +63,6 @@
   <meta name="twitter:description" content="Auto Camera, Ducking Audio and smart automation tools for live productions in vMix." />
   <meta name="twitter:image" content="https://pluginsforlive.com/assets/images/social/social-preview.jpg" />
   <meta name="twitter:image:alt" content="Plugins For Live — vMix plugins and automation tools" />
-
-  <link rel="canonical" href="https://pluginsforlive.com/" />
 
 <link rel="icon" type="image/png" href="assets/images/branding/plugins-for-live-logo.png" />
   <style>
@@ -170,19 +171,24 @@
     .video-panel:before,.video-panel:after{display:none}
     .hero-video{
       display:block;
+      position:absolute;
+      inset:0;
       width:100%;
       height:100%;
       border:0;
+      opacity:0;
+      transition:opacity .25s ease;
+    }
+    .hero-video.is-loaded{
+      opacity:1;
     }
     .video-placeholder{
-      position:relative;
+      position:absolute;
+      z-index:1;
+      inset:0;
       width:100%;
       height:100%;
-      padding:0;
-      border:0;
       background:#02050a;
-      color:#fff;
-      cursor:pointer;
       overflow:hidden;
     }
     .video-placeholder img{
@@ -191,44 +197,20 @@
       height:100%;
       object-fit:cover;
     }
-    .video-placeholder:after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45));
-      transition:background .2s ease;
-    }
-    .video-placeholder:hover:after,
-    .video-placeholder:focus-visible:after{
-      background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.52));
-    }
-    .video-play{
+    .video-loader{
       position:absolute;
       z-index:1;
       left:50%;
       top:50%;
-      display:grid;
-      place-items:center;
-      width:82px;
-      height:58px;
-      border-radius:16px;
-      background:#ff0033;
-      box-shadow:0 12px 32px rgba(0,0,0,.5);
+      width:46px;
+      height:46px;
+      border:4px solid rgba(255,255,255,.35);
+      border-top-color:#fff;
+      border-radius:50%;
       transform:translate(-50%,-50%);
-      transition:transform .2s ease,background .2s ease;
+      animation:video-loading .8s linear infinite;
     }
-    .video-play:before{
-      content:"";
-      margin-left:5px;
-      border-top:12px solid transparent;
-      border-bottom:12px solid transparent;
-      border-left:20px solid #fff;
-    }
-    .video-placeholder:hover .video-play,
-    .video-placeholder:focus-visible .video-play{
-      background:#ff174b;
-      transform:translate(-50%,-50%) scale(1.08);
-    }
+    @keyframes video-loading{to{transform:translate(-50%,-50%) rotate(360deg)}}
     .hero-card-title{
       margin:0 0 14px;
       color:#ffffff;
@@ -660,17 +642,6 @@
 
 </style>
 
-<script>
-  (function () {
-    var savedLanguage = localStorage.getItem('pfl_language');
-    var browserLanguage = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
-    var preferredLanguage = savedLanguage || (browserLanguage.toLowerCase().startsWith('pl') ? 'pl' : 'en');
-    if (preferredLanguage === 'pl') {
-      window.location.replace('pl/index-pl.html');
-    }
-  })();
-</script>
-
 <!-- Google Analytics loads only after cookie consent. -->
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -713,8 +684,8 @@
         <a href="pages/privacy-policy.html">Privacy Policy</a>
       </div>
       <div class="lang-switch" aria-label="Choose language">
-        <a href="index.html" class="active" lang="en" aria-current="page" onclick="localStorage.setItem('pfl_language','en')">EN</a>
-        <a href="pl/index-pl.html" lang="pl" onclick="localStorage.setItem('pfl_language','pl')">PL</a>
+        <a href="/" class="active" lang="en" hreflang="en" aria-current="page">EN</a>
+        <a href="/pl/" lang="pl" hreflang="pl">PL</a>
       </div>
       <a class="btn secondary" href="#zakup"
 onclick="gtag('event', 'menu_kup_wtyczke', { event_category: 'navigation' })">
@@ -747,18 +718,17 @@ Contact us
             <p>Watch Auto Camera follow a conversation and switch between three cameras in real time. The fourth window shows the finished mix — created automatically, without a camera operator or vision mixer.</p>
           </div>
           <div class="panel video-panel">
-            <button
+            <div
               class="video-placeholder"
-              type="button"
               data-youtube-id="355FK-nuVlA"
-              aria-label="Play Auto Camera demonstration video">
+              aria-hidden="true">
               <img
                 src="assets/images/video/auto-camera-demo-poster.png"
                 alt="Auto Camera demonstration with two speakers and three camera views"
                 width="1919"
                 height="1079">
-              <span class="video-play" aria-hidden="true"></span>
-            </button>
+              <span class="video-loader"></span>
+            </div>
           </div>
 </div>
       </div>
@@ -815,6 +785,7 @@ Contact us
                 })">
                 Download trial version
               </a>
+              <a href="products/auto-camera/" class="trial-btn">View product details</a>
             </div>
           </div>
 
@@ -837,6 +808,7 @@ Contact us
 
             <div class="plugin-actions">
               <div class="coming-soon">available soon</div>
+              <a href="products/automix/" class="trial-btn">View product details</a>
             </div>
           </div>
 
@@ -876,6 +848,7 @@ Contact us
     })">
     Download trial version
   </a>
+  <a href="products/ducking-audio/" class="trial-btn">View product details</a>
 </div>
 
         </div>
@@ -1290,26 +1263,21 @@ Contact us
 document.addEventListener('DOMContentLoaded', function(){
 
   document.querySelectorAll('.video-placeholder').forEach(placeholder => {
-    placeholder.addEventListener('click', function(){
-      const videoId = this.dataset.youtubeId;
-      if (!videoId) return;
+    const videoId = placeholder.dataset.youtubeId;
+    if (!videoId) return;
 
-      const iframe = document.createElement('iframe');
-      iframe.className = 'hero-video';
-      iframe.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1&playsinline=1&rel=0&modestbranding=1';
-      iframe.title = 'Auto Camera automatically switching three cameras during a conversation';
-      iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
-      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-      iframe.allowFullscreen = true;
-      this.replaceWith(iframe);
-
-      if (typeof gtag === 'function') {
-        gtag('event', 'video_play', {
-          event_category: 'engagement',
-          video_id: videoId
-        });
-      }
+    const iframe = document.createElement('iframe');
+    iframe.className = 'hero-video';
+    iframe.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1&mute=1&loop=1&playlist=' + encodeURIComponent(videoId) + '&playsinline=1&rel=0&modestbranding=1';
+    iframe.title = 'Auto Camera automatically switching three cameras during a conversation';
+    iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    iframe.allowFullscreen = true;
+    iframe.addEventListener('load', function(){
+      iframe.classList.add('is-loaded');
+      placeholder.remove();
     }, { once: true });
+    placeholder.parentElement.appendChild(iframe);
   });
 
   const lightbox = document.getElementById('imageLightbox');
