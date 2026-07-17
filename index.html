@@ -193,7 +193,12 @@
       overflow:hidden;
       opacity:1;
       transition:opacity .4s ease;
+      padding:0;
+      border:0;
+      color:inherit;
+      cursor:pointer;
     }
+    .video-placeholder:focus-visible{outline:3px solid var(--brand);outline-offset:4px}
     .video-placeholder.is-hiding{opacity:0;pointer-events:none}
     .video-placeholder img{
       display:block;
@@ -202,6 +207,7 @@
       object-fit:cover;
     }
     .video-loader{
+      display:none;
       position:absolute;
       z-index:1;
       left:50%;
@@ -214,7 +220,30 @@
       transform:translate(-50%,-50%);
       animation:video-loading .8s linear infinite;
     }
-    .video-loading-label{
+    .video-placeholder.is-loading .video-loader{display:block}
+    .video-placeholder.is-loading .video-play{display:none}
+    .video-play{
+      position:absolute;
+      z-index:2;
+      left:50%;
+      top:50%;
+      width:76px;
+      height:76px;
+      border-radius:50%;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      box-shadow:0 12px 34px rgba(0,0,0,.42),0 0 0 8px rgba(255,255,255,.12);
+      transform:translate(-50%,-50%);
+    }
+    .video-play:after{
+      content:"";
+      position:absolute;
+      left:31px;
+      top:23px;
+      border-top:15px solid transparent;
+      border-bottom:15px solid transparent;
+      border-left:23px solid #07101d;
+    }
+    .video-status-label{
       position:absolute;
       z-index:2;
       left:50%;
@@ -737,18 +766,20 @@ Contact us
             <p>Watch Auto Camera follow a conversation and switch between three cameras in real time. The fourth window shows the finished mix — created automatically, without a camera operator or vision mixer.</p>
           </div>
           <div class="panel video-panel">
-            <div
+            <button
+              type="button"
               class="video-placeholder"
               data-youtube-id="355FK-nuVlA"
-              aria-hidden="true">
+              aria-label="Play the Auto Camera demonstration">
               <img
                 src="assets/images/video/auto-camera-demo-poster.png"
-                alt="Auto Camera demonstration with two speakers and three camera views"
+                alt=""
                 width="1919"
                 height="1079">
+              <span class="video-play" aria-hidden="true"></span>
               <span class="video-loader"></span>
-              <span class="video-loading-label">Loading video…</span>
-            </div>
+              <span class="video-status-label">Play video</span>
+            </button>
           </div>
 </div>
       </div>
@@ -1286,26 +1317,33 @@ document.addEventListener('DOMContentLoaded', function(){
     const videoId = placeholder.dataset.youtubeId;
     if (!videoId) return;
 
-    const iframe = document.createElement('iframe');
-    iframe.className = 'hero-video';
-    iframe.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1&mute=1&loop=1&playlist=' + encodeURIComponent(videoId) + '&playsinline=1&rel=0&modestbranding=1';
-    iframe.title = 'Auto Camera automatically switching three cameras during a conversation';
-    iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
-    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-    iframe.allowFullscreen = true;
-    iframe.addEventListener('load', function(){
-      iframe.classList.add('is-loaded');
-      window.setTimeout(function(){
-        placeholder.classList.add('is-hiding');
-        placeholder.addEventListener('transitionend', function(){
-          placeholder.remove();
-        }, { once: true });
+    placeholder.addEventListener('click', function(){
+      if (placeholder.classList.contains('is-loading')) return;
+      placeholder.classList.add('is-loading');
+      placeholder.disabled = true;
+      placeholder.querySelector('.video-status-label').textContent = 'Loading video…';
+
+      const iframe = document.createElement('iframe');
+      iframe.className = 'hero-video';
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1&playsinline=1&rel=0&modestbranding=1';
+      iframe.title = 'Auto Camera automatically switching three cameras during a conversation';
+      iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+      iframe.allowFullscreen = true;
+      iframe.addEventListener('load', function(){
+        iframe.classList.add('is-loaded');
         window.setTimeout(function(){
-          if (placeholder.isConnected) placeholder.remove();
-        }, 600);
-      }, 700);
+          placeholder.classList.add('is-hiding');
+          placeholder.addEventListener('transitionend', function(){
+            placeholder.remove();
+          }, { once: true });
+          window.setTimeout(function(){
+            if (placeholder.isConnected) placeholder.remove();
+          }, 600);
+        }, 300);
+      }, { once: true });
+      placeholder.parentElement.appendChild(iframe);
     }, { once: true });
-    placeholder.parentElement.appendChild(iframe);
   });
 
   const lightbox = document.getElementById('imageLightbox');
