@@ -271,6 +271,23 @@
       white-space:nowrap;
       backdrop-filter:blur(8px);
     }
+    .video-showcase{padding:28px 0 82px}
+    .video-showcase-heading{max-width:760px;margin-bottom:28px}
+    .video-showcase-heading p{margin:0;color:var(--muted)}
+    .video-showcase-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+    .video-showcase-card{
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+      border:1px solid var(--line);
+      border-radius:22px;
+      background:rgba(255,255,255,.055);
+      box-shadow:0 16px 36px rgba(0,0,0,.2);
+    }
+    .showcase-video{border:0;border-radius:0;box-shadow:none}
+    .video-showcase-copy{padding:20px}
+    .video-showcase-copy h3{margin:0 0 8px;font-size:20px}
+    .video-showcase-copy p{margin:0;color:var(--muted);font-size:14px;line-height:1.55}
     @keyframes video-loading{to{transform:translate(-50%,-50%) rotate(360deg)}}
     .hero-card-title{
       margin:0 0 14px;
@@ -589,6 +606,7 @@
       h1{letter-spacing:-1.4px}
       .lead{font-size:18px}
       .product-screenshot{height:180px}
+      .video-showcase-grid{grid-template-columns:1fr}
     }
   
     .lightbox{
@@ -928,6 +946,44 @@ Contact us
   </a>
 </div>
 
+        </div>
+      </div>
+    </section>
+
+    <section class="video-showcase" aria-labelledby="auto-camera-videos-title">
+      <div class="wrap">
+        <div class="video-showcase-heading">
+          <h2 class="section-title" id="auto-camera-videos-title">Live productions made with Auto Camera</h2>
+          <p>Examples of real productions where Auto Camera creates the camera mix automatically, letting the conversation lead the shots.</p>
+        </div>
+        <div class="video-showcase-grid">
+          <article class="video-showcase-card" data-ga-view="view_auto_camera_video_1">
+            <div class="panel video-panel showcase-video">
+              <button type="button" class="video-placeholder" data-youtube-id="L1gNAhFrRak" data-play-label="Play video" aria-label="Play Auto Camera production example one">
+                <img src="https://i.ytimg.com/vi/L1gNAhFrRak/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">
+                <span class="video-play" aria-hidden="true"></span><span class="video-loader"></span><span class="video-status-label">Play video</span>
+              </button>
+            </div>
+            <div class="video-showcase-copy"><h3>Production example</h3><p>A live production created with automatic camera switching driven by the active speaker.</p></div>
+          </article>
+          <article class="video-showcase-card" data-ga-view="view_auto_camera_video_2">
+            <div class="panel video-panel showcase-video">
+              <button type="button" class="video-placeholder" data-youtube-id="B7wHfJ_xHiQ" data-play-label="Play video" aria-label="Play Auto Camera production example two">
+                <img src="https://i.ytimg.com/vi/B7wHfJ_xHiQ/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">
+                <span class="video-play" aria-hidden="true"></span><span class="video-loader"></span><span class="video-status-label">Play video</span>
+              </button>
+            </div>
+            <div class="video-showcase-copy"><h3>Conversation in motion</h3><p>See how Auto Camera follows the rhythm of a multi-person conversation without manual cuts.</p></div>
+          </article>
+          <article class="video-showcase-card" data-ga-view="view_auto_camera_video_3">
+            <div class="panel video-panel showcase-video">
+              <button type="button" class="video-placeholder" data-youtube-id="TGWFxNIUy-8" data-play-label="Play video" aria-label="Play Auto Camera production example three">
+                <img src="https://i.ytimg.com/vi/TGWFxNIUy-8/hqdefault.jpg" alt="" width="480" height="360" loading="lazy">
+                <span class="video-play" aria-hidden="true"></span><span class="video-loader"></span><span class="video-status-label">Play video</span>
+              </button>
+            </div>
+            <div class="video-showcase-copy"><h3>Automatic camera mix</h3><p>A complete example of a production delivered with Auto Camera handling the camera changes.</p></div>
+          </article>
         </div>
       </div>
     </section>
@@ -1310,37 +1366,69 @@ Contact us
 <script>
 document.addEventListener('DOMContentLoaded', function(){
 
+  let activeVideoPanel = null;
+  const playLabel = document.documentElement.lang === 'pl' ? 'Odtwórz film' : 'Play video';
+  const loadingLabel = document.documentElement.lang === 'pl' ? 'Ładowanie filmu…' : 'Loading video…';
+
+  function stopVideo(panel) {
+    if (!panel) return;
+    const iframe = panel.querySelector('.hero-video');
+    if (iframe) iframe.remove();
+    const placeholder = panel.querySelector('.video-placeholder');
+    if (placeholder) {
+      placeholder.classList.remove('is-loading', 'is-hiding');
+      placeholder.disabled = false;
+      placeholder.querySelector('.video-status-label').textContent = placeholder.dataset.playLabel || playLabel;
+    }
+    if (activeVideoPanel === panel) activeVideoPanel = null;
+  }
+
   document.querySelectorAll('.video-placeholder').forEach(placeholder => {
     const videoId = placeholder.dataset.youtubeId;
     if (!videoId) return;
 
     placeholder.addEventListener('click', function(){
-      if (placeholder.classList.contains('is-loading')) return;
+      const panel = placeholder.parentElement;
+      if (placeholder.classList.contains('is-loading') || panel.querySelector('.hero-video')) return;
+      if (activeVideoPanel && activeVideoPanel !== panel) stopVideo(activeVideoPanel);
+
       placeholder.classList.add('is-loading');
       placeholder.disabled = true;
-      placeholder.querySelector('.video-status-label').textContent = 'Loading video…';
+      placeholder.querySelector('.video-status-label').textContent = loadingLabel;
 
       const iframe = document.createElement('iframe');
       iframe.className = 'hero-video';
       iframe.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(videoId) + '?autoplay=1&playsinline=1&rel=0&modestbranding=1';
-      iframe.title = 'Auto Camera automatically switching three cameras during a conversation';
+      iframe.title = placeholder.getAttribute('aria-label');
       iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
       iframe.referrerPolicy = 'strict-origin-when-cross-origin';
       iframe.allowFullscreen = true;
       iframe.addEventListener('load', function(){
+        if (!iframe.isConnected) return;
         iframe.classList.add('is-loaded');
-        window.setTimeout(function(){
-          placeholder.classList.add('is-hiding');
-          placeholder.addEventListener('transitionend', function(){
-            placeholder.remove();
-          }, { once: true });
-          window.setTimeout(function(){
-            if (placeholder.isConnected) placeholder.remove();
-          }, 600);
-        }, 300);
+        placeholder.classList.remove('is-loading');
+        placeholder.classList.add('is-hiding');
       }, { once: true });
-      placeholder.parentElement.appendChild(iframe);
-    }, { once: true });
+      panel.appendChild(iframe);
+      activeVideoPanel = panel;
+
+      if (typeof gtag === 'function') {
+        gtag('event', 'auto_camera_video_play', { video_id: videoId });
+      }
+    });
+  });
+
+  if ('IntersectionObserver' in window) {
+    const videoObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting && entry.target === activeVideoPanel) stopVideo(entry.target);
+      });
+    }, { threshold: 0.25 });
+    document.querySelectorAll('.video-panel').forEach(panel => videoObserver.observe(panel));
+  }
+
+  document.addEventListener('visibilitychange', function(){
+    if (document.hidden) stopVideo(activeVideoPanel);
   });
 
   const lightbox = document.getElementById('imageLightbox');
