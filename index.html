@@ -14,7 +14,7 @@
 
   <meta
     name="description"
-    content="Professional vMix plugins and tools. Automatic camera switching, audio ducking, automix solutions and free live production utilities."
+    content="Professional vMix plugins and tools. Automatic camera switching, audio ducking and free live production utilities."
   />
 
   <link rel="canonical" href="https://pluginsforlive.com/" />
@@ -797,7 +797,7 @@ Download and try for free
       <div class="wrap grid">
         <div>
           <h1>vMix Plugins That <span>Automate Live Video Production</span>.</h1>
-          <p class="lead">Tools designed to work with vMix. Auto Camera, microphone automix and Ducking Audio for automatic audio control in vMix. More plugins coming soon.</p>
+          <p class="lead">Tools designed to work with vMix. Auto Camera and Ducking Audio for automatic video and audio control in vMix. More plugins coming soon.</p>
           <div class="actions">
             <a class="btn" href="https://github.com/tomaszcedro1222/pluginyvmix/releases/latest/download/AutoCameraSetup.exe"
 onclick="gtag('event', 'download_auto_camera', { event_category: 'button' })">
@@ -887,28 +887,6 @@ Contact us
                 onclick="gtag('event', 'begin_checkout', { currency: 'USD', value: 9.99, item_name: 'Auto Camera' }); gtag('event', 'stripe_checkout_click', { event_category: 'checkout', item_name: 'Auto Camera', currency: 'USD', value: 9.99, link_url: 'https://buy.stripe.com/8x25kD8Qv65j0YAeLj6Na08' })">
                 Buy / Subscribe
               </a>
-            </div>
-          </div>
-
-          <div class="plugin-item" data-ga-view="view_automix">
-            <h3 class="plugin-title"><img src="assets/images/products/automix/icon.png" alt="AutoMix icon" class="plugin-icon">AutoMix</h3>
-            <img src="assets/images/products/automix/interface.jpg" alt="AutoMix interface screenshot" class="product-screenshot" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Enlarge AutoMix interface screenshot">
-
-            <p>
-              Intelligent microphone automix that works similarly to professional audio automixers. The plugin automatically manages audio levels.
-            </p>
-
-            <ul>
-              <li>Automatic audio level control</li>
-              <li>Clearer conversations</li>
-              <li>Less chaos in the audio mix</li>
-              <li>More stable live audio mix</li>
-              <li>Simple setup</li>
-            </ul>
-            <a href="products/automix/" class="plugin-info-link">Learn more</a>
-
-            <div class="plugin-actions">
-              <div class="coming-soon">available soon</div>
             </div>
           </div>
 
@@ -1154,8 +1132,6 @@ Contact us
       const PRODUCT_PRICES = {
         'auto_camera': { item_name: 'Auto Camera', value: 9.99, currency: 'USD' },
         'autocamera': { item_name: 'Auto Camera', value: 9.99, currency: 'USD' },
-        'auto_mix': { item_name: 'AutoMix', value: 69, currency: 'USD' },
-        'automix': { item_name: 'AutoMix', value: 69, currency: 'USD' },
         'ducking_audio': { item_name: 'Ducking Audio', value: 45, currency: 'USD' },
         'duckingaudio': { item_name: 'Ducking Audio', value: 45, currency: 'USD' }
       };
@@ -1173,7 +1149,6 @@ Contact us
       function normalizeProductName(text) {
         const source = String(text || '').toLowerCase();
         if (source.includes('auto camera') || source.includes('autocamera')) return 'Auto Camera';
-        if (source.includes('automix') || source.includes('auto mix')) return 'AutoMix';
         if (source.includes('ducking')) return 'Ducking Audio';
         if (source.includes('rocket prompter')) return 'Rocket Prompter';
         if (source.includes('rocket timer')) return 'Rocket Timer';

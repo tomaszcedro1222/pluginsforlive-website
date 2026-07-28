@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Wtyczki i narzędzia automatyzacji vMix | Auto Camera, Ducking Audio | Plugins For Live</title>
-  <meta name="description" content="Profesjonalne wtyczki i narzędzia do vMix. Automatyczne przełączanie kamer, ducking audio, automix oraz darmowe narzędzia do produkcji na żywo." />
+  <meta name="description" content="Profesjonalne wtyczki i narzędzia do vMix. Automatyczne przełączanie kamer, ducking audio oraz darmowe narzędzia do produkcji na żywo." />
   <link rel="canonical" href="https://pluginsforlive.com/pl/" />
   <link rel="alternate" hreflang="en" href="https://pluginsforlive.com/" />
   <link rel="alternate" hreflang="pl" href="https://pluginsforlive.com/pl/" />
@@ -763,7 +763,7 @@ Pobierz i testuj za darmo.
       <div class="wrap grid">
         <div>
           <h1>Wtyczki vMix, które <span>automatyzują produkcję wideo na żywo</span>.</h1>
-          <p class="lead">Narzędzia stworzone do pracy z vMix. Auto Camera, automix mikrofonów i Ducking Audio zapewniają automatyczną kontrolę obrazu i dźwięku w vMix. Więcej wtyczek już wkrótce.</p>
+          <p class="lead">Narzędzia stworzone do pracy z vMix. Auto Camera i Ducking Audio zapewniają automatyczną kontrolę obrazu i dźwięku w vMix. Więcej wtyczek już wkrótce.</p>
           <div class="actions">
             <a class="btn" href="https://github.com/tomaszcedro1222/pluginyvmix/releases/latest/download/AutoCameraSetup.exe"
 onclick="gtag('event', 'download_auto_camera', { event_category: 'button' })">
@@ -853,28 +853,6 @@ Skontaktuj się
                 onclick="gtag('event', 'begin_checkout', { currency: 'PLN', value: 29.99, item_name: 'Auto Camera' }); gtag('event', 'stripe_checkout_click', { event_category: 'checkout', item_name: 'Auto Camera', currency: 'PLN', value: 29.99, link_url: 'https://buy.stripe.com/8x25kD8Qv65j0YAeLj6Na08' })">
                 Kup / subskrybuj
               </a>
-            </div>
-          </div>
-
-          <div class="plugin-item" data-ga-view="view_automix">
-            <h3 class="plugin-title"><img src="../assets/images/products/automix/icon.png" alt="AutoMix icon" class="plugin-icon">AutoMix</h3>
-            <img src="../assets/images/products/automix/interface.jpg" alt="Zrzut ekranu interfejsu AutoMix" class="product-screenshot" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Powiększ zrzut interfejsu AutoMix">
-
-            <p>
-              Inteligentny automix mikrofonów działający podobnie do profesjonalnych automikserów audio. Wtyczka automatycznie zarządza poziomami dźwięku.
-            </p>
-
-            <ul>
-              <li>Automatyczna kontrola poziomów dźwięku</li>
-              <li>Wyraźniejsze rozmowy</li>
-              <li>Mniej chaosu w miksie audio</li>
-              <li>Stabilniejszy miks dźwięku na żywo</li>
-              <li>Prosta konfiguracja</li>
-            </ul>
-            <a href="products/automix/" class="plugin-info-link">Dowiedz się więcej</a>
-
-            <div class="plugin-actions">
-              <div class="coming-soon">dostępne wkrótce</div>
             </div>
           </div>
 
@@ -1120,8 +1098,6 @@ Skontaktuj się
       const PRODUCT_PRICES = {
         'auto_camera': { item_name: 'Auto Camera', value: 29.99, currency: 'PLN' },
         'autocamera': { item_name: 'Auto Camera', value: 29.99, currency: 'PLN' },
-        'auto_mix': { item_name: 'AutoMix', value: 69, currency: 'USD' },
-        'automix': { item_name: 'AutoMix', value: 69, currency: 'USD' },
         'ducking_audio': { item_name: 'Ducking Audio', value: 45, currency: 'USD' },
         'duckingaudio': { item_name: 'Ducking Audio', value: 45, currency: 'USD' }
       };
@@ -1139,7 +1115,6 @@ Skontaktuj się
       function normalizeProductName(text) {
         const source = String(text || '').toLowerCase();
         if (source.includes('auto camera') || source.includes('autocamera')) return 'Auto Camera';
-        if (source.includes('automix') || source.includes('auto mix')) return 'AutoMix';
         if (source.includes('ducking')) return 'Ducking Audio';
         if (source.includes('rocket prompter')) return 'Rocket Prompter';
         if (source.includes('rocket timer')) return 'Rocket Timer';
