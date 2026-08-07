@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>LINK VISUALS — Studio Care Game</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#05070a;color:#fff;font-family:Arial,Helvetica,sans-serif;user-select:none;touch-action:manipulation}
+:root{--hp:#34e06d;--wallLight:1;--red:#ff3148;--wood:#b9874e}
+.game{position:relative;width:100vw;height:100vh;overflow:hidden;background:radial-gradient(circle at 18% 18%,rgba(255,49,72,.13),transparent 22%),radial-gradient(circle at 55% 9%,rgba(255,200,120,.16),transparent 32%),linear-gradient(145deg,#10151d,#252b35 60%,#101010);filter:brightness(calc(.55 + var(--wallLight) * .45));transition:filter .6s ease}
+.game.night{background:radial-gradient(circle at 18% 18%,rgba(80,120,255,.12),transparent 22%),linear-gradient(145deg,#07101b,#172232 60%,#08090d)}
+.game.rainy .windowSky:after{content:"";position:absolute;inset:-20%;background:repeating-linear-gradient(110deg,transparent 0 18px,rgba(210,235,255,.75) 19px 21px,transparent 22px 32px);animation:rain .45s linear infinite}
+@keyframes rain{from{transform:translate(-20px,-20px)}to{transform:translate(20px,20px)}}
+
+.stats{position:absolute;left:18px;top:18px;z-index:200;min-width:220px;padding:13px 15px;border-radius:18px;background:rgba(4,8,14,.62);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.14);box-shadow:0 15px 35px rgba(0,0,0,.25)}
+.logo{font-size:18px;font-weight:950;letter-spacing:.18em;margin-bottom:7px}
+.statsText{font-size:13px;line-height:1.45}
+.globalHp{height:12px;border-radius:999px;background:rgba(255,255,255,.18);overflow:hidden;margin-top:8px}
+.globalHpFill{height:100%;width:100%;background:var(--hp);transition:width .5s ease,background .5s ease}
+
+.fullscreenBtn{position:absolute;right:18px;top:18px;z-index:210;border:1px solid rgba(255,255,255,.18);padding:10px 14px;border-radius:999px;background:rgba(4,8,14,.62);color:#fff;font-size:13px;font-weight:900;backdrop-filter:blur(10px);cursor:pointer;opacity:1;transition:opacity .45s ease,transform .45s ease}
+.fullscreenBtn.hidden{opacity:0;transform:translateY(-16px);pointer-events:none}
+
+.backWall{position:absolute;inset:0 0 24vh 0;z-index:1;background:linear-gradient(to bottom,rgba(255,255,255,.06),transparent)}
+.slats{position:absolute;left:34%;top:5vh;width:31%;height:56vh;border-radius:14px;background:repeating-linear-gradient(90deg,#1b1510 0 10px,var(--wood) 11px 17px,#1b1510 18px 30px);box-shadow:inset 0 0 50px rgba(255,190,100,.14),0 35px 70px rgba(0,0,0,.35);z-index:2}
+.slats:before,.slats:after{content:"";position:absolute;top:0;bottom:0;width:8px;background:linear-gradient(#ffc56f,transparent 45%,#ffc56f);opacity:.85}
+.slats:before{left:22%}.slats:after{right:24%}
+.shelf{position:absolute;top:13vh;width:21vw;height:38vh;z-index:3;border-top:5px solid rgba(255,255,255,.16);border-bottom:5px solid rgba(255,255,255,.12);background:linear-gradient(to bottom,transparent 0 32%,rgba(255,255,255,.12) 33% 35%,transparent 36% 66%,rgba(255,255,255,.12) 67% 69%,transparent 70%),rgba(0,0,0,.14)}
+.shelf.left{left:7vw}.shelf.right{right:6vw}
+.shelf:before{content:"";position:absolute;inset:8%;background:radial-gradient(circle at 14% 18%,#7fc779 0 5%,transparent 6%),linear-gradient(90deg,transparent 0 8%,#d4c5aa 8% 13%,transparent 13% 19%,#444b57 19% 24%,transparent 24% 31%,#b18754 31% 35%,transparent 35%),radial-gradient(circle at 80% 66%,#7fc779 0 7%,transparent 8%);opacity:.75}
+
+.mainScreen{position:absolute;left:50%;top:16vh;width:min(34vw,520px);height:min(22vw,310px);min-width:330px;min-height:185px;transform:translateX(-50%);z-index:10;border:8px solid #05070a;border-radius:10px;background:radial-gradient(circle at 50% 50%,rgba(255,49,72,.14),transparent 62%),linear-gradient(180deg,#06080d,#121722);box-shadow:0 0 42px rgba(255,49,72,.32),0 35px 70px rgba(0,0,0,.5);display:grid;place-items:center;text-align:center}
+.screenTitle{font-size:clamp(28px,4vw,58px);font-weight:950;letter-spacing:.11em}
+.screenSub{margin-top:12px;font-size:clamp(11px,1.3vw,17px);font-weight:850;letter-spacing:.15em;opacity:.9}
+.screenBadge{display:inline-block;margin-top:16px;padding:7px 14px;border-radius:999px;background:var(--red);font-size:12px;font-weight:950;letter-spacing:.09em}
+
+.window{position:absolute;right:5vw;top:10vh;width:17vw;min-width:180px;height:26vh;z-index:7;border:10px solid #111820;border-radius:14px;overflow:hidden;box-shadow:0 20px 45px rgba(0,0,0,.35),inset 0 0 0 3px rgba(255,255,255,.08);background:#111}
+.windowSky{position:absolute;inset:0;overflow:hidden;background:linear-gradient(#85d9ff,#eaf9ff)}
+.game.night .windowSky{background:linear-gradient(#061120,#132b4d)}
+.sunMoon{position:absolute;right:18%;top:15%;width:42px;height:42px;border-radius:50%;background:#ffd45a;box-shadow:0 0 26px rgba(255,212,90,.75)}
+.game.night .sunMoon{background:#f4f1da;box-shadow:0 0 18px rgba(255,255,255,.5)}
+.cloud{position:absolute;left:12%;top:27%;width:72px;height:26px;border-radius:999px;background:rgba(255,255,255,.82);animation:cloud 22s linear infinite}
+.cloud:before,.cloud:after{content:"";position:absolute;border-radius:50%;background:inherit}.cloud:before{width:35px;height:35px;left:12px;top:-17px}.cloud:after{width:45px;height:45px;right:8px;top:-23px}
+@keyframes cloud{from{transform:translateX(-60px)}to{transform:translateX(230px)}}
+.tempTV{position:absolute;right:7vw;top:39vh;width:150px;height:82px;z-index:8;border:6px solid #05070a;border-radius:10px;background:#101722;display:grid;place-items:center;text-align:center;box-shadow:0 20px 35px rgba(0,0,0,.38),0 0 22px rgba(255,49,72,.18);font-weight:950;letter-spacing:.05em}
+
+.computer{position:absolute;left:6vw;top:41vh;width:210px;height:165px;z-index:35}
+.monitor{position:absolute;left:0;top:0;width:170px;height:100px;border:7px solid #080a0d;border-radius:9px;background:#05070a;box-shadow:0 18px 28px rgba(0,0,0,.45);display:grid;place-items:center;color:#5bff92;font-size:25px;font-weight:950;letter-spacing:.08em}
+.monitor.on{background:radial-gradient(circle at center,#1b3b5c,#06101d);color:#fff;text-shadow:0 0 16px #4bb7ff}
+.monitorStand{position:absolute;left:75px;top:100px;width:18px;height:35px;background:#080a0d}.desk{position:absolute;left:-18px;top:125px;width:225px;height:14px;border-radius:999px;background:#1a1410}.keyboard{position:absolute;left:20px;top:137px;width:150px;height:20px;border-radius:5px;background:#0b0d10}
+
+.neon{position:absolute;z-index:5;padding:8px 18px;border:2px solid var(--red);border-radius:8px;color:#fff;font-weight:950;letter-spacing:.08em;text-shadow:0 0 12px var(--red);box-shadow:0 0 20px rgba(255,49,72,.45),inset 0 0 18px rgba(255,49,72,.2)}
+.neon.rec{left:5vw;top:28vh}.neon.air{right:7vw;top:32vh}
+
+.softbox{position:absolute;z-index:34;width:170px;height:140px;filter:drop-shadow(0 20px 20px rgba(0,0,0,.45))}
+.softbox.left{left:10vw;top:5vh;transform:rotate(18deg)}.softbox.right{right:22vw;top:4vh;transform:rotate(-20deg) scaleX(-1)}
+.softbox .head{position:absolute;width:112px;height:60px;border-radius:10px;background:linear-gradient(90deg,rgba(255,255,255,.96) 0 35%,#111 36% 42%,rgba(255,255,255,.96) 43% 75%,#111 76%);box-shadow:0 0 36px rgba(255,255,255,.38)}
+.softbox.off .head{background:#151923;box-shadow:none}.softbox .stand{position:absolute;left:78px;top:54px;width:5px;height:120px;background:#070707;border-radius:999px}
+
+.floor{position:absolute;left:0;right:0;bottom:0;height:36vh;z-index:20;background:radial-gradient(ellipse at center,rgba(255,255,255,.11),transparent 52%),linear-gradient(160deg,#161616,#24211f 48%,#101010);box-shadow:inset 0 26px 42px rgba(0,0,0,.35)}
+.rug{position:absolute;left:50%;bottom:9vh;width:min(44vw,650px);height:17vh;transform:translateX(-50%);border-radius:50%;background:radial-gradient(ellipse at center,rgba(255,255,255,.11),transparent 65%),repeating-radial-gradient(ellipse at center,#3a3a3a 0 3px,#303030 4px 7px);z-index:22;opacity:.85}
+
+.setup{position:absolute;inset:0;z-index:24;pointer-events:none}
+.chair{position:absolute;bottom:18vh;width:16vw;min-width:155px;height:20vh;transition:opacity .5s ease}
+.chair.left{left:35vw;transform:translateX(-50%)}.chair.right{right:35vw;transform:translateX(50%) scaleX(-1)}
+.chair .seat{position:absolute;bottom:0;left:8%;right:8%;height:44%;border-radius:30px 30px 14px 14px;background:linear-gradient(145deg,#8a8580,#5f6067);box-shadow:0 24px 28px rgba(0,0,0,.34)}
+.chair .back{position:absolute;left:0;right:0;bottom:30%;height:68%;border-radius:34px 34px 16px 16px;background:linear-gradient(145deg,#9d9892,#686a72)}
+.chair .leg{position:absolute;bottom:-30px;width:6px;height:34px;background:#111;border-radius:999px}.chair .leg.one{left:26%}.chair .leg.two{right:26%}
+.sofa{position:absolute;left:50%;bottom:13vh;width:390px;height:135px;transform:translateX(-50%);display:none;transition:opacity .5s ease}.sofa.on{display:block}
+.sofaBack{position:absolute;left:0;right:0;bottom:32px;height:75%;border-radius:30px 30px 14px 14px;background:linear-gradient(145deg,#454249,#25252b);box-shadow:inset -18px -12px rgba(0,0,0,.12),0 24px 30px rgba(0,0,0,.38)}
+.sofaSeat{position:absolute;left:5%;right:5%;bottom:0;height:48%;border-radius:18px;background:linear-gradient(145deg,#3d3a41,#1f2026);box-shadow:0 22px 24px rgba(0,0,0,.38)}
+.sofaArm{position:absolute;bottom:0;width:15%;height:70%;border-radius:18px;background:#25252b}.sofaArm.left{left:-2%}.sofaArm.right{right:-2%}
+.table{position:absolute;left:50%;bottom:14vh;width:155px;height:76px;transform:translateX(-50%);z-index:27;border-radius:50%;background:linear-gradient(#111,#050505);box-shadow:0 24px 26px rgba(0,0,0,.42)}
+.coffeeCup{position:absolute;left:95px;top:16px;width:28px;height:32px;border-radius:0 0 10px 10px;background:#fff}.coffeeCup:before{content:"";position:absolute;left:5px;right:5px;top:6px;height:8px;border-radius:50%;background:#6b3d21}
+
+.mic{position:absolute;bottom:30vh;z-index:35;width:80px;height:70px}.mic.left{left:39vw;transform:rotate(-16deg)}.mic.right{right:39vw;transform:rotate(16deg) scaleX(-1)}
+.mic:before{content:"";position:absolute;left:10px;top:28px;width:60px;height:6px;border-radius:999px;background:#101010;transform:rotate(-20deg);transform-origin:left center}.mic:after{content:"";position:absolute;right:0;top:12px;width:20px;height:34px;border-radius:999px;background:repeating-linear-gradient(0deg,#111 0 4px,#333 5px 7px)}
+
+.camera{position:absolute;z-index:36;width:130px;height:125px;cursor:grab;touch-action:none;filter:drop-shadow(0 20px 20px rgba(0,0,0,.45));transition:left .8s ease,top .8s ease,bottom .8s ease}
+.camera.dragging{z-index:160;cursor:grabbing;transition:none}.camera.c1{left:3vw;bottom:18vh;transform:scale(1.15)}.camera.c2{right:9vw;bottom:16vh}.camera.c3{left:58vw;bottom:24vh;transform:scale(.82)}
+.camBody{position:absolute;top:16px;left:28px;width:76px;height:44px;border-radius:8px;background:linear-gradient(145deg,#1e2732,#06080d);border:1px solid rgba(255,255,255,.18)}.camBody:after{content:"LV";position:absolute;left:12px;top:13px;font-weight:950;font-size:14px;letter-spacing:.1em}
+.lens{position:absolute;top:20px;left:0;width:42px;height:36px;border-radius:16px 4px 4px 16px;background:radial-gradient(circle at 25% 50%,#23384d,#05070a 55%);border:3px solid #0b0b0b}.tripod{position:absolute;top:58px;left:64px;width:6px;height:72px;background:#070707;border-radius:999px}.tripod:before,.tripod:after{content:"";position:absolute;top:35px;width:6px;height:72px;background:#070707;border-radius:999px;transform-origin:top center}.tripod:before{transform:rotate(24deg)}.tripod:after{transform:rotate(-24deg)}
+
+.clients{position:absolute;inset:0;z-index:45;pointer-events:none}.client{position:absolute;width:58px;height:110px;bottom:17vh;opacity:0;transition:opacity .5s ease,left 1s ease}.clients.on .client{opacity:1}.client.a{left:40vw}.client.b{left:55vw}
+.clientHead{position:absolute;top:0;left:15px;width:30px;height:30px;border-radius:50%;background:#ffd2ac}.clientBody{position:absolute;top:34px;left:10px;width:40px;height:52px;border-radius:12px;background:#2d3442}.clientLeg{position:absolute;top:82px;width:9px;height:30px;background:#111;border-radius:999px}.clientLeg.one{left:18px}.clientLeg.two{right:18px}
+
+.worker{position:absolute;left:46vw;bottom:13vh;width:70px;height:126px;z-index:70;transform-origin:50% 100%;transition:left 1.15s ease,bottom 1.15s ease,transform 1.15s ease,filter .4s ease}
+.worker.walking{animation:bob .55s ease-in-out infinite}@keyframes bob{0%,100%{margin-bottom:0}50%{margin-bottom:5px}}
+.worker.dirty1{filter:saturate(.85) brightness(.92)}.worker.dirty2{filter:saturate(.6) brightness(.78)}.worker.dirty3{filter:saturate(.35) brightness(.62)}
+.dirt{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:0;background:radial-gradient(circle at 22px 22px,rgba(82,50,23,.8) 0 5px,transparent 6px),radial-gradient(circle at 45px 55px,rgba(82,50,23,.75) 0 6px,transparent 7px),radial-gradient(circle at 28px 88px,rgba(82,50,23,.7) 0 5px,transparent 6px)}
+.worker.dirty1 .dirt{opacity:.35}.worker.dirty2 .dirt{opacity:.7}.worker.dirty3 .dirt{opacity:1}
+.hpWrap{position:absolute;left:50%;top:-26px;width:86px;height:13px;transform:translateX(-50%);border-radius:999px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.38);overflow:hidden}.hpFill{height:100%;width:100%;border-radius:999px;background:var(--hp);transition:width .5s ease,background .5s ease}
+.speech{position:absolute;left:50%;bottom:138px;transform:translateX(-50%);width:max-content;max-width:min(340px,calc(100vw - 28px));padding:10px 12px;border-radius:15px 15px 15px 2px;background:rgba(255,255,255,.95);color:#142033;font-size:13px;font-weight:850;line-height:1.25;box-shadow:0 10px 20px rgba(0,0,0,.18);opacity:0;pointer-events:none;z-index:3;text-align:center;transition:opacity .35s ease}.speech.show{opacity:1}
+.hair{position:absolute;top:-6px;left:15px;width:40px;height:14px;background:#19100b;border-radius:18px 18px 6px 6px;transform:rotate(-5deg);z-index:2}.personHead{position:absolute;top:0;left:18px;width:34px;height:34px;border-radius:50%;background:#ffd5ae}.eye{position:absolute;top:13px;left:9px;width:5px;height:5px;background:#142033;border-radius:50%;z-index:3}.eye2{position:absolute;top:13px;left:21px;width:5px;height:5px;background:#142033;border-radius:50%;z-index:3}.mouth{position:absolute;left:50%;top:23px;width:12px;height:6px;margin-left:-6px;border-bottom:2px solid #7a3f3f;border-radius:0 0 12px 12px;z-index:3}.personBody{position:absolute;top:38px;left:13px;width:44px;height:48px;border-radius:13px 13px 9px 9px;background:#0a0b0e;border:1px solid rgba(255,255,255,.12)}.personBody:after{content:"LV";position:absolute;left:0;right:0;top:11px;text-align:center;color:white;font-size:13px;font-weight:950;letter-spacing:.08em}.arm,.leg{position:absolute;border-radius:999px;transform-origin:top center}.arm{top:45px;width:9px;height:38px;background:#ffd5ae}.arm.left{left:6px}.arm.right{right:6px}.leg{top:84px;width:10px;height:43px;background:#050505}.leg.left{left:20px}.leg.right{right:20px}.worker.walking .arm.left,.worker.walking .leg.right{animation:swing .55s ease-in-out infinite}.worker.walking .arm.right,.worker.walking .leg.left{animation:swing .55s ease-in-out infinite reverse}@keyframes swing{0%,100%{transform:rotate(24deg)}50%{transform:rotate(-24deg)}}
+.worker.sit .personBody{transform:translateY(18px)}.worker.sit .personHead,.worker.sit .hair{transform:translateY(14px)}.worker.sit .arm{transform:rotate(55deg)}.worker.sit .leg{top:103px;height:27px;transform:rotate(72deg)}.worker.sofaSit .personBody{transform:translateY(23px) rotate(-12deg)}.worker.sofaSit .personHead,.worker.sofaSit .hair{transform:translateY(18px) rotate(-8deg)}.worker.sofaSit .arm{transform:rotate(70deg)}.worker.sofaSit .leg{top:103px;height:27px;transform:rotate(78deg)}
+
+.actionPanel{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:130;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:min(980px,calc(100vw - 20px))}
+.actionPanel button{border:1px solid rgba(255,255,255,.18);padding:9px 12px;border-radius:999px;background:rgba(4,8,14,.72);color:#fff;font-weight:900;font-size:12px;cursor:pointer;backdrop-filter:blur(10px);touch-action:manipulation;-webkit-tap-highlight-color:transparent}.actionPanel button:hover{background:rgba(255,255,255,.18)}.actionPanel button:disabled{opacity:.45;cursor:not-allowed}
+
+
+.mainScreen{cursor:pointer}
+.game.lightsOff{filter:brightness(.34) contrast(1.12)}
+.game.lightsOff .softbox .head{background:#10131a!important;box-shadow:none!important}
+.game.lightsOff .neon{opacity:.35}
+.screenTapHint{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);font-size:10px;font-weight:900;letter-spacing:.12em;opacity:.45}
+.worker.goingByTap{z-index:180}
+
+
+/* === NEW INTERACTIVE FEATURES === */
+.game.rgbOn{
+  background:
+    radial-gradient(circle at 14% 22%,rgba(255,0,90,.34),transparent 23%),
+    radial-gradient(circle at 83% 18%,rgba(0,170,255,.32),transparent 25%),
+    radial-gradient(circle at 52% 12%,rgba(150,80,255,.30),transparent 32%),
+    linear-gradient(145deg,#10151d,#252b35 60%,#101010);
+}
+
+.game.rgbOn .slats{
+  box-shadow:
+    inset 0 0 65px rgba(255,0,120,.26),
+    0 0 55px rgba(0,160,255,.25),
+    0 35px 70px rgba(0,0,0,.35);
+}
+
+.game.rgbOn .screen{
+  box-shadow:
+    0 0 42px rgba(255,49,72,.32),
+    0 0 52px rgba(0,180,255,.24),
+    0 35px 70px rgba(0,0,0,.5);
+}
+
+.game.rgbOn .floor{
+  background:
+    radial-gradient(circle at 20% 40%,rgba(255,0,120,.22),transparent 28%),
+    radial-gradient(circle at 80% 40%,rgba(0,160,255,.20),transparent 28%),
+    radial-gradient(ellipse at center,rgba(255,255,255,.11),transparent 52%),
+    linear-gradient(160deg,#161616,#24211f 48%,#101010);
+}
+
+.game.lightsOff{
+  filter:brightness(.30) contrast(1.16);
+}
+
+.game.lightsOff.rgbOn{
+  filter:brightness(.48) contrast(1.20) saturate(1.55);
+}
+
+.game.lightsOff .softbox .head{
+  background:#10131a!important;
+  box-shadow:none!important;
+}
+
+.game.lightsOff .neon{
+  opacity:.36;
+}
+
+.windowBlinds{
+  position:absolute;
+  inset:0;
+  z-index:5;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(15,18,23,.96) 0 11px,
+      rgba(35,38,45,.98) 12px 19px,
+      rgba(8,10,14,.98) 20px 24px
+    );
+  transform:translateY(0);
+  transition:transform .7s ease, opacity .7s ease;
+  box-shadow:inset 0 0 18px rgba(0,0,0,.65);
+}
+
+.window.open .windowBlinds{
+  transform:translateY(-105%);
+  opacity:.15;
+}
+
+.monitor.autoOff{
+  color:#ffcc66;
+  font-size:15px;
+  line-height:1.15;
+  text-align:center;
+}
+
+.rgbGlow{
+  position:absolute;
+  inset:0;
+  z-index:6;
+  pointer-events:none;
+  opacity:0;
+  background:
+    radial-gradient(circle at 18% 40%,rgba(255,0,120,.22),transparent 28%),
+    radial-gradient(circle at 84% 35%,rgba(0,160,255,.24),transparent 30%),
+    radial-gradient(circle at 48% 18%,rgba(150,70,255,.18),transparent 34%);
+  transition:opacity .6s ease;
+}
+
+.game.rgbOn .rgbGlow{
+  opacity:1;
+}
+
+@media(max-width:850px){.screen{min-width:280px}.slats{left:24%;width:48%}.shelf{opacity:.35}.window{right:10px;top:11vh;min-width:140px;width:145px;height:160px}.tempTV{right:18px;top:31vh;width:120px;height:65px;font-size:12px}.computer{left:8px;top:43vh;transform:scale(.72);transform-origin:left top}.softbox.left{left:-40px;transform:rotate(18deg) scale(.7)}.softbox.right{right:-48px;transform:rotate(-20deg) scaleX(-1) scale(.7)}.camera.c1{left:-45px;transform:scale(.78)}.camera.c2{right:-42px;transform:scale(.75)}.camera.c3{display:none}.chair{min-width:115px;width:26vw}.sofa{width:270px}.stats{left:10px;top:10px;padding:10px 12px;min-width:160px}.stats .logo{font-size:15px}.statsText{font-size:12px}.fullscreenBtn{right:10px;top:10px}.actionPanel{bottom:8px}.actionPanel button{font-size:11px;padding:8px 9px}}
+</style>
+</head>
+<body>
+<main id="game" class="game">
+<div class="backWall"></div><div class="rgbGlow"></div><div class="slats"></div><div class="shelf left"></div><div class="shelf right"></div>
+<section class="stats"><div class="logo">LINK VISUALS</div><div id="statsText" class="statsText">Ładowanie studia…</div><div class="globalHp"><div id="globalHpFill" class="globalHpFill"></div></div></section>
+<button id="fullscreenBtn" class="fullscreenBtn" type="button">⛶ Fullscreen</button>
+<div class="neon rec">● REC</div><div class="neon air">ON AIR</div>
+<section id="mainScreen" class="mainScreen"><div><div id="screenTitle" class="screenTitle">LINK VISUALS</div><div id="screenSub" class="screenSub">STUDIO CARE GAME</div><div id="screenBadge" class="screenBadge">DBAJ O LUDKA I STUDIO</div><div class="screenTapHint">KLIKNIJ EKRAN</div></div></section>
+<div id="windowBox" class="window"><div class="windowSky"><div class="sunMoon"></div><div class="cloud"></div></div><div id="windowBlinds" class="windowBlinds"></div></div>
+<div id="tempTV" class="tempTV">--°C<br>na zewnątrz</div>
+<div class="computer"><div id="monitor" class="monitor">OFF</div><div class="monitorStand"></div><div class="desk"></div><div class="keyboard"></div></div>
+<div id="softLeft" class="softbox left"><div class="head"></div><div class="stand"></div></div><div id="softRight" class="softbox right"><div class="head"></div><div class="stand"></div></div>
+<div class="camera c1 draggableCamera"><div class="lens"></div><div class="camBody"></div><div class="tripod"></div></div><div class="camera c2 draggableCamera"><div class="lens"></div><div class="camBody"></div><div class="tripod"></div></div><div class="camera c3 draggableCamera"><div class="lens"></div><div class="camBody"></div><div class="tripod"></div></div>
+<div class="floor"></div><div class="rug"></div>
+<div class="setup"><div id="chairLeft" class="chair left"><div class="back"></div><div class="seat"></div><div class="leg one"></div><div class="leg two"></div></div><div id="chairRight" class="chair right"><div class="back"></div><div class="seat"></div><div class="leg one"></div><div class="leg two"></div></div><div id="sofa" class="sofa"><div class="sofaBack"></div><div class="sofaSeat"></div><div class="sofaArm left"></div><div class="sofaArm right"></div></div><div class="table"><div class="coffeeCup"></div></div></div>
+<div class="mic left"></div><div class="mic right"></div>
+<div id="clients" class="clients"><div class="client a"><div class="clientHead"></div><div class="clientBody"></div><div class="clientLeg one"></div><div class="clientLeg two"></div></div><div class="client b"><div class="clientHead"></div><div class="clientBody"></div><div class="clientLeg one"></div><div class="clientLeg two"></div></div></div>
+<div id="worker" class="worker"><div class="hpWrap"><div id="hpFill" class="hpFill"></div></div><div id="speech" class="speech">Studio gotowe?</div><div class="dirt"></div><div class="hair"></div><div class="personHead"><div class="eye"></div><div class="eye2"></div><div class="mouth"></div></div><div class="personBody"></div><div class="arm left"></div><div class="arm right"></div><div class="leg left"></div><div class="leg right"></div></div>
+<nav class="actionPanel"><button data-action="cameras">Ustaw kamery +20 HP</button><button data-action="lights">Światła ON/OFF</button><button data-action="rgb">Kolorowe światła</button><button data-action="vmix">vMix ON/OFF +20 HP</button><button data-action="blinds">Rolety okna</button><button data-action="setup">Przestaw setup +20 HP</button><button data-action="coffee">Wypij kawę +20 HP</button><button data-action="mics">Sprawdź mikrofony</button><button data-action="in">Wpuść klientów</button><button data-action="out">Wypuść klientów</button></nav>
+</main>
+<script>
+const game=document.getElementById('game'),worker=document.getElementById('worker'),speech=document.getElementById('speech'),hpFill=document.getElementById('hpFill'),globalHpFill=document.getElementById('globalHpFill'),statsText=document.getElementById('statsText'),monitor=document.getElementById('monitor'),tempTV=document.getElementById('tempTV'),fullscreenBtn=document.getElementById('fullscreenBtn'),buttons=document.querySelectorAll('.actionPanel button'),cameras=document.querySelectorAll('.draggableCamera'),clients=document.getElementById('clients'),sofa=document.getElementById('sofa'),chairLeft=document.getElementById('chairLeft'),chairRight=document.getElementById('chairRight'),softLeft=document.getElementById('softLeft'),softRight=document.getElementById('softRight'),mainScreen=document.getElementById('mainScreen'),screenTitle=document.getElementById('screenTitle'),screenSub=document.getElementById('screenSub'),screenBadge=document.getElementById('screenBadge'),windowBox=document.getElementById('windowBox');
+let hp=Number(localStorage.getItem('lv_hp')||100),lastHpTick=Number(localStorage.getItem('lv_last_hp_tick')||Date.now()),busy=false,setupMode=localStorage.getItem('lv_setup')||'chairs',speechTimer,fullscreenHideTimer,autoActionIndex=0,screenLogoIndex=Number(localStorage.getItem('lv_screen_logo_index')||0),vmixStartedAt=Number(localStorage.getItem('lv_vmix_started_at')||0),vmixAutoTimer=null;
+const fallback={latitude:52.2297,longitude:21.0122};
+const screenNames=[
+  {title:'ALAB LABORATORIA',sub:'STUDIO · LIVE · EKSPERCI',badge:'REALIZACJA ROZMÓW I NAGRAŃ'},
+  {title:'LINK VISUALS',sub:'PODCAST · VIDEO · LIVE',badge:'STUDIO CARE GAME'},
+  {title:'LIVE',sub:'ON AIR · STREAM · REALIZACJA',badge:'NADAJEMY NA ŻYWO'}
+];
+function applyScreenLogo(){const item=screenNames[screenLogoIndex%screenNames.length];screenTitle.textContent=item.title;screenSub.textContent=item.sub;screenBadge.textContent=item.badge;localStorage.setItem('lv_screen_logo_index',String(screenLogoIndex%screenNames.length));}
+function nextScreenLogo(){screenLogoIndex=(screenLogoIndex+1)%screenNames.length;applyScreenLogo();say('Ekran zmieniony: '+screenNames[screenLogoIndex].title+'.');}
+function clamp(v,min,max){return Math.max(min,Math.min(max,v))}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
+function say(text){speech.textContent=text;speech.classList.add('show');requestAnimationFrame(()=>{const rect=speech.getBoundingClientRect();let dx=0;if(rect.left<10)dx=10-rect.left;if(rect.right>innerWidth-10)dx=(innerWidth-10)-rect.right;speech.style.marginLeft=dx+'px'});clearTimeout(speechTimer);speechTimer=setTimeout(()=>{speech.classList.remove('show');speech.style.marginLeft='0px'},10000)}
+function saveHp(){localStorage.setItem('lv_hp',String(hp));localStorage.setItem('lv_last_hp_tick',String(lastHpTick))}
+function applyHourlyDecay(){const now=Date.now(),hours=Math.floor((now-lastHpTick)/3600000);if(hours>0){hp=clamp(hp-hours*5,0,100);lastHpTick+=hours*3600000;saveHp()}}
+function addHp(v){hp=clamp(hp+v,0,100);saveHp();updateHp()}
+function updateHp(){hpFill.style.width=hp+'%';globalHpFill.style.width=hp+'%';const color=hp>60?'#34e06d':hp>30?'#ffd23f':'#ff4058';hpFill.style.background=color;globalHpFill.style.background=color;worker.classList.remove('dirty1','dirty2','dirty3');if(hp<25)worker.classList.add('dirty3');else if(hp<50)worker.classList.add('dirty2');else if(hp<75)worker.classList.add('dirty1');statsText.innerHTML=`Poziom życia: <b>${hp}%</b><br>Spada o 5% co godzinę.`}
+function setBusy(s){busy=s;buttons.forEach(b=>b.disabled=s)}
+function moveWorker(left,bottom='13vh',scale=1){worker.classList.remove('sit','sofaSit');worker.classList.add('walking');worker.style.left=left;worker.style.bottom=bottom;worker.style.transform=`scale(${scale})`}
+async function arrive(){await sleep(1150);worker.classList.remove('walking')}
+function applySetup(){if(setupMode==='sofa'){sofa.classList.add('on');chairLeft.style.display='none';chairRight.style.display='none'}else{sofa.classList.remove('on');chairLeft.style.display='block';chairRight.style.display='block'}localStorage.setItem('lv_setup',setupMode)}
+async function actionCameras(){if(busy)return;setBusy(true);say('Ustawiam trzy kamery. Kadr sam się nie zrobi.');const spots=[['10vw','19vh'],['75vw','17vh'],['58vw','25vh']];for(let i=0;i<cameras.length;i++){moveWorker(spots[i][0],spots[i][1]);await arrive();const cam=cameras[i];cam.style.left=`calc(${spots[i][0]} - 35px)`;cam.style.bottom=spots[i][1];cam.style.right='auto';cam.style.top='auto';cam.style.transform=i===0?'scale(1.1)':i===2?'scale(.85)':'scale(1)';say(`Kamera ${i+1} ustawiona.`);await sleep(1200)}addHp(20);say('Kamery ustawione. +20 HP');setBusy(false)}
+async function actionLights(){if(busy)return;setBusy(true);const off=game.classList.contains('lightsOff');say(off?'Idę zapalić światła.':'Idę zgasić światła.');moveWorker('15vw','32vh');await arrive();if(off){document.documentElement.style.setProperty('--wallLight','1');softLeft.classList.remove('off');softRight.classList.remove('off');game.classList.remove('lightsOff');say('Światła zapalone. Studio znowu wygląda premium.')}else{document.documentElement.style.setProperty('--wallLight','0');softLeft.classList.add('off');softRight.classList.add('off');game.classList.add('lightsOff');say('Światła zgaszone. Robi się klimat nocnego wywiadu.')}await sleep(2200);setBusy(false)}
+function setVmixState(on, auto=false){
+  clearTimeout(vmixAutoTimer);
+  if(on){
+    vmixStartedAt = Date.now();
+    localStorage.setItem('lv_vmix_started_at', String(vmixStartedAt));
+    monitor.classList.remove('autoOff');
+    monitor.classList.add('on');
+    monitor.textContent='vMix';
+    vmixAutoTimer=setTimeout(()=>setVmixState(false,true),5*60*60*1000);
+  }else{
+    vmixStartedAt = 0;
+    localStorage.removeItem('lv_vmix_started_at');
+    monitor.classList.remove('on');
+    if(auto){
+      monitor.classList.add('autoOff');
+      monitor.innerHTML='vMix<br>auto OFF';
+      say('vMix wyłączył się automatycznie po 5 godzinach.');
+      setTimeout(()=>{if(!monitor.classList.contains('on')){monitor.classList.remove('autoOff');monitor.textContent='OFF';}},7000);
+    }else{
+      monitor.classList.remove('autoOff');
+      monitor.textContent='OFF';
+    }
+  }
+}
+
+function restoreVmixState(){
+  if(!vmixStartedAt) return;
+  const elapsed = Date.now() - vmixStartedAt;
+  const limit = 5*60*60*1000;
+  if(elapsed >= limit){
+    setVmixState(false,true);
+  }else{
+    monitor.classList.add('on');
+    monitor.textContent='vMix';
+    vmixAutoTimer=setTimeout(()=>setVmixState(false,true),limit-elapsed);
+  }
+}
+
+async function actionRgb(){if(busy)return;setBusy(true);const on=game.classList.contains('rgbOn');say(on?'Wyłączam kolorowe światła.':'Włączam kolorowe światła w studiu.');moveWorker('18vw','30vh');await arrive();game.classList.toggle('rgbOn',!on);say(on?'Kolorowe światła wyłączone. Wracamy do klasyki.':'Kolorowe światła włączone. Studio robi się bardziej eventowe.');await sleep(1600);setBusy(false)}
+
+async function actionBlinds(){if(busy)return;setBusy(true);const open=windowBox.classList.contains('open');say(open?'Zasłaniam rolety.':'Odsłaniam rolety, żeby było widać pogodę za oknem.');moveWorker('82vw','31vh');await arrive();windowBox.classList.toggle('open',!open);say(open?'Rolety zasłonięte.':'Rolety odsłonięte. Widać, co dzieje się za oknem.');await sleep(1600);setBusy(false)}
+
+async function actionVmix(){if(busy)return;setBusy(true);const on=monitor.classList.contains('on');say(on?'Idę wyłączyć vMixa.':'Uruchamiam vMixa na komputerze.');moveWorker('9vw','35vh');await arrive();if(on){setVmixState(false,false);say('vMix wyłączony. Komputer odpoczywa.')}else{setVmixState(true,false);addHp(20);say('vMix uruchomiony. Wyłączy się automatycznie po 5 godzinach. +20 HP')}await sleep(1400);setBusy(false)}
+async function actionSetup(){if(busy)return;setBusy(true);say('Przestawiam setup. Meble robią cardio.');moveWorker('40vw','14vh');await arrive();chairLeft.style.opacity='0';chairRight.style.opacity='0';sofa.style.opacity='0';await sleep(700);setupMode=setupMode==='chairs'?'sofa':'chairs';applySetup();await sleep(300);chairLeft.style.opacity='1';chairRight.style.opacity='1';sofa.style.opacity='1';addHp(20);say(setupMode==='sofa'?'Setup zmieniony na kanapę. +20 HP':'Setup zmieniony na fotele. +20 HP');setBusy(false)}
+async function actionCoffee(){if(busy)return;setBusy(true);say('Idę po kawę przy czarnym stoliku.');moveWorker('49vw','10vh');await arrive();worker.classList.add('sit');addHp(20);say('Kawa to nie napój. To tryb produkcyjny. +20 HP');await sleep(3000);worker.classList.remove('sit');setBusy(false)}
+async function actionMics(){if(busy)return;setBusy(true);say('Sprawdzam mikrofony.');moveWorker('41vw','22vh');await arrive();say('Raz, raz. Mikrofon niesie się lepiej niż ja rano.');await sleep(2500);setBusy(false)}
+async function actionClientsIn(){if(busy)return;setBusy(true);say('Wpuszczam klientów.');moveWorker('86vw','13vh');await arrive();clients.classList.add('on');say('Klienci usiedli. Studio gotowe do nagrania.');await sleep(1800);setBusy(false)}
+async function actionClientsOut(){if(busy)return;setBusy(true);say('Wypuszczam klientów. Dzięki za nagranie!');moveWorker('86vw','13vh');await arrive();clients.classList.remove('on');say('Klienci wyszli. Studio wraca do przygotowań.');await sleep(1800);setBusy(false)}
+async function restOnSofa(){if(busy||setupMode!=='sofa')return;setBusy(true);say('Na chwilę spocznę na kanapie. To też element produkcji.');moveWorker('52vw','16vh');await arrive();worker.classList.add('sofaSit');await sleep(5000);worker.classList.remove('sofaSit');setBusy(false)}
+function runAction(action){
+  if(action==='cameras')actionCameras();
+  if(action==='lights')actionLights();
+  if(action==='rgb')actionRgb();
+  if(action==='vmix')actionVmix();
+  if(action==='blinds')actionBlinds();
+  if(action==='setup')actionSetup();
+  if(action==='coffee')actionCoffee();
+  if(action==='mics')actionMics();
+  if(action==='in')actionClientsIn();
+  if(action==='out')actionClientsOut();
+}
+
+document.querySelectorAll('.actionPanel button').forEach(btn=>{
+  btn.addEventListener('click', e=>{
+    e.preventDefault();
+    e.stopPropagation();
+    runAction(btn.dataset.action);
+  });
+
+  btn.addEventListener('touchend', e=>{
+    e.preventDefault();
+    e.stopPropagation();
+    runAction(btn.dataset.action);
+  }, {passive:false});
+});
+
+mainScreen.addEventListener('click', e=>{e.preventDefault();e.stopPropagation();nextScreenLogo();});
+mainScreen.addEventListener('touchend', e=>{e.preventDefault();e.stopPropagation();nextScreenLogo();},{passive:false});
+
+async function moveWorkerToTap(clientX,clientY){
+  if(busy) return;
+  const x=clamp(clientX-35,0,window.innerWidth-70);
+  const yFromBottom=clamp(window.innerHeight-clientY-63,70,window.innerHeight-170);
+  worker.classList.remove('sit','sofaSit');
+  worker.classList.add('walking','goingByTap');
+  worker.style.left=x+'px';
+  worker.style.bottom=yFromBottom+'px';
+  worker.style.transform='scale(1)';
+  say('Idę tam, gdzie kliknąłeś.');
+  await sleep(1150);
+  worker.classList.remove('walking','goingByTap');
+}
+
+game.addEventListener('click', e=>{
+  if(e.target.closest('.actionPanel')||e.target.closest('.camera')||e.target.closest('#fullscreenBtn')||e.target.closest('#mainScreen')) return;
+  moveWorkerToTap(e.clientX,e.clientY);
+});
+game.addEventListener('touchend', e=>{
+  if(e.target.closest('.actionPanel')||e.target.closest('.camera')||e.target.closest('#fullscreenBtn')||e.target.closest('#mainScreen')) return;
+  const t=e.changedTouches&&e.changedTouches[0];
+  if(t) moveWorkerToTap(t.clientX,t.clientY);
+},{passive:true});
+
+cameras.forEach(camera=>{let dragging=false,offsetX=0,offsetY=0;camera.addEventListener('pointerdown',e=>{if(busy)return;e.stopPropagation();dragging=true;camera.classList.add('dragging');camera.setPointerCapture(e.pointerId);const r=camera.getBoundingClientRect();offsetX=e.clientX-r.left;offsetY=e.clientY-r.top;camera.style.left=r.left+'px';camera.style.top=r.top+'px';camera.style.right='auto';camera.style.bottom='auto'});camera.addEventListener('pointermove',e=>{if(!dragging)return;camera.style.left=clamp(e.clientX-offsetX,-40,innerWidth-60)+'px';camera.style.top=clamp(e.clientY-offsetY,40,innerHeight-90)+'px'});function stop(e){if(!dragging)return;dragging=false;camera.classList.remove('dragging');try{camera.releasePointerCapture(e.pointerId)}catch(err){}say('Kamera przestawiona palcem. Kadr dostał nowe życie.')}camera.addEventListener('pointerup',stop);camera.addEventListener('pointercancel',stop)});
+function isRain(code){return[51,53,55,61,63,65,80,81,82,95,96,99].includes(Number(code))}
+function updateDayNight(){const h=new Date().getHours();game.classList.toggle('night',h<6||h>=20)}
+async function fetchWeather(place=fallback){const url=`https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,weather_code&timezone=auto`;try{const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error();const data=await r.json();const c=data.current||{},temp=Math.round(c.temperature_2m??0);game.classList.toggle('rainy',isRain(c.weather_code));tempTV.innerHTML=`${temp}°C<br><span style="font-size:11px;opacity:.8">na zewnątrz</span>`}catch(e){tempTV.innerHTML=`--°C<br><span style="font-size:11px;opacity:.8">offline</span>`}}
+function tryLocation(){if(!navigator.geolocation){fetchWeather();return}navigator.geolocation.getCurrentPosition(p=>fetchWeather({latitude:p.coords.latitude,longitude:p.coords.longitude}),()=>fetchWeather(),{enableHighAccuracy:false,timeout:8000,maximumAge:20*60*1000})}
+function showFullscreenButton(){fullscreenBtn.classList.remove('hidden');clearTimeout(fullscreenHideTimer);fullscreenHideTimer=setTimeout(()=>fullscreenBtn.classList.add('hidden'),10000)}
+async function toggleFullscreen(){try{if(!document.fullscreenElement){await document.documentElement.requestFullscreen();fullscreenBtn.textContent='⛶ Wyjdź'}else{await document.exitFullscreen();fullscreenBtn.textContent='⛶ Fullscreen'}}catch(e){}showFullscreenButton()}
+fullscreenBtn.addEventListener('pointerdown',e=>e.stopPropagation());fullscreenBtn.addEventListener('click',e=>{e.stopPropagation();toggleFullscreen()});document.addEventListener('fullscreenchange',()=>{fullscreenBtn.textContent=document.fullscreenElement?'⛶ Wyjdź':'⛶ Fullscreen';showFullscreenButton()});['pointermove','pointerdown','keydown'].forEach(ev=>window.addEventListener(ev,showFullscreenButton,{passive:true}));
+const autoActions=['cameras','lights','rgb','vmix','blinds','setup','coffee','mics','in','out'];async function autoLoop(){if(!busy){const action=autoActions[autoActionIndex%autoActions.length];autoActionIndex++;runAction(action)}setTimeout(autoLoop,18000)}setTimeout(autoLoop,5000);
+setInterval(()=>{if(!busy&&Math.random()>.68)restOnSofa()},22000);
+setInterval(()=>{if(!busy){const lines=['Statyw stoi stabilnie, bo ma trzy argumenty.','Kamera ma obiektywne spojrzenie.','Prompter nie zapomina tekstu. Najwyżej go przewija.','Mikrofon niesie się lepiej niż ja przed kawą.','Światło dobre, humor lepszy.'];say(lines[Math.floor(Math.random()*lines.length)])}},18000);
+setInterval(()=>{applyHourlyDecay();updateHp()},60000);
+updateDayNight();applyHourlyDecay();applySetup();applyScreenLogo();restoreVmixState();windowBox.classList.add('open');updateHp();tryLocation();showFullscreenButton();say('Dbaj o ludka. Jak HP spada, daj mu coś do roboty.');
+setInterval(updateDayNight,60000);setInterval(tryLocation,600000);
+</script>
+</body>
+</html>
