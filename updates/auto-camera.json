@@ -1,10 +1,10 @@
 {
-    "version":  "15",
-    "installer_url":  "https://github.com/tomaszcedro1222/pluginsforlive-website/releases/download/v15/AutoCameraSetup.exe",
-    "release_notes_url":  "https://github.com/tomaszcedro1222/pluginsforlive-website/releases/tag/v15",
-    "sha256":  "11699ce940e81db1857f43408898dcde6d90005ae53be4eb8d3121ad65a8aa72",
-    "size_bytes":  232873584,
+    "version":  "15.01",
+    "installer_url":  "https://github.com/tomaszcedro1222/pluginsforlive-website/releases/download/v15.01/AutoCameraSetup.exe",
+    "release_notes_url":  "https://github.com/tomaszcedro1222/pluginsforlive-website/releases/tag/v15.01",
+    "sha256":  "7cefad3554146b15df110398968f69b4cc03a6ad8845ca56011012b23a16e701",
+    "size_bytes":  232889032,
     "require_signed_installer":  true,
-    "notes_pl":  "Nowy model licencji, poprawiony system aktualizacji i poprawki stabilności.",
-    "notes_en":  "New licensing model, improved update system and stability fixes."
+    "notes_pl":  "Test systemu aktualizacji i poprawki stabilności.",
+    "notes_en":  "Update system test and stability improvements."
 }
