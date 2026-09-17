@@ -1,10 +1,12 @@
 {
-    "version":  "15.01",
-    "installer_url":  "https://github.com/tomaszcedro1222/pluginsforlive-website/releases/download/v15.01/AutoCameraSetup.exe",
-    "release_notes_url":  "https://github.com/tomaszcedro1222/pluginsforlive-website/releases/tag/v15.01",
-    "sha256":  "7cefad3554146b15df110398968f69b4cc03a6ad8845ca56011012b23a16e701",
-    "size_bytes":  232889032,
+    "version":  "15.03",
+    "installer_url":  "https://github.com/tomaszcedro1222/pluginsforlive-website/releases/download/v15.03/AutoCameraSetup.exe",
+    "release_notes_url":  "https://github.com/tomaszcedro1222/pluginsforlive-website/releases/download/v15.03/AutoCameraSetup.exe",
+    "sha256":  "f3c82bbcb37f87976acb2839070c63449f0f4a83afde522ce5c997f687f060fd",
+    "size_bytes":  232901040,
     "require_signed_installer":  true,
-    "notes_pl":  "Test systemu aktualizacji i poprawki stabilności.",
-    "notes_en":  "Update system test and stability improvements."
+    "notes_pl":  "Aktualizacja do wersji 15.03 wymaga ręcznego pobrania. Program możesz pobrać ze strony https://www.pluginsforlive.com lub klikając przycisk \u0027Co nowego?\u0027. Wtedy pobierze się najnowszy instalator. Po pobraniu uruchom go ręcznie. Nie używaj przycisku \u0027Aktualizuj\u0027 w tej wersji programu.",
+    "notes_en":  "The update to version 15.03 requires a manual download. You can download the program from https://www.pluginsforlive.com or by clicking \u0027What\u0027s new?\u0027. This downloads the latest installer. Run it manually after downloading. Do not use the \u0027Update\u0027 button in this application version.",
+    "manual_download_required":  true,
+    "manual_download_url":  "https://www.pluginsforlive.com"
 }
