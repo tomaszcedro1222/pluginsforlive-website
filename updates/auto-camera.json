@@ -1,10 +1,10 @@
 {
-    "version":  "15.02",
-    "installer_url":  "https://github.com/tomaszcedro1222/pluginsforlive-website/releases/download/v15.02/AutoCameraSetup.exe",
-    "release_notes_url":  "https://github.com/tomaszcedro1222/pluginsforlive-website/releases/tag/v15.02",
-    "sha256":  "8b7df4d1253b69615a7872c7a4c42e78adcf15f8e605751b3161680d8079699f",
-    "size_bytes":  232886904,
+    "version":  "15.01",
+    "installer_url":  "https://github.com/tomaszcedro1222/pluginsforlive-website/releases/download/v15.01/AutoCameraSetup.exe",
+    "release_notes_url":  "https://github.com/tomaszcedro1222/pluginsforlive-website/releases/tag/v15.01",
+    "sha256":  "7cefad3554146b15df110398968f69b4cc03a6ad8845ca56011012b23a16e701",
+    "size_bytes":  232889032,
     "require_signed_installer":  true,
-    "notes_pl":  "Nowa wersja Auto Camera 15.02 jest dostępna.",
-    "notes_en":  "Auto Camera 15.02 is now available."
+    "notes_pl":  "Test systemu aktualizacji i poprawki stabilności.",
+    "notes_en":  "Update system test and stability improvements."
 }
