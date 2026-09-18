@@ -5,8 +5,8 @@
   "sha256": "143a738a28a9491fff1f0764ddf2f24c3ffa053deeb19f3a57a2842c9c8aa5fc",
   "size_bytes": 232931712,
   "require_signed_installer": true,
-  "notes_pl": "Aktualizacja do wersji 15.04 wymaga ręcznego pobrania. Program możesz pobrać ze strony https://www.pluginsforlive.com lub klikając przycisk 'Co nowego?'. Wtedy pobierze się najnowszy instalator. Po pobraniu uruchom go ręcznie. Nie używaj przycisku 'Aktualizuj' w tej wersji programu.",
-  "notes_en": "The update to version 15.04 requires a manual download. You can download the program from https://www.pluginsforlive.com or by clicking 'What's new?'. This downloads the latest installer. Run it manually after downloading. Do not use the 'Update' button in this application version.",
-  "manual_download_required": true,
-  "manual_download_url": "https://www.pluginsforlive.com"
+  "notes_pl": "Automatyczna aktualizacja pobierze najnowszy instalator. Jeśli pobieranie lub instalacja nie rozpocznie się, pobierz program ręcznie ze strony https://www.pluginsforlive.com.",
+  "notes_en": "The automatic update will download the latest installer. If the download or installation does not start, download the program manually from https://www.pluginsforlive.com.",
+  "manual_download_required": false,
+  "manual_download_url": ""
 }
