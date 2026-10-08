@@ -1,12 +1,12 @@
 {
-  "version": "15.04",
-  "installer_url": "https://github.com/tomaszcedro1222/pluginsforlive-website/releases/download/v15.04/AutoCameraSetup.exe",
-  "release_notes_url": "https://github.com/tomaszcedro1222/pluginsforlive-website/releases/download/v15.04/AutoCameraSetup.exe",
-  "sha256": "143a738a28a9491fff1f0764ddf2f24c3ffa053deeb19f3a57a2842c9c8aa5fc",
-  "size_bytes": 232931712,
+  "version": "15.06",
+  "installer_url": "https://github.com/tomaszcedro1222/pluginsforlive-website/releases/download/v15.06/AutoCameraSetup.exe",
+  "release_notes_url": "https://github.com/tomaszcedro1222/pluginsforlive-website/releases/download/v15.06/AutoCameraSetup.exe",
+  "sha256": "5fa474f6705971fc92ab038090ba0b8c604b694305de41fcc71b9ddf73f72465",
+  "size_bytes": 232950040,
   "require_signed_installer": true,
-  "notes_pl": "Automatyczna aktualizacja pobierze najnowszy instalator. Jeśli pobieranie lub instalacja nie rozpocznie się, pobierz program ręcznie ze strony https://www.pluginsforlive.com.",
-  "notes_en": "The automatic update will download the latest installer. If the download or installation does not start, download the program manually from https://www.pluginsforlive.com.",
+  "notes_pl": "Auto Camera 15.06: zaktualizowano link do licencji komercyjnej. Kliknij Aktualizuj, aby pobrać i uruchomić instalator. Jeśli aktualizacja nie zadziała, pobierz program ze strony https://www.pluginsforlive.com.",
+  "notes_en": "Auto Camera 15.06: updated the commercial subscription link. Click Update to download and launch the installer. If the update fails, download it from https://www.pluginsforlive.com.",
   "manual_download_required": false,
   "manual_download_url": ""
 }
