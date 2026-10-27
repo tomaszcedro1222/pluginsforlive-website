@@ -59,6 +59,23 @@ h1{margin:0;font-size:clamp(42px,6vw,72px);line-height:1;letter-spacing:-2.4px}
 .button.secondary{border-color:var(--line);background:rgba(255,255,255,.07);color:var(--text);box-shadow:none}
 .button.disabled{cursor:default;background:rgba(255,255,255,.09);color:#dce5f4;box-shadow:none}
 .product-image{display:block;width:100%;max-height:470px;object-fit:contain;border:1px solid var(--line);border-radius:var(--radius);background:#070b12;box-shadow:var(--shadow)}
+.premiere-hero h1{max-width:1000px;font-size:clamp(38px,5.4vw,64px);line-height:1.08}
+.premiere-hero .lead{max-width:850px}
+.premiere-compat{font-size:14px;margin:18px 0 28px}
+.premiere-workspace{display:block}
+.premiere-workspace .product-image{max-height:none;height:auto}
+.screenshot-link{display:block;cursor:zoom-in;border-radius:16px}
+.screenshot-link:focus-visible{outline:3px solid var(--brand);outline-offset:5px}
+.premiere-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:start}
+.premiere-screen{margin:0;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--surface-soft)}
+.premiere-screen img{display:block;width:100%;height:auto}
+.premiere-screen figcaption{padding:22px}
+.premiere-screen figcaption p{margin:0;color:var(--muted);font-size:15px}
+.screenshot-dialog{position:fixed;inset:0;width:fit-content;max-width:96vw;max-height:96vh;padding:44px 12px 12px;border:1px solid var(--line);border-radius:18px;background:#101827;color:var(--text);overflow:auto}
+.screenshot-dialog::backdrop{background:rgba(0,0,0,.88)}
+.screenshot-dialog img{display:block;max-width:100%;max-height:84vh;width:auto;height:auto;object-fit:contain;margin:auto}
+.screenshot-close{position:absolute;right:8px;top:4px;width:40px;height:40px;border:0;background:transparent;color:#fff;font-size:32px;cursor:pointer}
+section[id]{scroll-margin-top:85px}
 
 .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:34px}
 .fact{padding:18px;border:1px solid var(--line);border-radius:18px;background:var(--surface-soft)}
@@ -95,6 +112,7 @@ h3{margin:0 0 9px;font-size:21px;line-height:1.2}
 .foot a{text-underline-offset:3px}
 
 @media(max-width:860px){
+  .premiere-gallery{grid-template-columns:1fr;max-width:540px;margin-inline:auto}
   .hero-grid,.split{grid-template-columns:1fr}
   .facts{grid-template-columns:repeat(2,1fr)}
   .cards{grid-template-columns:1fr}
