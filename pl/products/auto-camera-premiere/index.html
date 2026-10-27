@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Auto Camera for Adobe Premiere | Automatyczny montaż kamer</title>
-  <meta name="description" content="Automatycznie montuj podcasty i wywiady w Adobe Premiere Pro. Przypisz mikrofony do kamer, ustaw rytm cięć, wycinaj ciszę i dodawaj powolny zoom na rozmówcę.">
+  <title>Automatyczny montaż podcastów w Premiere Pro | Auto Camera</title>
+  <meta name="description" content="Automatyczny montaż podcastów i wywiadów w Adobe Premiere Pro. Przypisz mikrofony do kamer, ustaw rytm cięć, wycinaj ciszę i dodawaj powolny zoom.">
   <link rel="canonical" href="https://pluginsforlive.com/pl/products/auto-camera-premiere/">
   <link rel="alternate" hreflang="en" href="https://pluginsforlive.com/products/auto-camera-premiere/">
   <link rel="alternate" hreflang="pl" href="https://pluginsforlive.com/pl/products/auto-camera-premiere/">
@@ -14,32 +14,60 @@
   <meta property="og:locale:alternate" content="en_US">
   <meta property="og:site_name" content="Plugins For Live">
   <meta property="og:url" content="https://pluginsforlive.com/pl/products/auto-camera-premiere/">
-  <meta property="og:title" content="Auto Camera for Adobe Premiere | Automatyczny montaż kamer">
-  <meta property="og:description" content="Automatycznie montuj podcasty i wywiady w Adobe Premiere Pro. Przypisz mikrofony do kamer, ustaw rytm cięć, wycinaj ciszę i dodawaj powolny zoom na rozmówcę.">
+  <meta property="og:title" content="Automatyczny montaż podcastów w Premiere Pro | Auto Camera">
+  <meta property="og:description" content="Automatyczny montaż podcastów i wywiadów w Adobe Premiere Pro. Przypisz mikrofony do kamer, ustaw rytm cięć, wycinaj ciszę i dodawaj powolny zoom.">
   <meta property="og:image" content="https://pluginsforlive.com/assets/images/products/auto-camera-premiere/editing-workspace.png">
   <meta property="og:image:alt" content="Auto Camera for Adobe Premiere obok gotowego montażu wielokamerowego na osi czasu">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Auto Camera for Adobe Premiere | Automatyczny montaż kamer">
-  <meta name="twitter:description" content="Automatycznie montuj podcasty i wywiady w Adobe Premiere Pro. Przypisz mikrofony do kamer, ustaw rytm cięć, wycinaj ciszę i dodawaj powolny zoom na rozmówcę.">
+  <meta name="twitter:title" content="Automatyczny montaż podcastów w Premiere Pro | Auto Camera">
+  <meta name="twitter:description" content="Automatyczny montaż podcastów i wywiadów w Adobe Premiere Pro. Przypisz mikrofony do kamer, ustaw rytm cięć, wycinaj ciszę i dodawaj powolny zoom.">
   <meta name="twitter:image" content="https://pluginsforlive.com/assets/images/products/auto-camera-premiere/editing-workspace.png">
   <link rel="icon" type="image/png" href="../../../assets/images/branding/plugins-for-live-logo.png">
   <link rel="stylesheet" href="../../../assets/product-page.css">
-  <script type="application/ld+json">{
+  <script type="application/ld+json">
+{
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "Organization",
+      "@id": "https://pluginsforlive.com/#organization",
+      "name": "Plugins For Live",
+      "legalName": "AZ Tomasz Cedro",
+      "url": "https://pluginsforlive.com/"
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://pluginsforlive.com/pl/products/auto-camera-premiere/#webpage",
+      "url": "https://pluginsforlive.com/pl/products/auto-camera-premiere/",
+      "name": "Automatyczny montaż podcastów w Premiere Pro | Auto Camera",
+      "description": "Automatyczny montaż podcastów i wywiadów w Adobe Premiere Pro. Przypisz mikrofony do kamer, ustaw rytm cięć, wycinaj ciszę i dodawaj powolny zoom.",
+      "inLanguage": "pl",
+      "isPartOf": {
+        "@id": "https://pluginsforlive.com/#website"
+      },
+      "publisher": {
+        "@id": "https://pluginsforlive.com/#organization"
+      },
+      "mainEntity": {
+        "@id": "https://pluginsforlive.com/pl/products/auto-camera-premiere/#software"
+      },
+      "breadcrumb": {
+        "@id": "https://pluginsforlive.com/pl/products/auto-camera-premiere/#breadcrumb"
+      }
+    },
+    {
       "@type": "SoftwareApplication",
-      "@id": "https://pluginsforlive.com/products/auto-camera-premiere/#software",
+      "@id": "https://pluginsforlive.com/pl/products/auto-camera-premiere/#software",
       "name": "Auto Camera for Adobe Premiere",
       "url": "https://pluginsforlive.com/pl/products/auto-camera-premiere/",
-      "description": "Automatycznie montuj podcasty i wywiady w Adobe Premiere Pro. Przypisz mikrofony do kamer, ustaw rytm cięć, wycinaj ciszę i dodawaj powolny zoom na rozmówcę.",
+      "description": "Automatyczny montaż podcastów i wywiadów w Adobe Premiere Pro. Przypisz mikrofony do kamer, ustaw rytm cięć, wycinaj ciszę i dodawaj powolny zoom.",
       "applicationCategory": "MultimediaApplication",
-      "applicationSubCategory": "Multicamera video editing",
+      "applicationSubCategory": "Wielokamerowy montaż wideo",
       "operatingSystem": [
         "Windows",
         "macOS"
       ],
-      "softwareRequirements": "Adobe Premiere Pro 26.2+; synchronized camera tracks; microphone source WAV audio",
+      "softwareRequirements": "Adobe Premiere Pro 26.2 lub nowszy; zsynchronizowane ścieżki kamer; źródłowe nagrania mikrofonów WAV. Integracja przetestowana na Windows; weryfikacja macOS w toku.",
       "image": "https://pluginsforlive.com/assets/images/products/auto-camera-premiere/editing-workspace.png",
       "screenshot": [
         "https://pluginsforlive.com/assets/images/products/auto-camera-premiere/editing-workspace.png",
@@ -48,9 +76,10 @@
         "https://pluginsforlive.com/assets/images/products/auto-camera-premiere/zoom-controls.png"
       ],
       "publisher": {
-        "@type": "Organization",
-        "name": "Plugins For Live",
-        "url": "https://pluginsforlive.com/"
+        "@id": "https://pluginsforlive.com/#organization"
+      },
+      "mainEntityOfPage": {
+        "@id": "https://pluginsforlive.com/pl/products/auto-camera-premiere/#webpage"
       }
     },
     {
@@ -102,6 +131,7 @@
     },
     {
       "@type": "BreadcrumbList",
+      "@id": "https://pluginsforlive.com/pl/products/auto-camera-premiere/#breadcrumb",
       "itemListElement": [
         {
           "@type": "ListItem",
@@ -112,18 +142,25 @@
         {
           "@type": "ListItem",
           "position": 2,
+          "name": "Wtyczki",
+          "item": "https://pluginsforlive.com/pl/#pluginy"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
           "name": "Auto Camera for Adobe Premiere",
           "item": "https://pluginsforlive.com/pl/products/auto-camera-premiere/"
         }
       ]
     }
   ]
-}</script>
+}
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Przejdź do treści</a>
   <nav class="nav" aria-label="Nawigacja główna"><div class="wrap navin">
-    <a class="logo" href="/pl/"><img src="../../../assets/images/branding/plugins-for-live-logo.png" alt="" width="38" height="38"><span>pluginsforlive.com</span></a>
+    <a class="logo" href="/pl/"><img src="../../../assets/images/branding/plugins-for-live-logo.png" alt="" width="38" height="38" decoding="async"><span>pluginsforlive.com</span></a>
     <div class="navlinks"><a href="/pl/#pluginy">Wtyczki</a><a href="/pl/#tools">Darmowe narzędzia</a><a href="/pl/#kontakt">Kontakt</a></div>
     <a class="language-link" href="/products/auto-camera-premiere/" lang="en" hreflang="en">EN</a>
   </div></nav>
@@ -135,9 +172,9 @@
       <p class="lead">Zamień nagraną rozmowę w edytowalny montaż wielokamerowy. Przypisz mikrofony do ścieżek kamer, dopasuj rytm i pozwól Auto Camera ułożyć ujęcia w Adobe Premiere Pro.</p>
       <div class="hero-actions"><a class="button" href="mailto:support@pluginsforlive.com?subject=Auto%20Camera%20for%20Adobe%20Premiere">Zapytaj o dostęp</a><a class="button secondary" href="#features">Poznaj funkcje</a></div>
       <p class="premiere-compat muted">Premiere Pro 26.2+ · Windows i macOS · Panel UXP</p>
-      <a class="screenshot-link premiere-workspace" href="../../../assets/images/products/auto-camera-premiere/editing-workspace.png" aria-label="Powiększ zrzut: Adobe Premiere"><img class="product-image" src="../../../assets/images/products/auto-camera-premiere/editing-workspace.png" alt="Auto Camera for Adobe Premiere obok gotowego montażu wielokamerowego na osi czasu" width="1919" height="1030" fetchpriority="high"></a>
+      <a class="screenshot-link premiere-workspace" href="../../../assets/images/products/auto-camera-premiere/editing-workspace.png" aria-label="Powiększ zrzut: Adobe Premiere"><img class="product-image" src="../../../assets/images/products/auto-camera-premiere/editing-workspace.png" alt="Auto Camera for Adobe Premiere obok gotowego montażu wielokamerowego na osi czasu" width="1919" height="1030" fetchpriority="high" decoding="async"></a>
     </div></header>
-    <section><div class="wrap"><div class="section-heading"><h2>Od zsynchronizowanych nagrań do gotowej sekwencji</h2><p>Pracuj bezpośrednio w Premiere z kamerami i nagraniami mikrofonów ułożonymi już na osi czasu.</p></div><div class="steps"><div class="step"><h3>Przypisz mikrofony do kamer</h3><p>Odczytaj aktywną sekwencję i przypisz do 10 ścieżek mikrofonowych do ścieżek wideo. Użyj automatycznego rozpoznania kanału WAV albo wybierz go ręcznie.</p></div>
+    <section><div class="wrap"><div class="section-heading"><h2>Automatyczny montaż wielokamerowych podcastów i wywiadów</h2><p>Pracuj bezpośrednio w Premiere z kamerami i nagraniami mikrofonów ułożonymi już na osi czasu.</p></div><div class="steps"><div class="step"><h3>Przypisz mikrofony do kamer</h3><p>Odczytaj aktywną sekwencję i przypisz do 10 ścieżek mikrofonowych do ścieżek wideo. Użyj automatycznego rozpoznania kanału WAV albo wybierz go ręcznie.</p></div>
 <div class="step"><h3>Dopasuj rytm</h3><p>Ustaw próg głosu, czas reakcji, podtrzymanie mówcy i minimalną długość ujęcia. Wyprzedzenie zmiany pozwala pokazać kolejną osobę, zanim zacznie mówić.</p></div>
 <div class="step"><h3>Utwórz montaż i dopracuj go</h3><p>Wygeneruj osobną sekwencję ze zwykłymi, edytowalnymi klipami. Poprawiaj cięcia w Premiere, zachowując dostęp do oryginalnej sekwencji.</p></div></div></div></section>
     <section id="features"><div class="wrap"><div class="section-heading"><p class="eyebrow">Funkcje</p><h2>Dopasuj montaż do rytmu rozmowy</h2></div><div class="cards"><article class="card"><h3>Cięcia sterowane mikrofonami</h3><p>Wybór kamery opiera się na aktywności rozmówców. Do 10 przypisań pozwala łączyć kilka mikrofonów z jedną kamerą albo dać każdej osobie osobny kadr.</p></article>
@@ -146,14 +183,15 @@
 <article class="card"><h3>Wycinanie ciszy</h3><p>Skracaj przerwy na ścieżkach audio i wideo równocześnie. Ustaw próg, minimalny czas i margines przy słowach. Przycisk Auto dobiera próg na podstawie wybranych mikrofonów.</p></article>
 <article class="card"><h3>Powolny zoom na rozmówcę</h3><p>Wskaż osobę w kadrze z jedną, dwiema lub trzema osobami. Ustaw prędkość dojazdu i włączaj go osobno dla każdego mikrofonu oraz planu szerokiego.</p></article>
 <article class="card"><h3>Dwa układy montażu</h3><p>Utwórz montaż na nowej górnej ścieżce wideo albo przycinaj istniejące ścieżki kamer w kopii sekwencji. Wynik pozostaje edytowalny w Premiere.</p></article></div></div></section>
-    <section><div class="wrap"><div class="section-heading"><h2>Zobacz panel w Premiere</h2><p>Ustawienia, przypisania kamer i sterowanie zoomem w jednym panelu. Kliknij zrzut, aby go powiększyć.</p></div><div class="premiere-gallery"><figure class="premiere-screen"><a class="screenshot-link" href="../../../assets/images/products/auto-camera-premiere/camera-mapping.png" aria-label="Powiększ zrzut: Mikrofony i kamery"><img src="../../../assets/images/products/auto-camera-premiere/camera-mapping.png" alt="Mikrofony i kamery — Auto Camera for Adobe Premiere" width="565" height="923" loading="lazy"></a><figcaption><h3>Mikrofony i kamery</h3><p>Przypisz każdemu mikrofonowi ścieżkę audio i kamerę, a następnie wybierz kanał źródłowy dźwięku.</p></figcaption></figure>
-<figure class="premiere-screen"><a class="screenshot-link" href="../../../assets/images/products/auto-camera-premiere/speaker-mapping.png" aria-label="Powiększ zrzut: Kilku rozmówców, jedna kamera"><img src="../../../assets/images/products/auto-camera-premiere/speaker-mapping.png" alt="Kilku rozmówców, jedna kamera — Auto Camera for Adobe Premiere" width="566" height="1003" loading="lazy"></a><figcaption><h3>Kilku rozmówców, jedna kamera</h3><p>Połącz różne mikrofony z tą samą kamerą, zachowując osobną konfigurację dla każdego rozmówcy.</p></figcaption></figure>
-<figure class="premiere-screen"><a class="screenshot-link" href="../../../assets/images/products/auto-camera-premiere/zoom-controls.png" aria-label="Powiększ zrzut: Wybierz kierunek dojazdu"><img src="../../../assets/images/products/auto-camera-premiere/zoom-controls.png" alt="Wybierz kierunek dojazdu — Auto Camera for Adobe Premiere" width="567" height="999" loading="lazy"></a><figcaption><h3>Wybierz kierunek dojazdu</h3><p>Określ liczbę osób w kadrze i wskaż osobę, do której ma zbliżać się obraz. Włączaj ruch niezależnie dla każdego ujęcia.</p></figcaption></figure></div></div></section>
+    <section><div class="wrap"><div class="section-heading"><h2>Zobacz panel w Premiere</h2><p>Ustawienia, przypisania kamer i sterowanie zoomem w jednym panelu. Kliknij zrzut, aby go powiększyć.</p></div><div class="premiere-gallery"><figure class="premiere-screen"><a class="screenshot-link" href="../../../assets/images/products/auto-camera-premiere/camera-mapping.png" aria-label="Powiększ zrzut: Mikrofony i kamery"><img src="../../../assets/images/products/auto-camera-premiere/camera-mapping.png" alt="Mikrofony i kamery — Auto Camera for Adobe Premiere" width="565" height="923" loading="lazy" decoding="async"></a><figcaption><h3>Mikrofony i kamery</h3><p>Przypisz każdemu mikrofonowi ścieżkę audio i kamerę, a następnie wybierz kanał źródłowy dźwięku.</p></figcaption></figure>
+<figure class="premiere-screen"><a class="screenshot-link" href="../../../assets/images/products/auto-camera-premiere/speaker-mapping.png" aria-label="Powiększ zrzut: Kilku rozmówców, jedna kamera"><img src="../../../assets/images/products/auto-camera-premiere/speaker-mapping.png" alt="Kilku rozmówców, jedna kamera — Auto Camera for Adobe Premiere" width="566" height="1003" loading="lazy" decoding="async"></a><figcaption><h3>Kilku rozmówców, jedna kamera</h3><p>Połącz różne mikrofony z tą samą kamerą, zachowując osobną konfigurację dla każdego rozmówcy.</p></figcaption></figure>
+<figure class="premiere-screen"><a class="screenshot-link" href="../../../assets/images/products/auto-camera-premiere/zoom-controls.png" aria-label="Powiększ zrzut: Wybierz kierunek dojazdu"><img src="../../../assets/images/products/auto-camera-premiere/zoom-controls.png" alt="Wybierz kierunek dojazdu — Auto Camera for Adobe Premiere" width="567" height="999" loading="lazy" decoding="async"></a><figcaption><h3>Wybierz kierunek dojazdu</h3><p>Określ liczbę osób w kadrze i wskaż osobę, do której ma zbliżać się obraz. Włączaj ruch niezależnie dla każdego ujęcia.</p></figcaption></figure></div></div></section>
     <section><div class="wrap split"><div class="panel"><h2>Przygotuj sekwencję</h2><ul class="checklist"><li>Adobe Premiere Pro w wersji 26.2 lub nowszej.</li>
 <li>Obraz z kamer i nagrania mikrofonów muszą być wcześniej zsynchronizowane.</li>
 <li>Analiza mikrofonów korzysta z osobnych ścieżek z plikami PCM lub float WAV, także wielokanałowymi.</li>
 <li>Analizowany jest źródłowy dźwięk WAV, bez efektów Premiere i przetworzonego sygnału miksera.</li>
 <li>Pakiet CCX jest przeznaczony dla Windows i macOS. Integrację przetestowano na Windows; sprawdzenie na macOS jest jeszcze przed nami.</li></ul></div><div class="panel"><h2>Zachowaj kontrolę nad wynikiem</h2><p class="muted">Auto Camera pracuje na kopii sekwencji i zapisuje wynik jako osobny plik projektu. Obejrzyj automatyczny montaż, dopracuj cięcia i kontynuuj pracę w Premiere. Oryginalny plik projektu nie jest nadpisywany.</p><div class="hero-actions"><a class="button secondary" href="../auto-camera/">Auto Camera for vMix</a></div></div></div></section>
+    <aside class="wrap" aria-label="Poradnik konfiguracji"><p class="muted">Przed pierwszym montażem sprawdź poradnik: <a href="../../guides/automatic-podcast-editing-premiere-pro/">automatyczny montaż podcastu w Premiere Pro</a>. Zobacz, jak przygotować nagrania i sprawdzić wygenerowane cięcia.</p></aside>
     <section id="faq"><div class="wrap"><div class="section-heading"><h2>Pytania o Auto Camera for Adobe Premiere</h2></div><div class="faq"><details><summary>Czy wtyczka synchronizuje kamery i dźwięk?</summary><p>Najpierw przygotuj i zsynchronizuj nagrania. Auto Camera korzysta z ich położenia na osi czasu, aby przeanalizować mikrofony i utworzyć cięcia kamer.</p></details>
 <details><summary>Czy mogę poprawić wygenerowany montaż?</summary><p>Tak. Wynik zawiera zwykłe klipy Premiere w osobnej sekwencji. Możesz przesuwać cięcia i dalej montować ręcznie.</p></details>
 <details><summary>Jak działa zoom?</summary><p>To cyfrowy dojazd zapisany klatkami kluczowymi pozycji i skali efektu Motion. Wybierasz osobę oraz prędkość; funkcja nie porusza fizyczną kamerą PTZ.</p></details>

@@ -469,6 +469,8 @@
 
     .plugin-info-link{
       display:inline-flex;
+      min-height:3.1em;
+      align-items:flex-end;
       margin-top:auto;
       color:var(--brand);
       font-weight:800;
@@ -477,6 +479,10 @@
     }
 
     .plugin-info-link:hover{color:#fff}
+    .guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+    .guide-grid h3{margin:0 0 12px;font-size:24px}
+    .guide-grid a,.video-showcase-copy a{color:var(--brand);text-decoration:underline;text-underline-offset:4px}
+    @media(max-width:700px){.guide-grid{grid-template-columns:1fr}}
 
     .plugin-item ul{
       padding-left:18px;
@@ -814,7 +820,7 @@
   <nav class="nav" aria-label="Nawigacja główna">
     <div class="wrap navin">
       <a class="logo" href="#">
-        <img src="../assets/images/branding/plugins-for-live-logo.png" alt="Plugins For Live logo" class="logo-img">
+        <img src="../assets/images/branding/plugins-for-live-logo.png" alt="Plugins For Live logo" class="logo-img" width="256" height="256">
         pluginsforlive.com
       </a>
       <div class="links">
@@ -840,7 +846,7 @@ Pobierz Auto Camera for vMix za darmo
     <header class="hero">
       <div class="wrap grid">
         <div>
-          <h1>Automatyzuj kamery <span>na żywo i w montażu</span>.</h1>
+          <h1>Automatyzacja kamer w <span>vMix i Adobe Premiere</span>.</h1>
           <p class="lead">Auto Camera for vMix przełącza kamery podczas transmisji na żywo. Auto Camera for Adobe Premiere montuje nagrane podcasty i wywiady bezpośrednio na osi czasu. Ducking Audio automatyzuje kontrolę dźwięku w vMix.</p>
           <div class="actions">
             <a class="btn" href="https://github.com/tomaszcedro1222/pluginsforlive-website/releases/latest/download/AutoCameraSetup.exe"
@@ -869,7 +875,7 @@ Skontaktuj się
                 src="../assets/images/video/auto-camera-demo-poster.png"
                 alt=""
                 width="1919"
-                height="1079">
+                height="1079" fetchpriority="high" decoding="async">
               <span class="video-play" aria-hidden="true"></span>
               <span class="video-loader"></span>
               <span class="video-status-label">Odtwórz film</span>
@@ -882,7 +888,7 @@ Skontaktuj się
     <section id="pluginy">
       <div class="wrap">
 
-        <h2 class="section-title">Dostępne wtyczki</h2>
+        <h2 class="section-title">Wtyczki do transmisji na żywo i montażu wielokamerowego</h2>
         <p class="muted" style="margin-bottom:28px;">
           Narzędzia do automatyzacji realizacji na żywo i montażu nagrań. Wybierz wersję Auto Camera dla swojego środowiska pracy.
         </p>
@@ -891,7 +897,7 @@ Skontaktuj się
 
           <div class="plugin-item" data-ga-view="view_auto_camera">
             <h3 class="plugin-title"><img src="../assets/images/branding/plugins-for-live-logo.png" alt="Auto Camera for vMix icon" class="plugin-icon">Auto Camera for vMix</h3>
-            <img src="../assets/images/products/auto-camera/interface-v14.png" alt="Zrzut ekranu interfejsu Auto Camera for vMix v14" class="product-screenshot" width="1100" height="868" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Powiększ zrzut interfejsu Auto Camera for vMix">
+            <img src="../assets/images/products/auto-camera/interface-v14.png" alt="Zrzut ekranu interfejsu Auto Camera for vMix v14" class="product-screenshot" width="1100" height="868" loading="lazy" decoding="async" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Powiększ zrzut interfejsu Auto Camera for vMix">
 
             <p>
               Auto Camera for vMix automatycznie miksuje kamery zależnie od tego, kto aktualnie mówi. Aplikacja jest całkowicie darmowa, bez limitu czasu i bez ograniczeń funkcjonalnych do użytku niekomercyjnego oraz testów. Jeśli używasz jej przy płatnych realizacjach, transmisjach dla klientów lub innej pracy zarobkowej, potrzebna jest aktywna licencja komercyjna.
@@ -906,7 +912,7 @@ Skontaktuj się
               <li>AI Voice Recognition do identyfikacji mówcy po głosie</li>
               <li>Camera Readiness sprawdzające osobę, ostrość i stabilność kadru</li>
             </ul>
-            <a href="products/auto-camera/" class="plugin-info-link">Dowiedz się więcej</a>
+            <a href="products/auto-camera/" class="plugin-info-link">Poznaj Auto Camera for vMix</a>
 
             <div class="plugin-actions">
               <a
@@ -948,13 +954,13 @@ Skontaktuj się
               <li>Dwa tryby montażu i zachowanie oryginalnej sekwencji</li>
               <li>Premiere Pro 26.2+ · Windows i macOS</li>
             </ul>
-            <a href="products/auto-camera-premiere/" class="plugin-info-link">Dowiedz się więcej</a>
+            <a href="products/auto-camera-premiere/" class="plugin-info-link">Poznaj Auto Camera for Premiere</a>
             <div class="plugin-actions"><a href="mailto:support@pluginsforlive.com?subject=Auto%20Camera%20for%20Adobe%20Premiere" class="trial-btn">Zapytaj o dostęp</a></div>
           </div>
 
           <div class="plugin-item" data-ga-view="view_ducking_audio">
             <h3 class="plugin-title"><img src="../assets/images/products/ducking-audio/icon.png" alt="Ducking Audio icon" class="plugin-icon">Ducking Audio</h3>
-            <img src="../assets/images/products/ducking-audio/interface.jpg" alt="Zrzut ekranu interfejsu Ducking Audio" class="product-screenshot" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Powiększ zrzut interfejsu Ducking Audio">
+            <img src="../assets/images/products/ducking-audio/interface.jpg" alt="Zrzut ekranu interfejsu Ducking Audio" class="product-screenshot" width="717" height="648" loading="lazy" decoding="async" tabindex="0" role="button" aria-haspopup="dialog" aria-label="Powiększ zrzut interfejsu Ducking Audio">
 
             <p>
               Ducking Audio automatycznie ścisza wybrane źródła dźwięku, gdy inne źródło staje się aktywne.
@@ -970,7 +976,7 @@ Skontaktuj się
               <li>Regulowane progi, czas podtrzymania i czasy przejścia</li>
               <li>Stworzone z myślą o rzeczywistych produkcjach na żywo</li>
             </ul>
-            <a href="products/ducking-audio/" class="plugin-info-link">Dowiedz się więcej</a>
+            <a href="products/ducking-audio/" class="plugin-info-link">Poznaj Ducking Audio dla vMix</a>
 
 
 <div class="plugin-actions">
@@ -1016,16 +1022,16 @@ Skontaktuj się
                 <span class="video-play" aria-hidden="true"></span><span class="video-loader"></span><span class="video-status-label">Odtwórz film</span>
               </button>
             </div>
-            <div class="video-showcase-copy"><h3>Przykład realizacji</h3><p>Produkcja na żywo z automatycznym przełączaniem kamer sterowanym przez aktywnego mówcę.</p></div>
+            <div class="video-showcase-copy"><h3>Przykład realizacji</h3><p>Produkcja na żywo z automatycznym przełączaniem kamer sterowanym przez aktywnego mówcę.</p><a href="https://www.youtube.com/watch?v=L1gNAhFrRak">Obejrzyj tę realizację na YouTube</a></div>
           </article>
           <article class="video-showcase-card" data-ga-view="view_auto_camera_video_2">
             <div class="panel video-panel showcase-video">
               <button type="button" class="video-placeholder" data-youtube-id="B7wHfJ_xHiQ" data-play-label="Odtwórz film" aria-label="Odtwórz drugi przykład realizacji Auto Camera for vMix">
-                <img src="../assets/images/video/auto-camera-interview-poster.png" alt="" class="video-poster-contain" width="1100" height="780">
+                <img src="../assets/images/video/auto-camera-interview-poster.png" alt="" class="video-poster-contain" width="1100" height="780" loading="lazy" decoding="async">
                 <span class="video-play" aria-hidden="true"></span><span class="video-loader"></span><span class="video-status-label">Odtwórz film</span>
               </button>
             </div>
-            <div class="video-showcase-copy"><h3>Rozmowa w ruchu</h3><p>Zobacz, jak Auto Camera for vMix podąża za rytmem rozmowy wielu osób bez ręcznego wykonywania cięć.</p></div>
+            <div class="video-showcase-copy"><h3>Rozmowa w ruchu</h3><p>Zobacz, jak Auto Camera for vMix podąża za rytmem rozmowy wielu osób bez ręcznego wykonywania cięć.</p><a href="https://www.youtube.com/watch?v=B7wHfJ_xHiQ">Obejrzyj wywiad na YouTube</a></div>
           </article>
           <article class="video-showcase-card" data-ga-view="view_auto_camera_video_3">
             <div class="panel video-panel showcase-video">
@@ -1034,7 +1040,7 @@ Skontaktuj się
                 <span class="video-play" aria-hidden="true"></span><span class="video-loader"></span><span class="video-status-label">Odtwórz film</span>
               </button>
             </div>
-            <div class="video-showcase-copy"><h3>Automatyczny miks kamer</h3><p>Pełny przykład realizacji, w której Auto Camera for vMix odpowiada za zmiany kamer.</p></div>
+            <div class="video-showcase-copy"><h3>Automatyczny miks kamer</h3><p>Pełny przykład realizacji, w której Auto Camera for vMix odpowiada za zmiany kamer.</p><a href="https://www.youtube.com/watch?v=TGWFxNIUy-8">Obejrzyj automatyczne przełączanie kamer na YouTube</a></div>
           </article>
         </div>
       </div>
@@ -1131,6 +1137,17 @@ Skontaktuj się
   </div>
     </section>
 
+    <section id="guides" aria-labelledby="guides-title">
+      <div class="wrap">
+        <h2 class="section-title" id="guides-title">Poradniki automatyzacji kamer</h2>
+        <p class="muted">Praktyczna konfiguracja realizacji na żywo i montażu nagranych podcastów.</p>
+        <div class="guide-grid">
+          <article class="box"><h3>Automatyczne przełączanie kamer w vMix</h3><p class="muted">Przypisz mikrofony do kadrów, ustaw rytm przełączeń i przygotuj realizację na żywo.</p><a href="guides/automatic-camera-switching-vmix/">Przeczytaj poradnik przełączania kamer w vMix</a></article>
+          <article class="box"><h3>Automatyczny montaż podcastu w Premiere Pro</h3><p class="muted">Przygotuj ścieżki, przypisz rozmówców do kamer, skróć ciszę i sprawdź gotową sekwencję.</p><a href="guides/automatic-podcast-editing-premiere-pro/">Przeczytaj poradnik montażu podcastu w Premiere Pro</a></article>
+        </div>
+      </div>
+    </section>
+
     <section id="zakup" data-ga-view="view_purchase_section">
       <div class="wrap buy">
         <div class="box">
@@ -1170,6 +1187,7 @@ Skontaktuj się
       <div>© <span id="year"></span> AZ Tomasz Cedro. Plugins For Live to marka oprogramowania prowadzona przez AZ Tomasz Cedro.</div>
       <div class="footer-line">Niezależne narzędzia do pracy z vMix. Ta strona nie jest oficjalnie powiązana z producentem vMix.</div>
       <div class="legal-links">
+        <a href="guides/">Poradniki automatyzacji kamer</a>
         <a href="../pages/publisher.html">Informacje o wydawcy</a>
         <a href="../pages/contact.html">Kontakt</a>
         <a href="../pages/privacy-policy.html">Polityka prywatności</a>

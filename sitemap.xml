@@ -32,14 +32,14 @@
   </url>
   <url>
     <loc>https://pluginsforlive.com/products/ducking-audio/</loc>
-    <lastmod>2026-07-17</lastmod>
+    <lastmod>2026-10-27</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://pluginsforlive.com/products/ducking-audio/" />
     <xhtml:link rel="alternate" hreflang="pl" href="https://pluginsforlive.com/pl/products/ducking-audio/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pluginsforlive.com/products/ducking-audio/" />
   </url>
   <url>
     <loc>https://pluginsforlive.com/pl/products/ducking-audio/</loc>
-    <lastmod>2026-07-17</lastmod>
+    <lastmod>2026-10-27</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://pluginsforlive.com/products/ducking-audio/" />
     <xhtml:link rel="alternate" hreflang="pl" href="https://pluginsforlive.com/pl/products/ducking-audio/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pluginsforlive.com/products/ducking-audio/" />
@@ -77,5 +77,47 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://pluginsforlive.com/products/auto-camera-premiere/" />
     <xhtml:link rel="alternate" hreflang="pl" href="https://pluginsforlive.com/pl/products/auto-camera-premiere/" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://pluginsforlive.com/products/auto-camera-premiere/" />
+  </url>
+  <url>
+    <loc>https://pluginsforlive.com/guides/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pluginsforlive.com/guides/" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://pluginsforlive.com/pl/guides/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pluginsforlive.com/guides/" />
+  </url>
+  <url>
+    <loc>https://pluginsforlive.com/pl/guides/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pluginsforlive.com/guides/" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://pluginsforlive.com/pl/guides/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pluginsforlive.com/guides/" />
+  </url>
+  <url>
+    <loc>https://pluginsforlive.com/guides/automatic-camera-switching-vmix/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pluginsforlive.com/guides/automatic-camera-switching-vmix/" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://pluginsforlive.com/pl/guides/automatic-camera-switching-vmix/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pluginsforlive.com/guides/automatic-camera-switching-vmix/" />
+  </url>
+  <url>
+    <loc>https://pluginsforlive.com/pl/guides/automatic-camera-switching-vmix/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pluginsforlive.com/guides/automatic-camera-switching-vmix/" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://pluginsforlive.com/pl/guides/automatic-camera-switching-vmix/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pluginsforlive.com/guides/automatic-camera-switching-vmix/" />
+  </url>
+  <url>
+    <loc>https://pluginsforlive.com/guides/automatic-podcast-editing-premiere-pro/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pluginsforlive.com/guides/automatic-podcast-editing-premiere-pro/" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://pluginsforlive.com/pl/guides/automatic-podcast-editing-premiere-pro/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pluginsforlive.com/guides/automatic-podcast-editing-premiere-pro/" />
+  </url>
+  <url>
+    <loc>https://pluginsforlive.com/pl/guides/automatic-podcast-editing-premiere-pro/</loc>
+    <lastmod>2026-10-27</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pluginsforlive.com/guides/automatic-podcast-editing-premiere-pro/" />
+    <xhtml:link rel="alternate" hreflang="pl" href="https://pluginsforlive.com/pl/guides/automatic-podcast-editing-premiere-pro/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://pluginsforlive.com/guides/automatic-podcast-editing-premiere-pro/" />
   </url>
 </urlset>
