@@ -66,10 +66,11 @@ h1{margin:0;font-size:clamp(42px,6vw,72px);line-height:1;letter-spacing:-2.4px}
 .premiere-workspace .product-image{max-height:none;height:auto}
 .screenshot-link{display:block;cursor:zoom-in;border-radius:16px}
 .screenshot-link:focus-visible{outline:3px solid var(--brand);outline-offset:5px}
-.premiere-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:start}
-.premiere-screen{margin:0;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--surface-soft)}
-.premiere-screen img{display:block;width:100%;height:auto}
-.premiere-screen figcaption{padding:22px}
+.premiere-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;align-items:stretch}
+.premiere-screen{display:flex;flex-direction:column;margin:0;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--surface-soft)}
+.premiere-screen .screenshot-link{position:relative;aspect-ratio:565 / 923;overflow:hidden;border-radius:0}
+.premiere-screen img{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;object-position:center top}
+.premiere-screen figcaption{flex:1;padding:22px}
 .premiere-screen figcaption p{margin:0;color:var(--muted);font-size:15px}
 .screenshot-dialog{position:fixed;inset:0;width:fit-content;max-width:96vw;max-height:96vh;padding:44px 12px 12px;border:1px solid var(--line);border-radius:18px;background:#101827;color:var(--text);overflow:auto}
 .screenshot-dialog::backdrop{background:rgba(0,0,0,.88)}
